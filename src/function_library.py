@@ -14,7 +14,7 @@ logging.basicConfig(
     level = logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
-logger = logging.getLonger(__name__)
+logger = logging.getLogger(__name__)
 
 def load_config(self, config_path: str) -> None:
         """Load configuration from JSON file."""
