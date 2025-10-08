@@ -17,24 +17,24 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def load_config(self, config_path: str) -> None:
-        """Load configuration from JSON file."""
-        with open(config_path, 'r') as f:
-            self.config = json.load(f)
-        logger.info(f"Configuration loaded from {config_path}")
+    """Load configuration from JSON file."""
+    with open(config_path, 'r') as f:
+        self.config = json.load(f)
+    logger.info(f"Configuration loaded from {config_path}")
     
 def save_config(self, config_path: str) -> None:
-        """Save configuration to JSON file."""
-        with open(config_path, 'w') as f:
-            json.dump(self.config, f, indent=4)
-        logger.info(f"Configuration saved to {config_path}")
+    """Save configuration to JSON file."""
+    with open(config_path, 'w') as f:
+        json.dump(self.config, f, indent=4)
+    logger.info(f"Configuration saved to {config_path}")
     
 def get(self, key: str, default: Any = None) -> Any:
-        """Get configuration value."""
-        return self.config.get(key, default)
+    """Get configuration value."""
+    return self.config.get(key, default)
     
 def set(self, key: str, value: Any) -> None:
-        """Set configuration value."""
-        self.config[key] = value
+    """Set configuration value."""
+    self.config[key] = value
 
 
 def pipeline_step(step_name: str, log_output: bool = True):
