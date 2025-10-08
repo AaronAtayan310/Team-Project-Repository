@@ -5,6 +5,7 @@ A comprehensive Python framework for automated processing, analysis, and visuali
 
 ## Team Members
 
+Team Name: SAV 
 | Name | Role | Responsibilities |
 |------|------|------------------|
 | [Aaron Atayan] | Project Lead | Project coordinator and designer |
