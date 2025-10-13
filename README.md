@@ -23,7 +23,7 @@ Problem Statement:
 
 This library provides helper functions for **ingesting, cleaning, and analyzing crime rate data**. It is written in Python and relies on common data analysis libraries such as **pandas**.
 
-### 1. Clone or Download the Repository
+1. Clone or Download the Repository
 
 If using Git:
 ```bash
@@ -32,7 +32,7 @@ cd crime-data-library
 ```
 Or manually download the `.py` file and place it in your project directory.
 
-### 2. Create and Activate a Virtual Environment (Recommended)
+2. Create and Activate a Virtual Environment (Recommended)
 
 ```bash
 python -m venv venv
@@ -50,7 +50,7 @@ Then install all requirements:
 ```bash
 pip install -r requirements.txt
 
-### 4. Import the Library in Your Script or Notebook
+4. Import the Library in Your Script or Notebook
 
 Once installed, you can import your function library as follows:
 
