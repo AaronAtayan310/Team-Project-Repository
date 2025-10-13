@@ -4,6 +4,7 @@ import logging
 import pickle
 import requests
 import pandas as pd
+from datetime import datetime
 from typing import Any, Dict, List, Iterator, Optional
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
@@ -51,6 +52,24 @@ def fetch_api_data(url: str, params: Optional[Dict[str, Any]] = None) -> Dict[st
     response.raise_for_status()
     return response.json()
 
+def validate_csv_path(file_path: str) -> bool:
+    """
+    Validate whether a given file path points to an existing CSV file.
+
+    Args:
+        file_path (str): The path to the file being validated.
+
+    Returns:
+        bool: True if the file exists and has a '.csv' extension, False otherwise.
+
+    Raises:
+        TypeError: If 'file_path' is not a string.
+    """
+    if not isinstance(file_path, str):
+        raise TypeError("File path must be a string")
+
+    return os.path.isfile(file_path) and file_path.lower().endswith(".csv")
+
 
 # ---------------------------------------------------------------------------
 # 2. DATA CLEANING
@@ -95,6 +114,56 @@ def normalize_text_column(df: pd.DataFrame, column: str) -> pd.DataFrame:
     df = df.copy()
     df[column] = df[column].astype(str).str.lower().str.strip()
     return df
+
+def standardize_column_names(columns: list[str]) -> list[str]:
+    """
+    Standardize column names by stripping whitespace, converting to lowercase,
+    and replacing spaces with underscores.
+
+    Args:
+        columns (list[str]): A list of column names.
+
+    Returns:
+        list[str]: A list of standardized column names.
+
+    Raises:
+        TypeError: If 'columns' is not a list of strings.
+    """
+    if not isinstance(columns, list) or not all(isinstance(col, str) for col in columns):
+        raise TypeError("Columns must be a list of strings")
+
+    return [col.strip().lower().replace(" ", "_") for col in columns]
+
+
+def remove_outliers_iqr(df: pd.DataFrame, column: str) -> pd.DataFrame:
+    """
+    Remove outliers from a DataFrame column using the Interquartile Range (IQR) method.
+
+    Outliers are defined as values below Q1 - 1.5*IQR or above Q3 + 1.5*IQR.
+
+    Args:
+        df (pd.DataFrame): The input DataFrame.
+        column (str): The name of the column to filter for outliers.
+
+    Returns:
+        pd.DataFrame: A new DataFrame with outliers removed.
+
+    Raises:
+        TypeError: If 'df' is not a pandas DataFrame.
+        ValueError: If 'column' does not exist in the DataFrame.
+    """
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("df must be a pandas DataFrame")
+    if column not in df.columns:
+        raise ValueError(f"Column '{column}' not found in DataFrame")
+
+    Q1 = df[column].quantile(0.25)
+    Q3 = df[column].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    return df[(df[column] >= lower_bound) & (df[column] <= upper_bound)]
 
 
 # ---------------------------------------------------------------------------
@@ -187,6 +256,24 @@ def evaluate_model(model: LinearRegression, X_test: pd.DataFrame, y_test: pd.Ser
     mse = mean_squared_error(y_test, predictions)
     return {"mse": mse}
 
+def calculate_missing_data(df: pd.DataFrame) -> pd.Series:
+    """
+    Calculate the percentage of missing data in each column of a DataFrame.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to analyze.
+
+    Returns:
+        pd.Series: A Series containing the percentage of missing data per column.
+
+    Raises:
+        TypeError: If 'df' is not a pandas DataFrame.
+    """
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("Input must be a pandas DataFrame")
+
+    return (df.isnull().sum() / len(df)) * 100
+
 
 # ---------------------------------------------------------------------------
 # 5. DATA STORAGE
@@ -249,3 +336,25 @@ def run_pipeline(config: Dict[str, Any]) -> None:
     save_to_csv(stats, config["output_path"])
 
     log_pipeline_step("Pipeline", "completed")
+
+def generate_timestamped_filename(base_name: str, extension: str = ".csv") -> str:
+    """
+    Generate a timestamped filename with a given base name and extension.
+
+    The timestamp follows the format: YYYY-MM-DD_HH-MM-SS.
+
+    Args:
+        base_name (str): The base name of the file (without extension).
+        extension (str, optional): The file extension to append. Defaults to '.csv'.
+
+    Returns:
+        str: The generated filename including the timestamp and extension.
+
+    Raises:
+        TypeError: If 'base_name' or 'extension' is not a string.
+    """
+    if not isinstance(base_name, str) or not isinstance(extension, str):
+        raise TypeError("Base name and extension must be strings")
+
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    return f"{base_name}_{timestamp}{extension}"
