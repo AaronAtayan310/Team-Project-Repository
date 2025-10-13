@@ -21,6 +21,51 @@ Problem Statement:
 
 # Installation and Setup Instructions
 
+This library provides helper functions for **ingesting, cleaning, and analyzing crime rate data**. It is written in Python and relies on common data analysis libraries such as **pandas**.
+
+### 1. Clone or Download the Repository
+
+If using Git:
+```bash
+git clone https://github.com/yourusername/crime-data-library.git
+cd crime-data-library
+```
+Or manually download the `.py` file and place it in your project directory.
+
+### 2. Create and Activate a Virtual Environment (Recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate   # On Mac/Linux
+venv\Scripts\activate      # On Windows
+
+### 3. Install Required Dependencies
+
+Create a `requirements.txt` file containing:
+```
+pandas>=2.0.0
+```
+Then install all requirements:
+
+```bash
+pip install -r requirements.txt
+
+### 4. Import the Library in Your Script or Notebook
+
+Once installed, you can import your function library as follows:
+
+import os
+import json
+import logging
+import pickle
+import requests
+import pandas as pd
+from datetime import datetime
+from typing import Any, Dict, List, Iterator, Optional
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
 # Usage examples for key functions
 
 # Function library overview and organization
