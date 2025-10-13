@@ -162,8 +162,30 @@ def remove_outliers_iqr(df: pd.DataFrame, column: str) -> pd.DataFrame:
     IQR = Q3 - Q1
     lower_bound = Q1 - 1.5 * IQR
     upper_bound = Q3 + 1.5 * IQR
-
     return df[(df[column] >= lower_bound) & (df[column] <= upper_bound)]
+
+def clean_crime_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Perform general cleaning on a crime dataset:
+    - Standardize column names
+    - Drop duplicate rows
+    - Remove records with missing essential values
+    - Convert date columns to datetime objects
+
+    Args:
+        df (pd.DataFrame): Raw crime dataset.
+
+    Returns:
+        pd.DataFrame: Cleaned DataFrame ready for analysis.
+    """
+    df.columns = standardize_column_names(df.columns)
+    df = df.drop_duplicates()
+    if "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+        df = df.dropna(subset=["date"])
+    if "crime_type" in df.columns:
+        df = df.dropna(subset=["crime_type"])
+    return df.reset_index(drop=True)
 
 
 # ---------------------------------------------------------------------------
@@ -274,6 +296,73 @@ def calculate_missing_data(df: pd.DataFrame) -> pd.Series:
 
     return (df.isnull().sum() / len(df)) * 100
 
+def compute_crime_rate_by_year(df: pd.DataFrame, population_col: str = "population") -> pd.DataFrame:
+    """
+    Compute annual crime rates per 100,000 people.
+
+    Args:
+        df (pd.DataFrame): The crime dataset containing 'date' and 'population' columns.
+        population_col (str): Column name representing population data.
+
+    Returns:
+        pd.DataFrame: DataFrame with columns ['year', 'crime_count', 'crime_rate'].
+    """
+    if "date" not in df.columns:
+        raise ValueError("The dataset must contain a 'date' column.")
+    if population_col not in df.columns:
+        raise ValueError(f"Missing '{population_col}' column for population data.")
+
+    df["year"] = pd.to_datetime(df["date"]).dt.year
+    yearly_data = df.groupby("year").agg(
+        crime_count=("crime_type", "count"),
+        population=(population_col, "mean")
+    ).reset_index()
+    yearly_data["crime_rate"] = (yearly_data["crime_count"] / yearly_data["population"]) * 100000
+    return yearly_data
+
+def top_crime_types(df: pd.DataFrame, n: int = 10) -> pd.DataFrame:
+    """
+    Identify the top N most frequent crime types.
+
+    Args:
+        df (pd.DataFrame): The crime dataset containing a 'crime_type' column.
+        n (int): The number of top crime types to return.
+
+    Returns:
+        pd.DataFrame: DataFrame with columns ['crime_type', 'count'].
+    """
+    if "crime_type" not in df.columns:
+        raise ValueError("The dataset must include a 'crime_type' column.")
+
+    return (
+        df["crime_type"]
+        .value_counts()
+        .head(n)
+        .reset_index()
+        .rename(columns={"index": "crime_type", "crime_type": "count"})
+    )
+
+def find_high_crime_areas(df: pd.DataFrame, area_col: str = "neighborhood") -> pd.DataFrame:
+    """
+    Identify the areas with the highest number of reported crimes.
+
+    Args:
+        df (pd.DataFrame): The crime dataset containing an area column.
+        area_col (str): The name of the column representing geographic areas.
+
+    Returns:
+        pd.DataFrame: DataFrame of areas sorted by descending crime count.
+    """
+    if area_col not in df.columns:
+        raise ValueError(f"'{area_col}' column not found in dataset.")
+
+    area_stats = (
+        df.groupby(area_col)
+        .size()
+        .reset_index(name="crime_count")
+        .sort_values(by="crime_count", ascending=False)
+    )
+    return area_stats
 
 # ---------------------------------------------------------------------------
 # 5. DATA STORAGE
