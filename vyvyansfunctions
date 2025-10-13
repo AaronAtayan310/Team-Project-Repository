@@ -1,0 +1,60 @@
+def validate_csv_path(file_path):
+    ...
+def standardize_column_names(columns):
+    ...
+def calculate_missing_data(df):
+    ...
+def remove_outliers_iqr(df, column):
+    ...
+def generate_timestamped_filename(base_name, extension=".csv"):
+    ...
+
+
+def validate_csv_path(file_path):
+    import os
+
+    if not isinstance(file_path, str):
+        raise TypeError("File path must be a string")
+
+    return os.path.isfile(file_path) and file_path.lower().endswith(".csv")
+
+
+def standardize_column_names(columns):
+    if not isinstance(columns, list) or not all(isinstance(col, str) for col in columns):
+        raise TypeError("Columns must be a list of strings")
+
+    return [col.strip().lower().replace(" ", "_") for col in columns]
+
+
+import pandas as pd
+
+def calculate_missing_data(df):
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("Input must be a pandas DataFrame")
+
+    return (df.isnull().sum() / len(df)) * 100
+
+
+def remove_outliers_iqr(df, column):
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("df must be a pandas DataFrame")
+    if column not in df.columns:
+        raise ValueError(f"Column '{column}' not found in DataFrame")
+
+    Q1 = df[column].quantile(0.25)
+    Q3 = df[column].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    return df[(df[column] >= lower_bound) & (df[column] <= upper_bound)]
+
+
+from datetime import datetime
+
+def generate_timestamped_filename(base_name, extension=".csv"):
+    if not isinstance(base_name, str) or not isinstance(extension, str):
+        raise TypeError("Base name and extension must be strings")
+
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    return f"{base_name}_{timestamp}{extension}"
