@@ -66,7 +66,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-**# Usage Examples for Key Functions**
+### Usage Examples for Key Functions
 
 Below are practical examples of how to use the most important functions in the library.
 
