@@ -66,11 +66,11 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-# Usage Examples for Key Functions
+**# Usage Examples for Key Functions**
 
 Below are practical examples of how to use the most important functions in the library.
 
-### 1. Validate and Load a CSV File
+1. Validate and Load a CSV File
 
 ```python
 from crime_data_library import validate_csv_path, load_crime_data
@@ -83,8 +83,6 @@ if validate_csv_path(file_path):
 else:
     print("Invalid file path or format.")
 ```
-
----
 
 ### 2. Clean the Crime Dataset
 
