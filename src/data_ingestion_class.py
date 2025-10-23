@@ -86,9 +86,23 @@ class dataIngestion:
             pd.DataFrame: Loaded data as a DataFrame.
 
         Raises:
+            TypeError: If file is not a string
             FileNotFoundError: If the file does not exist.
         '''
+        if not isinstance(filepath, str):
+            raise TypeError("The filepath must be a string")
+        
         if not os.path.exists(filepath):
             raise FileNotFoundError(f"File not found: {filepath}")
+        
+        df = pd.read_csv(filepath)
 
-        return pd.read_csv(filepath)
+        if self._track_sources:
+            self._data_sources.append({
+                'type': 'csv',
+                'source': filepath,
+                'rows': len(df),
+                'columns': len(df.columns)
+            })
+
+        return df
