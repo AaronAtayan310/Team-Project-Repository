@@ -37,4 +37,58 @@ class dataIngestion:
         self._track_sources = track_sources
         self._data_sources =[]
 
+    @property
+    def default_timeout(self) -> int:
+        ''' Gets default_timeout for API requests'''
+        return self._default_timeout
     
+    @default_timeout.setter
+    def default_timeout(self, value: int):
+        '''
+        Set the default timeout for API requests
+
+        Args:
+            value (int): New timeout value in seconds.
+        
+        Raises:
+            TypeError: If value is not an integer.
+            ValueError: If value is not positive.
+        '''
+        if not isinstance(value, int):
+            raise TypeError("default_timeout must be an integer")
+        if value <= 0:
+            raise ValueError("default_timeout must be a positive integer")
+        
+        self._default_timeout = value
+    
+    @property
+    def track_sources(self) -> bool:
+        '''Get whether source tracking is enabled'''
+        return self._track_sources
+    
+    @track_sources.setter
+    def track_sources(self, value: bool):
+        '''
+        Set whether to track data sources
+        '''
+        if not isinstance(value, bool):
+            raise TypeError("track_sources must be a boolean")
+        self._track_sources = value
+    
+    def load_csv(filepath: str) -> pd.DataFrame:
+        '''
+        Load a CSV file into a pandas DataFrame.
+
+        Args:
+            filepath (str): Path to the CSV file.
+
+        Returns:
+            pd.DataFrame: Loaded data as a DataFrame.
+
+        Raises:
+            FileNotFoundError: If the file does not exist.
+        '''
+        if not os.path.exists(filepath):
+            raise FileNotFoundError(f"File not found: {filepath}")
+
+        return pd.read_csv(filepath)
