@@ -39,7 +39,9 @@ class dataIngestion:
 
     @property
     def default_timeout(self) -> int:
-        ''' Gets default_timeout for API requests'''
+        ''' 
+        Gets default_timeout for API requests
+        '''
         return self._default_timeout
     
     @default_timeout.setter
@@ -63,7 +65,9 @@ class dataIngestion:
     
     @property
     def track_sources(self) -> bool:
-        '''Get whether source tracking is enabled'''
+        '''
+        Get whether source tracking is enabled
+        '''
         return self._track_sources
     
     @track_sources.setter
@@ -75,7 +79,7 @@ class dataIngestion:
             raise TypeError("track_sources must be a boolean")
         self._track_sources = value
     
-    def load_csv(filepath: str) -> pd.DataFrame:
+    def load_csv(self, filepath: str) -> pd.DataFrame:
         '''
         Load a CSV file into a pandas DataFrame.
 
@@ -106,3 +110,109 @@ class dataIngestion:
             })
 
         return df
+    
+    def fetch_api_data(self, url: str,
+            params: Optional[Dict[str, Any]] = None,
+            timeout: Optional[int] = None
+    ) -> Dict[str, Any]:
+        '''
+        Fetch JSON data from a REST API endpoint.
+
+        Args:
+            url (str): the API URL
+            params (dict, optional): Query parameters to include in the request
+            timeout (int, optional): Request timeout in seconds. If None, uses default_timeout
+        Returns:
+            dict: Parsed JSON response
+        Raises:
+            TypeError: If URL is not a string or params is not a dict
+            requests.RequestException: if the API request fails
+        '''
+        if not isinstance(url, str):
+            raise TypeError("URL must be a string")
+        if params is not None and not isinstance(params, dict):
+            raise TypeError("params must be a dictionary or None")
+        
+        actual_timeout = timeout if timeout is not None else self._default_timeout
+
+        response = requests.get(url, params = params, timeout = actual_timeout)
+        response.raise_for_status()
+        data = response.json()
+
+        if self._track_sources:
+            self._data_sources.append({
+                'type': 'api',
+                'source': url,
+                'params': params,
+                'status_code': response.status_code
+            })
+        
+        return data
+    
+    @staticmethod
+    def validate_csv_path(file_path: str) -> bool:
+        '''
+        Validate whether a given file path points to an existing CSV file
+
+        Args:
+            file_path (str): The path to the file being validated.
+        Returns:
+            bool: True if the file exists and has a '.csv' extension,
+            False otherwise.
+        Raises:
+            TypeError: If 'file_path' is not a string.
+        '''
+        if not isinstance(file_path, str):
+            raise TypeError("File path must be a string")
+        
+        return os.path.isfile(file_path) and file_path.lower().endswith(".csv")
+    
+
+    def clear_sources(self):
+        '''
+        Clears the list of tracked data sources
+        '''
+        self._data_sources.clear()
+
+    def __str__(self) -> str:
+        '''
+        Return a string representation of the DataIngestion object
+
+        Returns:
+            str: A readable description of the object.
+        '''
+        sources_count = len(self._data_sources)
+        tracking_status = "enabled" if self._track_sources else "disabled"
+        return (f"DataIngestion (timeout= {self._default_timeout}s, "
+                f"tracking= {tracking_status}, sources_loaded = {sources_count})")
+    
+    def __repr__(self) -> str:
+        '''
+        Return a detailed string representation of the DataIngestion object
+
+        Returns:
+            str: A string that could be used to recreate the object.
+        '''
+        return (f"DataIngestion(default_timeout={self._default_timeout}, "
+                f"track_sources={self._track_sources})")
+    
+
+#Example usages (put into a separate py file later):
+if __name__ == "__main__":
+    # Create an instance
+    ingestion = dataIngestion()
+    print(ingestion)
+    print(repr(ingestion))
+    
+    # Validate a CSV path
+    is_valid = dataIngestion.validate_csv_path("example.csv")
+    print(f"CSV path valid: {is_valid}")
+    
+    # Load CSV (example - will fail if file doesn't exist)
+    # df = ingestion.load_csv("[input .csv file]")
+    
+    # Fetch API data (example)
+    data = ingestion.fetch_api_data("https://api.nationalize.io/?name=nathaniel")
+    
+    # Check loaded sources
+    print(f"Data sources: {ingestion.data_sources}")
