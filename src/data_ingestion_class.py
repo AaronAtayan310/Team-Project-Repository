@@ -215,4 +215,4 @@ if __name__ == "__main__":
     data = ingestion.fetch_api_data("https://api.nationalize.io/?name=nathaniel")
     
     # Check loaded sources
-    print(f"Data sources: {ingestion.data_sources}")
+    print(f"Data sources: {ingestion._data_sources}")
