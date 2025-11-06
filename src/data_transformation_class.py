@@ -2,12 +2,18 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 
 class dataTransformation:
+    """
+    This class allows for transforming dataframes into scaled or more feature complete versions.
+
+    Attributes:
+        frame (pd.DataFrame): A pandas dataframe containing the data we are working with, holding relevant data.
+    """
     def __init__(self, frame):
         """
-        This class allows for transforming dataframes into scaled or more feature complete versions.
+        Initialize the dataTransformation class.
 
-        Attributes:
-            frame (pd.DataFrame): A pandas dataframe containing the data we are working with.
+        Args:
+            frame: A pandas dataframe containing the data we are working with, holding relevant data.
         """
         self._frame = None
         self.frame = frame
@@ -55,3 +61,15 @@ class dataTransformation:
         if "value" in df.columns and "count" in df.columns:
             df["value_per_count"] = df["value"] / (df["count"] + 1e-9)
         self.frame = df
+
+    def __str__(self):
+        """
+        Returns a string representation of the dataTransformation object (the current state of the data being transformed).
+
+        Returns:
+            str: A readable description of the object.
+        """
+        source = str(self.frame)
+        print('Current state of data being transformed:')
+        print('\n')
+        print(source)
