@@ -203,13 +203,12 @@ File saved as: cleaned_crime_data_2025-10-12_21-04-10.csv
 
 
 # Function library overview and organization
-The library consists of roughly 20 functions, at time of writing. In terms of organization, the vast majority function independently, although some do rely on other functions in the library. The .py file uses some comment lines to break apart the functions into 6 core sections, which each represent the overarching purpose in the project that one group of functions, each achieving a more niche, specific goal, is intended to fulfill. These groups are.....
+The library consists of roughly 20 functions, at time of writing. An important detail to take note of regarding all functions in the library is that they are each designed to function with complete independence - that is, not relying on other functions in the library to be able to run. In terms of organization, the .py file for the function library uses some comment lines to break apart the functions into 5 core sections, which each represent the overarching purpose in the project that one group of functions, each achieving a more niche, specific goal, is intended to fulfill. These groups are.....
 1. Data Ingestion
-2. Data Analysis
+2. Data Cleaning
 3. Data Transformation
-4. Data Utilities
-5. Data Cleaning
-6. Data Storage
+4. Data Analysis
+5. Data Storage & Utilities
 
 # Contribution guidelines for team members
 1. Ensure you have the latest code
