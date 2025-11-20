@@ -1,5 +1,5 @@
 # Team-Project-Repository
-INST326 Team Project - Data Pipeline Framework for Crime rates/datasets
+INST326 Team Project - Crime Research Data Pipeline
 
 A comprehensive Python framework for automated processing, analysis, and visualization of crime datasets to support evidence-based policy making and criminal justice research.
 
