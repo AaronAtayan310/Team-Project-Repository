@@ -1,13 +1,13 @@
-# Crime Data Research Pipeline Project - Python Dependencies
+# Crime Research Data Pipeline Project - Python Dependencies
 # ==========================================================
 #
-# This file lists the Python packages required to run the Crime Data 
-# Research Pipeline Project. For this project, there are a few
-# significant external library dependencies.
+# This file lists the Python packages required to run the Crime
+# Research Data Pipeline Project. For this project, there are a
+# few significant external library dependencies.
 # 
 # CURRENT STATUS: Requires multiple external dependencies.
 # 
-# Below lists the current modules the Crime Data Research Pipeline 
+# Below lists the current modules the Crime Research Data Pipeline 
 # Function Library is dependent upon...
 # - os
 # - json
