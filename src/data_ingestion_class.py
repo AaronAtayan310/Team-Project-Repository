@@ -195,24 +195,3 @@ class dataIngestion:
         '''
         return (f"DataIngestion(default_timeout={self._default_timeout}, "
                 f"track_sources={self._track_sources})")
-    
-
-#Example usages (put into a separate py file later):
-if __name__ == "__main__":
-    # Create an instance
-    ingestion = dataIngestion()
-    print(ingestion)
-    print(repr(ingestion))
-    
-    # Validate a CSV path
-    is_valid = dataIngestion.validate_csv_path("example.csv")
-    print(f"CSV path valid: {is_valid}")
-    
-    # Load CSV (example - will fail if file doesn't exist)
-    # df = ingestion.load_csv("[input .csv file]")
-    
-    # Fetch API data (example)
-    data = ingestion.fetch_api_data("https://api.nationalize.io/?name=nathaniel")
-    
-    # Check loaded sources
-    print(f"Data sources: {ingestion._data_sources}")
