@@ -3,7 +3,7 @@ INST326 Team Project - Data Pipeline Framework for Crime rates/datasets
 
 A comprehensive Python framework for automated processing, analysis, and visualization of crime datasets to support evidence-based policy making and criminal justice research.
 
-## Team Members
+# Team Members
 
 Team Name: SAV 
 | Name | Role | Responsibilities |
@@ -38,6 +38,7 @@ Or manually download the `.py` file and place it in your project directory.
 python -m venv venv
 source venv/bin/activate   # On Mac/Linux
 venv\Scripts\activate      # On Windows
+```
 
 3. Install Required Dependencies
 
@@ -46,9 +47,9 @@ Create a `requirements.txt` file containing:
 pandas>=2.0.0
 ```
 Then install all requirements:
-
 ```bash
 pip install -r requirements.txt
+```
 
 4. Import the Library in Your Script or Notebook
 
@@ -66,7 +67,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-### Usage Examples for Key Functions
+# Usage Examples for Key Functions
 
 Below are practical examples of how to use the most important functions in the library.
 
@@ -84,7 +85,7 @@ else:
     print("Invalid file path or format.")
 ```
 
-### 2. Clean the Crime Dataset
+2. Clean the Crime Dataset
 
 ```python
 from crime_data_library import clean_crime_data
@@ -102,7 +103,7 @@ This function:
 
 ---
 
-### 3. Calculate Missing Data Percentages
+3. Calculate Missing Data Percentages
 
 ```python
 from crime_data_library import calculate_missing_data
@@ -123,7 +124,7 @@ dtype: float64
 
 ---
 
-### 4. Compute Annual Crime Rates
+4. Compute Annual Crime Rates
 
 ```python
 from crime_data_library import compute_crime_rate_by_year
@@ -142,7 +143,7 @@ Example output:
 
 ---
 
-### 5. Identify the Top Crime Types
+5. Identify the Top Crime Types
 
 ```python
 from crime_data_library import top_crime_types
@@ -164,7 +165,7 @@ Example output:
 
 ---
 
-### 6. Find Areas with the Highest Crime Rates
+6. Find Areas with the Highest Crime Rates
 
 ```python
 from crime_data_library import find_high_crime_areas
@@ -184,7 +185,7 @@ Example output:
 
 ---
 
-### 7. Save Processed Data with Timestamped Filenames
+7. Save Processed Data with Timestamped Filenames
 
 ```python
 from crime_data_library import generate_timestamped_filename
@@ -198,10 +199,17 @@ Example output:
 
 ```
 File saved as: cleaned_crime_data_2025-10-12_21-04-10.csv
-
+```
 
 
 # Function library overview and organization
+The library consists of roughly 20 functions, at time of writing. In terms of organization, the vast majority function independently, although some do rely on other functions in the library. The .py file uses some comment lines to break apart the functions into 6 core sections, which each represent the overarching purpose in the project that one group of functions, each achieving a more niche, specific goal, is intended to fulfill. These groups are.....
+1. Data Ingestion
+2. Data Analysis
+3. Data Transformation
+4. Data Utilities
+5. Data Cleaning
+6. Data Storage
 
 # Contribution guidelines for team members
 1. Ensure you have the latest code
