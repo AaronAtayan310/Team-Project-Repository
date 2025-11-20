@@ -17,11 +17,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 from crime_data_library import *
 
 def demo_data_ingestion():
-    """Demonstrate data ingestion from CSV and APIs."""
-    print("📥 DATA INGESTION DEMO")
+    """Demonstrate data ingestion from different formats."""
+    print("DATA INGESTION DEMO")
     print("=" * 50)
 
-    # Demo: loading a CSV file (replace with actual filename as available)
+    # Demo: loading a CSV file (fake, for example purposes)
     filepath = "sample_crime_data.csv"
     try:
         data = load_csv(filepath)
@@ -29,7 +29,7 @@ def demo_data_ingestion():
     except FileNotFoundError:
         print(f"File '{filepath}' not found - skipping CSV loading demo.")
     
-    # Demo: fetching API data (replace with a real endpoint as needed)
+    # Demo: fetching API data (fake, for example purposes)
     test_url = "https://api.example.com/crime"
     try:
         api_data = fetch_api_data(test_url)
@@ -42,11 +42,11 @@ def demo_data_ingestion():
     print()
 
 def demo_data_cleaning():
-    """Demonstrate DataFrame cleaning utilities."""
-    print("🧹 DATA CLEANING DEMO")
+    """Demonstrate cleaning capabilities for data / dataframes in the pipeline."""
+    print("DATA CLEANING DEMO")
     print("=" * 50)
 
-    # Example DataFrame for cleaning
+    # Example DataFrame for the demo
     import pandas as pd
     demo_df = pd.DataFrame({
         'Crime Type': ['Theft', 'Robbery', 'Assault', None, 'Theft'],
@@ -81,8 +81,8 @@ def demo_data_cleaning():
     print()
 
 def demo_data_transformation():
-    """Demonstrate feature engineering and scaling."""
-    print("🔄 DATA TRANSFORMATION DEMO")
+    """Demonstrate feature generation and scaling capabilities."""
+    print("DATA TRANSFORMATION DEMO")
     print("=" * 50)
 
     import pandas as pd
@@ -104,8 +104,8 @@ def demo_data_transformation():
     print()
 
 def demo_data_analysis():
-    """Demonstrate core analytics and statistics."""
-    print("📊 DATA ANALYSIS DEMO")
+    """Demonstrate core analysis capabilities of the library."""
+    print("DATA ANALYSIS DEMO")
     print("=" * 50)
 
     import pandas as pd
@@ -136,7 +136,7 @@ def demo_data_analysis():
     results = evaluate_model(trained_model, X_test, y_test)
     print(f"Evaluation - MSE: {results['mse']}")
 
-    print("\nMissing data analysis:")
+    print("\nMissing data:")
     print(calculate_missing_data(df))
 
     print("\nCrime rate by year calculation:")
@@ -150,8 +150,8 @@ def demo_data_analysis():
     print()
 
 def demo_data_storage_utilities():
-    """Demonstrate utility routines for storage and logging."""
-    print("💾 DATA STORAGE & UTILITIES DEMO")
+    """Demonstrate utility capabilities for storage and logging."""
+    print("DATA STORAGE & UTILITIES DEMO")
     print("=" * 50)
     import pandas as pd
     import pickle
@@ -185,7 +185,7 @@ def main():
     """Run all demonstration functions."""
     print("CRIME DATA FUNCTION LIBRARY - DEMO SCRIPT")
     print("=" * 60)
-    print("This demo showcases how the function library supports urban crime analytics. Based on synthetic or small sample data.")
+    print("This demo showcases how the function library supports crime analysis, based on some small sample data.")
 
     demo_data_ingestion()
     demo_data_cleaning()
@@ -195,7 +195,7 @@ def main():
 
     print("=" * 60)
     print("🎉 ALL DEMOS COMPLETE!")
-    print("This function library is foundational for building object-oriented data pipelines and analytics projects.")
+    print("This function library is foundational for object-oriented expansion on the project over the semester!")
     print("=" * 60)
 
 
