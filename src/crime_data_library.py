@@ -364,6 +364,7 @@ def find_high_crime_areas(df: pd.DataFrame, area_col: str = "neighborhood") -> p
     )
     return area_stats
 
+
 # ---------------------------------------------------------------------------
 # 5. DATA STORAGE & UTILITIES
 # ---------------------------------------------------------------------------
