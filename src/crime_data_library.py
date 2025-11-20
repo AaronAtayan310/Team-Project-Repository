@@ -365,7 +365,7 @@ def find_high_crime_areas(df: pd.DataFrame, area_col: str = "neighborhood") -> p
     return area_stats
 
 # ---------------------------------------------------------------------------
-# 5. DATA STORAGE
+# 5. DATA STORAGE & UTILITIES
 # ---------------------------------------------------------------------------
 
 def save_to_csv(df: pd.DataFrame, filepath: str) -> None:
@@ -390,11 +390,6 @@ def serialize_model(model: Any, path: str) -> None:
     with open(path, "wb") as file:
         pickle.dump(model, file)
 
-
-# ---------------------------------------------------------------------------
-# 6. UTILITIES / ORCHESTRATION
-# ---------------------------------------------------------------------------
-
 def log_pipeline_step(step_name: str, status: str) -> None:
     """
     Log a pipeline step for monitoring purposes.
@@ -405,26 +400,6 @@ def log_pipeline_step(step_name: str, status: str) -> None:
     """
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
     logging.info(f"Step '{step_name}' - Status: {status}")
-
-
-def run_pipeline(config: Dict[str, Any]) -> None:
-    """
-    Execute a simple data pipeline based on configuration.
-
-    Args:
-        config (dict): Pipeline configuration dictionary.
-    """
-    log_pipeline_step("Pipeline", "started")
-
-    # Example: Load data, clean it, compute stats, and save results
-    df = load_csv(config["input_path"])
-    df = handle_missing_values(df)
-    df = generate_features(df)
-
-    stats = compute_summary_stats(df)
-    save_to_csv(stats, config["output_path"])
-
-    log_pipeline_step("Pipeline", "completed")
 
 def generate_timestamped_filename(base_name: str, extension: str = ".csv") -> str:
     """
