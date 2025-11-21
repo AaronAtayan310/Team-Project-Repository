@@ -10,7 +10,7 @@ from typing import Any, Dict, Optional, Union
 import hashlib
 
 
-class DataPipelineUtils:
+class dataStorageUtils:
     """
     Utility class for data pipeline operations including storage, serialization,
     logging, and file management.
@@ -18,7 +18,7 @@ class DataPipelineUtils:
     
     def __init__(self, base_output_dir: Optional[str] = None, log_level: int = logging.INFO):
         """
-        Initialize the DataPipelineUtils class.
+        Initialize the dataStorageUtils class.
         
         Args:
             base_output_dir (Optional[str]): Base directory for outputs. Defaults to current directory.
