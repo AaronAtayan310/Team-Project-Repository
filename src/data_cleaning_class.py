@@ -71,7 +71,7 @@ class dataCleaning:
         '''
         Get verbose setting
         '''
-        return self.verbose
+        return self._verbose
     
     @verbose.setter
     def verbose(self, value: bool):
@@ -86,7 +86,7 @@ class dataCleaning:
         '''
         log a cleaning operation to the history
         '''
-        self._cleanining_history.append(operation)
+        self._cleaning_history.append(operation)
         if self._verbose:
             print(f"[DataCleaner] {operation}")
 
@@ -108,7 +108,7 @@ class dataCleaning:
             raise ValueError(f"Invalid Strategy. Choose from {valid_strategies}")
         
         target_df = self._df[columns] if columns else self._df
-        missing_before = self._dfisnull().sum().sum()
+        missing_before = self._df.isnull().sum().sum()
 
         if strategy == "mean":
             if columns:
@@ -170,9 +170,38 @@ class dataCleaning:
         self._df[column] = self._df[column].astype(str).str.lower().str.strip()
 
         if remove_special_chars:
-            self._df[column] - self._df[column].str.replace(r'[^a-z0-9\s]', '', regex = True)
+            self._df[column] = self._df[column].str.replace(r'[^a-z0-9\s]', '', regex = True)
 
         self._log_operation(f"Normalized text column '{column}'")
         return self
     
-    
+    def __str__(self) -> str:
+        '''
+        Returns a string representation of the DataCleaner object.
+
+        Returns:
+            str: Formatted summary
+        '''
+
+        missing_values = self._df.isnull().sum().sum()
+        missing_pct = (
+            missing_values / (self._df.shape[0] * self._df.shape[1])) * 100 if self._df.size > 0 else 0
+        
+        lines = [
+            "dataCleaning Summary",
+            "=" * 50,
+            f"Current Shape: {self._df.shape[0]} rows × {self._df.shape[1]} columns",
+            f"Original Shape: {self._original_shape[0]} rows × {self._original_shape[1]} columns",
+            f"Missing Values: {missing_values} ({missing_pct:.2f}%)",
+            f"Operations Performed: {len(self._cleaning_history)}",
+            "=" * 50
+        ]
+
+        if self._cleaning_history:
+            lines.append("Cleaning History:")
+            for i, operation in enumerate(self._cleaning_history, 1):
+                lines.append(f"  {i}. {operation}")
+        else:
+            lines.append("No cleaning operations performed")
+
+        return "\n".join(lines)
