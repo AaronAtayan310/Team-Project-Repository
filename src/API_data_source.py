@@ -65,3 +65,9 @@ class APIDataSource(dataSource):
             df = pd.DataFrame([data])
         else:
             raise ValueError("API response must be JSON list or dict")
+        
+        self._source_metadata['rows_loaded'] = len(df)
+        self._source_metadata['status_code'] = response.status_code
+        self._source_metadata['load_time'] = datetime.now().isoformat()
+
+        return df
