@@ -1,8 +1,10 @@
 import pandas as pd
 import numpy as np
 from typing import Optional, List, Union
+from src.data_processor import dataProcessor
 
-class dataCleaning:
+
+class dataCleaning(dataProcessor):
     '''
     Class for cleaning and preprocessing Pandas dataframes
 
@@ -31,10 +33,10 @@ class dataCleaning:
         if df.empty:
             raise ValueError("DataFrame cannot be empty")
         
-        self._df = df.copy()
+        super().__init__(df, verbose)
         self._original_shape = df.shape
-        self._cleaning_history = []
-        self._verbose = verbose
+        self._log_operation("dataCleaning Initalized")
+
     
     @property
     def df(self) -> pd.DataFrame:
@@ -64,8 +66,7 @@ class dataCleaning:
         '''
         Get the history of cleaning operations
         '''
-        return self._cleaning_history.copy()
-    
+        return self.processing_history
     @property
     def verbose(self) -> bool:
         '''
@@ -205,3 +206,34 @@ class dataCleaning:
             lines.append("No cleaning operations performed")
 
         return "\n".join(lines)
+    
+    def process(self) -> 'dataCleaning':
+        '''
+        Perform default cleaning process: handle missing values with mean strat.
+        
+        Returns:
+            dataCleaning: Self for method chaining
+        '''
+        self._log_operation("Starting default cleaning process")
+        self.handle_missing_values(strategy = 'mean')
+        return self
+    
+    def validate(self) -> bool:
+        '''
+        Validate that the Data Frame is in a clean state
+
+        Returns:
+            bool: True if no missing values and no duplicate rows
+        '''
+        has_no_missing = self._frame.isnull().sum().sum() == 0
+        has_no_duplicates = not self._frame.duplicated().any()
+        is_valid = has_no_missing and has_no_duplicates
+
+        if self._verbose:
+            print(f"Validation: {'PASSED' if is_valid else 'FAILED'}")
+            if not has_no_missing:
+                print(f"  - Missing values detected: {self._frame.isnull().sum().sum()}")
+            if not has_no_duplicates:
+                print(f"  - Duplicate rows detected: {self._frame.duplicated().sum()}")
+        
+        return is_valid

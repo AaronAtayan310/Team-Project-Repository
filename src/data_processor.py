@@ -20,7 +20,7 @@ class dataProcessor(ABC):
         verbose (bool): Whether to print processing information or not
     '''
 
-    def __init(self, frame: pd.DataFrame, verbose: bool = False):
+    def __init__(self, frame: pd.DataFrame, verbose: bool = False):
         '''
         Initalize the DataProcessor with a DataFrame
 
