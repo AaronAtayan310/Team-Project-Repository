@@ -21,14 +21,14 @@ Problem Statement:
 
 # Installation and Setup Instructions
 
-This library provides helper functions for **ingesting, cleaning, and analyzing crime rate data**. It is written in Python and relies on common data analysis libraries such as **pandas**.
+Note : The crime data library file in the src folder (proj1_crime_data_library) provides helper functions for **ingesting, cleaning, and analyzing crime rate data**. It forms the foundation of all other code in this repository, is written in Python, and relies on common data analysis libraries such as **pandas**.
 
 1. Clone or Download the Repository
 
 If using Git:
 ```bash
-git clone https://github.com/yourusername/crime-data-library.git
-cd crime-data-library
+git clone https://github.com/your-username/proj1_crime_data_library.git
+cd proj1_crime_data_library
 ```
 Or manually download the `.py` file and place it in your project directory.
 
@@ -74,7 +74,7 @@ Below are practical examples of how to use the most important functions in the l
 1. Validate and Load a CSV File
 
 ```python
-from crime_data_library import validate_csv_path, load_crime_data
+from proj1_crime_data_library import validate_csv_path, load_crime_data
 
 file_path = "data/crime_data.csv"
 
@@ -88,7 +88,7 @@ else:
 2. Clean the Crime Dataset
 
 ```python
-from crime_data_library import clean_crime_data
+from proj1_crime_data_library import clean_crime_data
 
 clean_df = clean_crime_data(df)
 print(clean_df.head())
@@ -106,7 +106,7 @@ This function:
 3. Calculate Missing Data Percentages
 
 ```python
-from crime_data_library import calculate_missing_data
+from proj1_crime_data_library import calculate_missing_data
 
 missing = calculate_missing_data(clean_df)
 print("Missing data (%):")
@@ -127,7 +127,7 @@ dtype: float64
 4. Compute Annual Crime Rates
 
 ```python
-from crime_data_library import compute_crime_rate_by_year
+from proj1_crime_data_library import compute_crime_rate_by_year
 
 yearly_rates = compute_crime_rate_by_year(clean_df, population_col="population")
 print(yearly_rates)
@@ -146,7 +146,7 @@ Example output:
 5. Identify the Top Crime Types
 
 ```python
-from crime_data_library import top_crime_types
+from proj1_crime_data_library import top_crime_types
 
 top_crimes = top_crime_types(clean_df, n=5)
 print(top_crimes)
@@ -168,7 +168,7 @@ Example output:
 6. Find Areas with the Highest Crime Rates
 
 ```python
-from crime_data_library import find_high_crime_areas
+from proj1_crime_data_library import find_high_crime_areas
 
 high_crime_areas = find_high_crime_areas(clean_df, area_col="neighborhood")
 print(high_crime_areas.head(10))
@@ -188,7 +188,7 @@ Example output:
 7. Save Processed Data with Timestamped Filenames
 
 ```python
-from crime_data_library import generate_timestamped_filename
+from proj1_crime_data_library import generate_timestamped_filename
 
 filename = generate_timestamped_filename("cleaned_crime_data")
 clean_df.to_csv(filename, index=False)
