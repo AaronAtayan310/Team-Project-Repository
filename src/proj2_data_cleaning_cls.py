@@ -205,3 +205,13 @@ class dataCleaner:
             lines.append("No cleaning operations performed")
 
         return "\n".join(lines)
+
+    def __repr__(self) -> str:
+        '''
+        Developer-targeted string representation of the dataCleaner object.
+
+        Returns:
+            str: A concise string including key info on the state of the dataCleaner object.
+        '''
+        msg = f"dataCleaner(df_shape={self._df.shape}, " + f"original_shape={self._original_shape}, " + f"operations={len(self._cleaning_history)}, " + f"verbose={self._verbose})"
+        return msg
