@@ -18,7 +18,6 @@ class dataTransformation:
         self._frame = None
         self.frame = frame
 
-
     @property
     def frame(self):
         """
@@ -73,3 +72,12 @@ class dataTransformation:
         print('Current state of data being transformed:')
         print('\n')
         print(source)
+
+    def __repr__(self):
+        """
+        Returns a developer-targeted string representation of the dataTransformation object.
+
+        Returns:
+            str: A development-useful description showing the class name and the dataframe shape.
+        """
+        return f"dataTransformation(frame=pd.DataFrame(shape={self.frame.shape}))"
