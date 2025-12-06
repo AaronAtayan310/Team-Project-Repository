@@ -294,7 +294,19 @@ class dataStorageUtils:
         return total_size
         
     def __str__(self):
+        """
+        Return a user-readable string representation of the dataStorageUtils object.
+        
+        Returns:
+            str: A readable description including the base output directory.
+        """
         return f"dataStorageUtils(base_output_dir='{self.base_output_dir}')"
 
     def __repr__(self):
+        """
+        Return a developer-targeted string representation of the dataStorageUtils instance.
+        
+        Returns:
+            str: A readable description that is valuable for debugging, showing constructor-valid arguments.
+        """
         return f"dataStorageUtils(base_output_dir={repr(self.base_output_dir)})"
