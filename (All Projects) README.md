@@ -19,18 +19,18 @@ Problem Statement:
     Law enforcement agencies face problems regarding the processing and analyzing of crime data due to 
     data fragmentation, manual processing, and scalability issues.
 
-# Installation and Setup Instructions
+# Installation and Setup Instructions for Project 1 Function Library
 
-Note : The crime data library file in the src folder (proj1_crime_data_library) provides helper functions for **ingesting, cleaning, and analyzing crime rate data**. It forms the foundation of all other code in this repository, is written in Python, and relies on common data analysis libraries such as **pandas**.
+The crime data library created for Project 1 (file found in the src folder, named proj1_crime_data_library) provides helper functions for **ingesting, cleaning, and analyzing crime rate data**. It forms the foundation of all other code in this repository, is written in Python, and relies on common data analysis libraries such as **pandas**.
 
 1. Clone or Download the Repository
 
 If using Git:
 ```bash
-git clone https://github.com/your-username/proj1_crime_data_library.git
-cd proj1_crime_data_library
+git clone https://github.com/your-username/Team-Project-Repository.git
+cd Team-Project-Repository
 ```
-Or manually download the `.py` file and place it in your project directory.
+Or manually download the `proj1_crime_data_library.py` file and place it in your project directory.
 
 2. Create and Activate a Virtual Environment (Recommended)
 
@@ -67,7 +67,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-# Usage Examples for Key Functions
+# Usage Examples for Key Functions within Project 1 Function Library
 
 Below are practical examples of how to use the most important functions in the library.
 
@@ -202,7 +202,7 @@ File saved as: cleaned_crime_data_2025-10-12_21-04-10.csv
 ```
 
 
-# Function library overview and organization
+# Overview and organization of Project 1 Function Library
 The library consists of 21 total functions, at time of writing. An important detail to take note of regarding all functions in the library is that they are each designed to function with complete independence - that is, not relying on other functions in the library to be able to run. In terms of organization, the .py file for the function library uses some comment lines to break apart the functions into 5 core sections, which each represent the overarching purpose in the project that one group of functions, each achieving a more niche, specific goal, is intended to fulfill. These groups are.....
 1. Data Ingestion
 2. Data Cleaning
@@ -210,7 +210,7 @@ The library consists of 21 total functions, at time of writing. An important det
 4. Data Analysis
 5. Data Storage & Utilities
 
-# Contribution guidelines for team members
+# Project contribution guidelines for team members
 1. Ensure you have the latest code
 2. Make your changes in the appropriate module
 4. Write tests for new functionality
