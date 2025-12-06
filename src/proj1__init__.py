@@ -18,7 +18,7 @@ __description__ = "Crime Research Data Pipeline Function Library for INST326"
 __license__ = "MIT"
 
 # Import main functions for easy access
-from .crime_data_library import (
+from .proj1_crime_data_library import (
     # Data Ingestion Functions
     load_csv,
     fetch_api_data,
@@ -51,7 +51,7 @@ from .crime_data_library import (
     generate_timestamped_filename
 )
 
-# Define what gets imported with "from garden_library import *"
+# Define what gets imported with "from proj1_crime_data_library import *"
 __all__ = [
     # Data Ingestion
     'load_csv',
@@ -174,3 +174,4 @@ def get_library_info():
         'categories': list(get_function_categories().keys()),
         'license': __license__
     }
+
