@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from typing import Optional, List, Union
 
-class dataCleaning:
+class dataCleaner:
     '''
     Class for cleaning and preprocessing Pandas dataframes
 
@@ -91,7 +91,7 @@ class dataCleaning:
             print(f"[DataCleaner] {operation}")
 
     def handle_missing_values(self, strategy: str = "mean", 
-                              columns: Optional[List[str]] = None) -> 'dataCleaning':
+                              columns: Optional[List[str]] = None) -> 'dataCleaner':
         '''
         Handle missing values in the DataFrame using a given strategy.
 
@@ -99,7 +99,7 @@ class dataCleaning:
             strategy (str): Method to handle missing values
             columns (Optional[List[str]]): specific columns to apply strategy to. If None, applies to all columns
         Returns:
-            dataCleaning: Self for method chaining
+            dataCleaner: Self for method chaining
         Raises:
             ValueError: If strategy is invalid
         '''
@@ -152,7 +152,7 @@ class dataCleaning:
         self._log_operation(f"Handled missing values using '{strategy}' strategy{cols_msg}")
         return self
     
-    def normalize_text_column(self, column: str, remove_special_chars: bool = False) -> 'dataCleaning':
+    def normalize_text_column(self, column: str, remove_special_chars: bool = False) -> 'dataCleaner':
         '''
         Normalize the text in a specified column
 
@@ -160,7 +160,7 @@ class dataCleaning:
             column (str): Column to normalize
             remove_special_chars (bool): If True, remove special characters
         Returns:
-            dataCleaning: Self for method chaining
+            dataCleaner: Self for method chaining
         Raises:
             ValueError: If column doesn't exist in DataFrame
         '''
@@ -177,7 +177,7 @@ class dataCleaning:
     
     def __str__(self) -> str:
         '''
-        Returns a string representation of the DataCleaner object.
+        Returns a string representation of the dataCleaner object.
 
         Returns:
             str: Formatted summary
@@ -188,7 +188,7 @@ class dataCleaning:
             missing_values / (self._df.shape[0] * self._df.shape[1])) * 100 if self._df.size > 0 else 0
         
         lines = [
-            "dataCleaning Summary",
+            "dataCleaner Summary",
             "=" * 50,
             f"Current Shape: {self._df.shape[0]} rows × {self._df.shape[1]} columns",
             f"Original Shape: {self._original_shape[0]} rows × {self._original_shape[1]} columns",
