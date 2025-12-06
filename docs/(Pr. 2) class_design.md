@@ -5,3 +5,7 @@ ENTRY #1
 ENTRY #2
 
 - Decisions made 11/20/2025 : The same principle for constructing the classes is being used. However, there will now be a total of five core classes designed for project 2 specifically, with the reduction coming from the decision made to merge the storage functions and utilities functions into one class together.
+
+ENTRY #3
+
+- Note added 12/06/2025 : For the grader reading this, please note that the five core classes made for Project 2 (Pr. 2) integrated the functions from the Project 1 Function Library by adapting them to become instance methods of the classes themselves, for objects of said classes to use accordingly. The vast majority of all methods in the Project 2 classes are slight variations of the functions from the Project 1 Function Library, altered to work syntactically with the classes. For example, instance methods of the data analysis class (data_analysis_cls.py) are primarily adapations of the functions that are in the data analysis section of the Project 1 Function Library. We found this more convenient to integrate the 2 projects than using tons of direct imports.
