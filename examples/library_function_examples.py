@@ -194,8 +194,8 @@ def main():
     demo_data_storage_utilities()
 
     print("=" * 60)
-    print("🎉 ALL DEMOS COMPLETE!")
-    print("This function library is foundational for object-oriented expansion on the project over the semester!")
+    print("All demo's have been ran successfully.")
+    print("This function library has built a solid foundation for object-oriented expansion on the project over the semester.")
     print("=" * 60)
 
 
