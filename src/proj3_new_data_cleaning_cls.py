@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
 from typing import Optional, List, Union
-from src.data_processor import dataProcessor
-
+from src.proj3_data_processor import dataProcessor
 
 class dataCleaning(dataProcessor):
     '''
@@ -67,6 +66,7 @@ class dataCleaning(dataProcessor):
         Get the history of cleaning operations
         '''
         return self.processing_history
+        
     @property
     def verbose(self) -> bool:
         '''
