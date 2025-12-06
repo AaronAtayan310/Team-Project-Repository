@@ -1,5 +1,3 @@
-# WIP
-
 import pandas as pd
 import pickle
 import logging
@@ -8,7 +6,6 @@ from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict, Optional, Union
 import hashlib
-
 
 class dataStorageUtils:
     """
@@ -295,3 +292,9 @@ class dataStorageUtils:
         total_size = sum(f.stat().st_size for f in path.rglob('*') if f.is_file())
         self.logger.info(f"Directory {path} total size: {total_size / (1024**2):.2f} MB")
         return total_size
+        
+    def __str__(self):
+        return f"dataStorageUtils(base_output_dir='{self.base_output_dir}')"
+
+    def __repr__(self):
+        return f"dataStorageUtils(base_output_dir={repr(self.base_output_dir)})"
