@@ -178,3 +178,12 @@ class dataAnalysis:
         print('Description of data:')
         print('\n')
         print(description)
+
+    def __repr__(self):
+        """
+        Returns a developer-targeted string representation of the dataAnalysis object, summarizing key information on the releated dataframe.
+
+        Returns:
+            str: A development-useful representation helpful for tasks like debugging.
+        """
+        return f"dataAnalysis(frame_shape={self.frame.shape}, described_shape={self.described.shape})"
