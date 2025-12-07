@@ -241,7 +241,7 @@ The implementation of the crime research data pipeline core classes (Project 2) 
 - Intended to allow project users to automate data analysis tasks on pandas dataframes that contain data of particular interest.
 - Methods run_regression(self, y: pd.Series), evaluate_model(self, model: LinearRegression, y_test: pd.Series), calculate_missing_data(self), compute_crime_rate_by_year(self, population_col: str = "population"), top_crime_types(self, n: int = 10) and find_high_crime_areas(self, area_col: str = "neighborhood") integrate crime research data pipeline library functions run_regression, evaluate_model, calculate_missing_data, compute_crime_rate_by_year, top_crime_types, and find_high_crime_areas respectively.
 ---
-**5. Storing Data & Extra Utilities - The dataStorageUtils Class (src -> proj2_storage+utilities_cls):**
+**5. Storing Data & Extra Utilities - The dataStorageUtils Class (src -> proj2_data_utilities_cls):**
 - Intended to automate general data pipeline operations such as serialization, logging, and file management, and also to allow project users to store relevant data in any of multiple formats (CSV, JSON, etc).
 - Methods save_to_csv(self, df: pd.DataFrame, filepath: str, use_timestamp: bool = False, **kwargs), serialize_model(self, model: Any, path: str, metadata: Optional[Dict] = None), log_pipeline_step(self, step_name: str, status: str, extra_info: Optional[Dict] = None) and @staticmethod generate_timestamped_filename(base_name: str, extension: str = ".csv") integrate crime research data pipeline library functions save_to_csv, serialize_model, log_pipeline_step, and generate_timestamped_filename respectively.
 
