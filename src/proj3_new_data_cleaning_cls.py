@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 from typing import Optional, List, Union
-from src.proj3_data_processor import dataProcessor
+from src.proj3_data_processor import dataProcessor 
 
-class dataCleaning(dataProcessor):
+class newDataCleaner(dataProcessor):
     '''
     Class for cleaning and preprocessing Pandas dataframes
 
@@ -34,8 +34,7 @@ class dataCleaning(dataProcessor):
         
         super().__init__(df, verbose)
         self._original_shape = df.shape
-        self._log_operation("dataCleaning Initalized")
-
+        self._log_operation("newDataCleaner Initalized")
     
     @property
     def df(self) -> pd.DataFrame:
@@ -89,10 +88,10 @@ class dataCleaning(dataProcessor):
         '''
         self._cleaning_history.append(operation)
         if self._verbose:
-            print(f"[DataCleaner] {operation}")
+            print(f"[newDataCleaner] {operation}")
 
     def handle_missing_values(self, strategy: str = "mean", 
-                              columns: Optional[List[str]] = None) -> 'dataCleaning':
+                              columns: Optional[List[str]] = None) -> 'newDataCleaner':
         '''
         Handle missing values in the DataFrame using a given strategy.
 
@@ -100,7 +99,7 @@ class dataCleaning(dataProcessor):
             strategy (str): Method to handle missing values
             columns (Optional[List[str]]): specific columns to apply strategy to. If None, applies to all columns
         Returns:
-            dataCleaning: Self for method chaining
+            newDataCleaner: Self for method chaining
         Raises:
             ValueError: If strategy is invalid
         '''
@@ -153,7 +152,7 @@ class dataCleaning(dataProcessor):
         self._log_operation(f"Handled missing values using '{strategy}' strategy{cols_msg}")
         return self
     
-    def normalize_text_column(self, column: str, remove_special_chars: bool = False) -> 'dataCleaning':
+    def normalize_text_column(self, column: str, remove_special_chars: bool = False) -> 'newDataCleaner':
         '''
         Normalize the text in a specified column
 
@@ -161,7 +160,7 @@ class dataCleaning(dataProcessor):
             column (str): Column to normalize
             remove_special_chars (bool): If True, remove special characters
         Returns:
-            dataCleaning: Self for method chaining
+            newDataCleaner: Self for method chaining
         Raises:
             ValueError: If column doesn't exist in DataFrame
         '''
@@ -178,7 +177,7 @@ class dataCleaning(dataProcessor):
     
     def __str__(self) -> str:
         '''
-        Returns a string representation of the DataCleaner object.
+        Returns a string representation of the newDataCleaner object.
 
         Returns:
             str: Formatted summary
@@ -189,7 +188,7 @@ class dataCleaning(dataProcessor):
             missing_values / (self._df.shape[0] * self._df.shape[1])) * 100 if self._df.size > 0 else 0
         
         lines = [
-            "dataCleaning Summary",
+            "newDataCleaner Summary",
             "=" * 50,
             f"Current Shape: {self._df.shape[0]} rows × {self._df.shape[1]} columns",
             f"Original Shape: {self._original_shape[0]} rows × {self._original_shape[1]} columns",
@@ -207,12 +206,12 @@ class dataCleaning(dataProcessor):
 
         return "\n".join(lines)
     
-    def process(self) -> 'dataCleaning':
+    def process(self) -> 'newDataCleaner':
         '''
         Perform default cleaning process: handle missing values with mean strat.
         
         Returns:
-            dataCleaning: Self for method chaining
+            newDataCleaner: Self for method chaining
         '''
         self._log_operation("Starting default cleaning process")
         self.handle_missing_values(strategy = 'mean')
@@ -220,7 +219,7 @@ class dataCleaning(dataProcessor):
     
     def validate(self) -> bool:
         '''
-        Validate that the Data Frame is in a clean state
+        Validate that the DataFrame is in a clean state
 
         Returns:
             bool: True if no missing values and no duplicate rows
