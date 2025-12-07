@@ -18,9 +18,10 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from proj1_crime_data_library import *
 
+
 def demo_data_ingestion():
     """Demonstrate data ingestion from different formats."""
-    print("DATA INGESTION DEMO")
+    print("❗ DATA INGESTION DEMO")
     print("=" * 50)
 
     # Demo: loading a CSV file (fake, for example purposes)
@@ -41,11 +42,11 @@ def demo_data_ingestion():
 
     # Validate CSV path
     print(f"Is '{filepath}' a valid CSV path? {validate_csv_path(filepath)}")
-    print()
+
 
 def demo_data_cleaning():
     """Demonstrate cleaning capabilities for data / dataframes in the pipeline."""
-    print("DATA CLEANING DEMO")
+    print("\n\n❗ DATA CLEANING DEMO")
     print("=" * 50)
 
     # Example DataFrame for the demo
@@ -80,11 +81,11 @@ def demo_data_cleaning():
 
     print("\nGeneral cleaning for crime data:")
     print(clean_crime_data(demo_df))
-    print()
+
 
 def demo_data_transformation():
     """Demonstrate feature generation and scaling capabilities."""
-    print("DATA TRANSFORMATION DEMO")
+    print("\n\n❗ DATA TRANSFORMATION DEMO")
     print("=" * 50)
 
     import pandas as pd
@@ -103,10 +104,10 @@ def demo_data_transformation():
     transformed_df = generate_features(df)
     print("\nData with generated features:")
     print(transformed_df)
-    print()
+
 
 def demo_data_analysis():
-    """Demonstrate core analysis capabilities of the library."""
+    """\n\n❗ Demonstrate core analysis capabilities of the library."""
     print("DATA ANALYSIS DEMO")
     print("=" * 50)
 
@@ -149,10 +150,10 @@ def demo_data_analysis():
 
     print("\nHigh crime area detection:")
     print(find_high_crime_areas(df))
-    print()
+
 
 def demo_data_storage_utilities():
-    """Demonstrate utility capabilities for storage and logging."""
+    """\n\n❗ Demonstrate utility capabilities for storage and logging."""
     print("DATA STORAGE & UTILITIES DEMO")
     print("=" * 50)
     import pandas as pd
@@ -180,12 +181,12 @@ def demo_data_storage_utilities():
 
     # Generate a timestamped filename
     timestamped_name = generate_timestamped_filename("summary_report")
-    print(f"Timestamped filename generated: {timestamped_name}")
-    print()
+    print(f"\nTimestamped filename generated: {timestamped_name}")
 
+    
 def main():
     """Run all demonstration functions."""
-    print("CRIME DATA FUNCTION LIBRARY - DEMO SCRIPT")
+    print("CRIME RESEARCH DATA PIPELINE - FUNCTION LIBRARY DEMO")
     print("=" * 60)
     print("This demo showcases how the function library supports crime analysis, based on some small sample data.")
 
@@ -195,7 +196,7 @@ def main():
     demo_data_analysis()
     demo_data_storage_utilities()
 
-    print("=" * 60)
+    print("\n" + "=" * 60)
     print("All demo's have been ran successfully.")
     print("This function library has built a solid foundation for object-oriented expansion on the project over the semester.")
     print("=" * 60)
