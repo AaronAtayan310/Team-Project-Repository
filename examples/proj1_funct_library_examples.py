@@ -6,6 +6,8 @@ This script demonstrates the key functions in our crime research data
 pipeline library with some practical scenarios.
 
 Author: INST326 Crime Research Data Pipeline Project Team
+Course: INST326 - Object-Oriented Programming for Information Science
+Project: Function Library Development (Project 1)
 """
 
 import sys
@@ -14,7 +16,7 @@ import os
 # Add src directory to path so we can import our library
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from crime_data_library import *
+from proj1_crime_data_library import *
 
 def demo_data_ingestion():
     """Demonstrate data ingestion from different formats."""
