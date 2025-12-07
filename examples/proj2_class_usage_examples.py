@@ -10,6 +10,18 @@ Course: INST326 - Object-Oriented Programming for Information Science
 Project: OOP Class Implementation (Project 2)
 """
 
+import sys
+import os
+
+# Add src directory to path so we can import our library
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+from proj2_data_analysis_cls import *
+from proj2_data_cleaning_cls import *
+from proj2_data_ingestion_cls import *
+from proj2_data_transformation_cls import *
+from proj2_data_utilities_cls import *
+
 # ---------------------------------------------------------------------------
 # 1. EXAMPLE USAGE : DATA INGESTION CLASS
 # ---------------------------------------------------------------------------
