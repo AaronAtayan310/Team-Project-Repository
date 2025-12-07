@@ -22,23 +22,23 @@ from proj2_data_ingestion_cls import *
 from proj2_data_transformation_cls import *
 from proj2_data_utilities_cls import *
 
-def demo_data_ingestion():
+def ingestion_class_demo():
     """Insert docstring here."""
     pass
 
-def demo_data_cleaning():
+def cleaning_class_demo():
     """Insert docstring here."""
     pass
 
-def demo_data_transformation():
+def transformation_class_demo():
     """Insert docstring here."""
     pass
 
-def demo_data_analysis():
+def analysis_class_demo():
     """Insert docstring here."""
     pass
 
-def demo_data_utilities():
+def utilities_class_demo():
     """Insert docstring here."""
     pass
 
