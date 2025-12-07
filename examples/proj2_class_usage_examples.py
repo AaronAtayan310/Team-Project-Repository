@@ -22,8 +22,37 @@ from proj2_data_ingestion_cls import *
 from proj2_data_transformation_cls import *
 from proj2_data_utilities_cls import *
 
+def demo_data_ingestion():
+    """Insert docstring here."""
+    pass
+
+def demo_data_cleaning():
+    """Insert docstring here."""
+    pass
+
+def demo_data_transformation():
+    """Insert docstring here."""
+    pass
+
+def demo_data_analysis():
+    """Insert docstring here."""
+    pass
+
+def demo_data_utilities():
+    """Insert docstring here."""
+    pass
+
+def main():
+    """Insert docstring here."""
+    pass
+
+
+if __name__ == "__main__":
+    main()
+
+
 # ---------------------------------------------------------------------------
-# 1. EXAMPLE USAGE : DATA INGESTION CLASS
+# ARCHIVED EXAMPLE USAGE : DATA INGESTION CLASS
 # ---------------------------------------------------------------------------
  
 if __name__ == "__main__":
@@ -44,28 +73,3 @@ if __name__ == "__main__":
     
     # Check loaded sources
     print(f"Data sources: {ingestion._data_sources}")
-
-# ---------------------------------------------------------------------------
-# 2. EXAMPLE USAGE : DATA CLEANING CLASS
-# ---------------------------------------------------------------------------
- 
-# INSERT CODE HERE
-
-# ---------------------------------------------------------------------------
-# 3. EXAMPLE USAGE : DATA TRANSFORMATION CLASS
-# ---------------------------------------------------------------------------
- 
-# INSERT CODE HERE
-
-# ---------------------------------------------------------------------------
-# 4. EXAMPLE USAGE : DATA ANALYSIS CLASS
-# ---------------------------------------------------------------------------
- 
-# INSERT CODE HERE
-
-# ---------------------------------------------------------------------------
-# 5. EXAMPLE USAGE : DATA STORAGE & UTILITIES CLASS
-# ---------------------------------------------------------------------------
- 
-# INSERT CODE HERE
- 
