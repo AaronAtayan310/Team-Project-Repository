@@ -22,40 +22,12 @@ from proj2_data_ingestion_cls import *
 from proj2_data_transformation_cls import *
 from proj2_data_utilities_cls import *
 
+
 def ingestion_class_demo():
-    """Insert docstring here."""
-    pass
-
-def cleaning_class_demo():
-    """Insert docstring here."""
-    pass
-
-def transformation_class_demo():
-    """Insert docstring here."""
-    pass
-
-def analysis_class_demo():
-    """Insert docstring here."""
-    pass
-
-def utilities_class_demo():
-    """Insert docstring here."""
-    pass
-
-def main():
-    """Insert docstring here."""
-    pass
-
-
-if __name__ == "__main__":
-    main()
-
-
-# ---------------------------------------------------------------------------
-# ARCHIVED EXAMPLE USAGE : DATA INGESTION CLASS
-# ---------------------------------------------------------------------------
- 
-if __name__ == "__main__":
+    """Demonstrate the basic capabilities of the dataIngestion class such as printing objects via _str__ or __repr__, loading & validating csv files, fetching API data, etc."""
+    print("❗ DATA INGESTION CLASS DEMO")
+    print("=" * 50)
+    
     # Create an instance
     ingestion = dataIngestion()
     print(ingestion)
@@ -73,3 +45,57 @@ if __name__ == "__main__":
     
     # Check loaded sources
     print(f"Data sources: {ingestion._data_sources}")
+
+
+def cleaning_class_demo():
+    """Insert docstring here."""
+    print("\n\n❗ DATA CLEANING CLASS DEMO")
+    print("=" * 50)
+    
+    pass
+
+
+def transformation_class_demo():
+    """Insert docstring here."""
+    print("\n\n❗ DATA TRANSFORMATION CLASS DEMO")
+    print("=" * 50)
+    
+    pass
+
+
+def analysis_class_demo():
+    """Insert docstring here."""
+    print("\n\n❗ DATA ANALYSIS CLASS DEMO")
+    print("=" * 50)
+    
+    pass
+
+
+def utilities_class_demo():
+    """Insert docstring here."""
+    print("\n\n❗ DATA UTILITIES CLASS DEMO")
+    print("=" * 50)
+    
+    pass
+
+
+def main():
+    """Run all core class demonstration functions."""
+    print("CRIME RESEARCH DATA PIPELINE - CORE CLASSES DEMO")
+    print("=" * 60)
+    print("This demo showcases how the core classes have adapted the function library to support crime analysis using an object-oriented approach, based on some small sample data.")
+
+    ingestion_class_demo()
+    cleaning_class_demo()
+    transformation_class_demo()
+    analysis_class_demo()
+    utilities_class_demo()
+
+    print("\n" + "=" * 60)
+    print("All core class demonstrations have been ran successfully.")
+    print("These core classes have successfully adapted the foundational function library using OOP principles to support more advanced project expansion over the remaining semester.")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()
