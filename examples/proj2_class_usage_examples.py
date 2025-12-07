@@ -1,3 +1,15 @@
+#!/usr/bin/env python3
+"""
+Crime Research Data Pipeline - Core Classes Demo Script
+
+This script demonstrates the core classes in our crime research data 
+pipeline project.
+
+Author: INST326 Crime Research Data Pipeline Project Team
+Course: INST326 - Object-Oriented Programming for Information Science
+Project: OOP Class Implementation (Project 2)
+"""
+
 # ---------------------------------------------------------------------------
 # 1. EXAMPLE USAGE : DATA INGESTION CLASS
 # ---------------------------------------------------------------------------
