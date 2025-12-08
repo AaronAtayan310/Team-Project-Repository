@@ -1,3 +1,16 @@
+"""
+Crime Research Data Pipeline - Function Library Main File
+
+This module provides major functions for the crime research
+data pipeline project including functions focused on data
+ingestion, cleaning, transformation, analysis, and storage.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: Function Library Development (Project 1)
+"""
+
 import os
 import json
 import logging
@@ -11,9 +24,9 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
 
-# ---------------------------------------------------------------------------
-# 1. DATA INGESTION
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Data Ingesiton Functions
+# =============================================================================
 
 def load_csv(filepath: str) -> pd.DataFrame:
     """
@@ -52,6 +65,7 @@ def fetch_api_data(url: str, params: Optional[Dict[str, Any]] = None) -> Dict[st
     response.raise_for_status()
     return response.json()
 
+
 def validate_csv_path(file_path: str) -> bool:
     """
     Validate whether a given file path points to an existing CSV file.
@@ -71,9 +85,9 @@ def validate_csv_path(file_path: str) -> bool:
     return os.path.isfile(file_path) and file_path.lower().endswith(".csv")
 
 
-# ---------------------------------------------------------------------------
-# 2. DATA CLEANING
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Data Cleaning Functions
+# =============================================================================
 
 def handle_missing_values(df: pd.DataFrame, strategy: str = "mean") -> pd.DataFrame:
     """
@@ -115,6 +129,7 @@ def normalize_text_column(df: pd.DataFrame, column: str) -> pd.DataFrame:
     df[column] = df[column].astype(str).str.lower().str.strip()
     return df
 
+    
 def standardize_column_names(columns: list[str]) -> list[str]:
     """
     Standardize column names by stripping whitespace, converting to lowercase,
@@ -164,6 +179,7 @@ def remove_outliers_iqr(df: pd.DataFrame, column: str) -> pd.DataFrame:
     upper_bound = Q3 + 1.5 * IQR
     return df[(df[column] >= lower_bound) & (df[column] <= upper_bound)]
 
+    
 def clean_crime_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Perform general cleaning on a crime dataset:
@@ -188,9 +204,9 @@ def clean_crime_data(df: pd.DataFrame) -> pd.DataFrame:
     return df.reset_index(drop=True)
 
 
-# ---------------------------------------------------------------------------
-# 3. DATA TRANSFORMATION
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Data Transformation Functions
+# =============================================================================
 
 def scale_features(df: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
     """
@@ -229,9 +245,9 @@ def generate_features(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-# ---------------------------------------------------------------------------
-# 4. DATA ANALYSIS / MODELING
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Data Analysis Functions
+# =============================================================================
 
 def compute_summary_stats(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -278,6 +294,7 @@ def evaluate_model(model: LinearRegression, X_test: pd.DataFrame, y_test: pd.Ser
     mse = mean_squared_error(y_test, predictions)
     return {"mse": mse}
 
+    
 def calculate_missing_data(df: pd.DataFrame) -> pd.Series:
     """
     Calculate the percentage of missing data in each column of a DataFrame.
@@ -295,6 +312,7 @@ def calculate_missing_data(df: pd.DataFrame) -> pd.Series:
         raise TypeError("Input must be a pandas DataFrame")
 
     return (df.isnull().sum() / len(df)) * 100
+
 
 def compute_crime_rate_by_year(df: pd.DataFrame, population_col: str = "population") -> pd.DataFrame:
     """
@@ -320,6 +338,7 @@ def compute_crime_rate_by_year(df: pd.DataFrame, population_col: str = "populati
     yearly_data["crime_rate"] = (yearly_data["crime_count"] / yearly_data["population"]) * 100000
     return yearly_data
 
+
 def top_crime_types(df: pd.DataFrame, n: int = 10) -> pd.DataFrame:
     """
     Identify the top N most frequent crime types.
@@ -341,6 +360,7 @@ def top_crime_types(df: pd.DataFrame, n: int = 10) -> pd.DataFrame:
         .reset_index()
         .rename(columns={"index": "crime_type", "crime_type": "count"})
     )
+
 
 def find_high_crime_areas(df: pd.DataFrame, area_col: str = "neighborhood") -> pd.DataFrame:
     """
@@ -365,9 +385,9 @@ def find_high_crime_areas(df: pd.DataFrame, area_col: str = "neighborhood") -> p
     return area_stats
 
 
-# ---------------------------------------------------------------------------
-# 5. DATA STORAGE & UTILITIES
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Data Storage & Utlities Functions
+# =============================================================================
 
 def save_to_csv(df: pd.DataFrame, filepath: str) -> None:
     """
@@ -391,6 +411,7 @@ def serialize_model(model: Any, path: str) -> None:
     with open(path, "wb") as file:
         pickle.dump(model, file)
 
+
 def log_pipeline_step(step_name: str, status: str) -> None:
     """
     Log a pipeline step for monitoring purposes.
@@ -401,6 +422,7 @@ def log_pipeline_step(step_name: str, status: str) -> None:
     """
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
     logging.info(f"Step '{step_name}' - Status: {status}")
+
 
 def generate_timestamped_filename(base_name: str, extension: str = ".csv") -> str:
     """
@@ -423,3 +445,4 @@ def generate_timestamped_filename(base_name: str, extension: str = ".csv") -> st
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     return f"{base_name}_{timestamp}{extension}"
+    
