@@ -4,19 +4,19 @@ This document provides comprehensive reference information for all crime researc
 
 ## Table of Contents
 
-1. [dataIngestion Class](#dataingestion-class)
-2. [dataCleaner Class](#datacleaner-class)
-3. [dataTransformation Class](#datatransformation-class)
-4. [dataAnalysis Class](#dataanalysis-class)
-5. [dataStorageUtils Class](#datastorageutils-class)
+1. [Class I (`src -> proj2_data_ingestion_cls.py`) : dataIngestion](#the-dataingestion-class)
+2. [Class II (`src -> proj2_data_cleaning_cls.py`) : dataCleaner](#the-datacleaner-class)
+3. [Class III (`src -> proj2_data_transformation_cls.py`) : dataTransformation](#the-datatransformation-class)
+4. [Class IV (`src -> proj2_data_analysis_cls.py`) : dataAnalysis](#the-dataanalysis-class)
+5. [Class V (`src -> proj2_data_utilities_cls.py`) : dataStorageUtils](#the-datastorageutils-class)
 
 ---
 
-## Class 1 (proj2_data_ingestion_cls.py) : dataIngestion
+## The dataIngestion class
 
 ### `__init__(default_timeout=10, track_sources=True)`
 
-**Purpose:** Initialize the dataIngestion class for loading data from CSV files and REST APIs.
+**Purpose:** Initialize an object of the dataIngestion class. Objects are intended to load crime data from various sources (CSV files, REST APis, etc) into the workspace of project users for later usage (research, analysis, etc). 
 
 **Parameters:**
 - `default_timeout` (int): Default timeout for API requests in seconds. Must be positive integer
@@ -79,11 +79,11 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## Class 2 (proj2_data_cleaning_cls.py) : dataCleaner
+## The dataCleaner class
 
 ### `__init__(df, verbose=False)`
 
-**Purpose:** Initialize the dataCleaner class with a DataFrame for cleaning operations.
+**Purpose:** Initialize an object of the dataCleaner class. Objects are intended to clean and preprocess pandas dataframes (the most common form of data for the sake of this project) to enhance the project users convenience of using these dataframes for later tasks (research, analysis, etc) in their workspace. 
 
 **Parameters:**
 - `df` (pd.DataFrame): The DataFrame to clean
@@ -123,11 +123,11 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## Class 3 (proj2_data_transformation_cls.py) : dataTransformation
+## The dataTransformation class
 
 ### `__init__(frame)`
 
-**Purpose:** Initialize the dataTransformation class with a DataFrame.
+**Purpose:** Initialize an object of the dataTransformation class. Objects are intended to allow project users more simplified execution of very basic data transformation tasks on pandas dataframes (generating new features and scaling existing features).
 
 **Parameters:**
 - `frame` (pd.DataFrame): Input DataFrame for transformation
@@ -159,11 +159,11 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## Class 4 (proj2_data_analysis_cls.py) : dataAnalysis
+## The dataAnalysis class
 
 ### `__init__(frame)`
 
-**Purpose:** Initialize the dataAnalysis class with a DataFrame for analysis.
+**Purpose:** Initialize an object of the dataAnalysis class. Objects are intended to allow project users to automate data analysis tasks on pandas dataframes that contain data of particular interest.
 
 **Parameters:**
 - `frame` (pd.DataFrame): DataFrame containing data to analyze
@@ -246,11 +246,11 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## Class 5 (proj2_data_utilities_cls.py) : dataStorageUtils
+## The dataStorageUtils class
 
 ### `__init__(base_output_dir=None, log_level=logging.INFO)`
 
-**Purpose:** Initialize utility class for data storage, serialization, and pipeline operations.
+**Purpose:** Initialize an object of the dataStorageUtils class. Objects are intended to automate general data pipeline operations such as serialization, logging, and file management, and also to allow project users to store relevant data in any of multiple formats (CSV, JSON, etc).
 
 **Parameters:**
 - `base_output_dir` (str, optional): Base directory for outputs
