@@ -1,3 +1,15 @@
+"""
+Crime Research Data Pipeline - Core Data Ingestion Class
+
+This module defines the dataIngestion class.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: OOP Class Implementation (Project 2)
+"""
+
+
 import os
 from typing import Dict, Any, Optional
 import pandas as pd
