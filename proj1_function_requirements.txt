@@ -1,5 +1,5 @@
 # Crime Research Data Pipeline Function Library - Python Dependencies
-# ======================================================================
+# ==========================================================
 #
 # This file lists the Python packages required to run the Crime
 # Research Data Pipeline Function Library. Like other project's code
@@ -12,16 +12,21 @@
 # 
 # CURRENT STATUS: Requires multiple external dependencies.
 # 
+# ==========================================================
+# LIST OF FUNCTION LIBRARY DEPENDENCIES
+# ==========================================================
+# 
 # Below lists the current modules the Crime Research Data Pipeline 
 # Function Library is dependent upon...
-# - os
-# - json
-# - logging
-# - pickle
-# - requests
-# - pandas
-# - datetime
-# - typing
-# - sklearn.preprocessing 
-# - sklearn.linear_model 
-# - sklearn.metrics 
+# 
+# 1. os
+# 2. json
+# 3. logging
+# 4. pickle
+# 5. requests
+# 6. pandas
+# 7. datetime
+# 8. typing
+# 9. sklearn.preprocessing 
+# 10. sklearn.linear_model 
+# 11. sklearn.metrics 
