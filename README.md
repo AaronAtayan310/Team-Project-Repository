@@ -21,7 +21,7 @@ Problem Statement:
 
 # Installation and Setup Instructions for Project 1 Function Library
 
-The crime data library created for Project 1 (file found in the src folder, named proj1_crime_data_library) provides helper functions for **ingesting, cleaning, and analyzing crime rate data**. It forms the foundation of all other code in this repository, is written in Python, and relies on common data analysis libraries such as **pandas**.
+The crime research data pipeline function library created for Project 1 provides helper functions for **ingesting, cleaning, and analyzing crime rate data**. It forms the foundation of all other code in this repository, is written in Python, and relies on common data analysis libraries such as **pandas**. To find its source file in this repository, use `src` -> `proj1_crime_data_library.py`.
 
 1. Clone or Download the Repository
 
@@ -248,6 +248,6 @@ The implementation of the crime research data pipeline core classes (Project 2) 
 # Project contribution guidelines for team members
 1. Ensure you have the latest code
 2. Make your changes in the appropriate module
-4. Write tests for new functionality
-5. Update documentation as needed
-6. Follow PEP 8 documentation guidelines
+3. Write tests for new functionality
+4. Update documentation as needed
+5. Follow PEP 8 documentation guidelines
