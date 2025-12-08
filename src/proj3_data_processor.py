@@ -1,3 +1,14 @@
+"""
+Crime Research Data Pipeline - Class Definition For Data Processing
+
+This module defines dataProcessor, an abstract base class.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
+"""
+
 #ABSTRACT CLASS
 from abc import ABC, abstractmethod
 import pandas as pd
