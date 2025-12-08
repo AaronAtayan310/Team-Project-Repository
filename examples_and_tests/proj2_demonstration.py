@@ -17,7 +17,7 @@ from sklearn.linear_model import LinearRegression
 import sys
 import os
 
-# Add src directory to path so we can import our library
+# Add src directory to path so we can import our core classes
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from proj2_data_analysis_cls import *
