@@ -1,3 +1,14 @@
+"""
+Crime Research Data Pipeline - Core Data Transformation Class
+
+This module defines the dataTransformation class.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: OOP Class Implementation (Project 2)
+"""
+
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
 
