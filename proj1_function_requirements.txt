@@ -1,4 +1,4 @@
-# Crime Research Data Pipeline Function Library - Python Dependencies
+# Crime Research Data Pipeline - Function Library Python Dependencies
 # ==========================================================
 
 # This file lists the Python packages required to run the Crime
