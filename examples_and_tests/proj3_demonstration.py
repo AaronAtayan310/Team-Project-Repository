@@ -14,3 +14,14 @@ Course: Object-Oriented Programming for Information Science
 Institution: University of Maryland, College Park
 Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
 """
+
+import sys
+import os
+
+# Add src directory to path so we can import our library
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+from proj1_crime_data_library import *
+
+
+def 
