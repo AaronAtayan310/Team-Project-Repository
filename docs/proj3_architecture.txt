@@ -1,1 +1,195 @@
+# IMPORTANT - THIS IS AN EXAMPLE DOCUMENT STRUCTURE FROM PROF. DEMPWOLF, REPLACE ALL TEXT IN THIS FILE WITH INFO RELEVANT TO CRIME RESEARCH DATA PIPELINE LATER ON
 
+# Garden Management System - Architecture Diagram
+
+## Complete System Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          ABSTRACT BASE LAYER                             │
+│                     (Defines Interface Contracts)                        │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│  ┌────────────────────────────────┐  ┌─────────────────────────────┐   │
+│  │ AbstractPlantingContainer      │  │ AbstractPlant                │   │
+│  ├────────────────────────────────┤  ├─────────────────────────────┤   │
+│  │ + container_id                 │  │ + plant_id                   │   │
+│  │ + name, dimensions, location   │  │ + common_name, scientific    │   │
+│  │                                │  │ + days_to_maturity           │   │
+│  │ @abstractmethod                │  │                              │   │
+│  │ + calculate_area()             │  │ @abstractmethod              │   │
+│  │ + calculate_volume()           │  │ + get_spacing_requirement()  │   │
+│  │ + get_drainage_type()          │  │ + get_water_frequency()      │   │
+│  └────────────────────────────────┘  │ + get_harvest_method()       │   │
+│             ▲                         │ + is_frost_sensitive()       │   │
+│             │                         └─────────────────────────────┘   │
+│             │ inherits                         ▲                         │
+│             │                                  │ inherits                │
+└─────────────┼──────────────────────────────────┼─────────────────────────┘
+              │                                  │
+┌─────────────┼──────────────────────────────────┼─────────────────────────┐
+│             │         CONCRETE IMPLEMENTATION LAYER                      │
+│             │              (Inheritance & Polymorphism)                  │
+├─────────────┴──────────────────────────────────┴─────────────────────────┤
+│                                                                           │
+│  ┌─────────────────┐  ┌──────────────┐  ┌────────────────────────┐     │
+│  │   RaisedBed     │  │ ContainerPot │  │ GreenhousePlanter      │     │
+│  ├─────────────────┤  ├──────────────┤  ├────────────────────────┤     │
+│  │ + material      │  │ + diameter   │  │ + has_heating          │     │
+│  │ + is_mobile=F   │  │ + has_holes  │  │ + has_light            │     │
+│  │                 │  │ + is_mobile=T│  │ + climate_controlled=T │     │
+│  │ calculate_area()│  │              │  │                        │     │
+│  │   → L × W       │  │ calculate_   │  │ calculate_area()       │     │
+│  │                 │  │   area()     │  │   → L × W              │     │
+│  │ get_drainage()  │  │   → π × r²   │  │                        │     │
+│  │   → Excellent   │  │              │  │ get_drainage()         │     │
+│  └─────────────────┘  │ get_drainage │  │   → Controlled         │     │
+│                       │   → Good/Poor│  │                        │     │
+│                       └──────────────┘  │ can_grow_year_round()  │     │
+│                                         └────────────────────────┘     │
+│                                                                           │
+│  ┌──────────────┐    ┌──────────────┐    ┌─────────────────────┐      │
+│  │  Vegetable   │    │     Herb     │    │      Flower         │      │
+│  ├──────────────┤    ├──────────────┤    ├─────────────────────┤      │
+│  │ +harvest_type│    │+is_perennial │    │ + bloom_color       │      │
+│  │ +category    │    │+category     │    │ + attracts_poll...  │      │
+│  │              │    │              │    │ + category          │      │
+│  │get_spacing() │    │get_spacing() │    │ get_spacing()       │      │
+│  │  → 12-36"    │    │  → 6-18"     │    │   → 8-24"           │      │
+│  │              │    │              │    │                     │      │
+│  │get_watering()│    │get_watering()│    │ get_watering()      │      │
+│  │  → Daily     │    │  → 2-3 days  │    │   → Daily blooming  │      │
+│  └──────────────┘    └──────────────┘    └─────────────────────┘      │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+                                 │
+                                 │ used by
+                                 ▼
+┌───────────────────────────────────────────────────────────────────────────┐
+│                       COMPOSITION LAYER                                    │
+│                   (System Coordination)                                    │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │                      GardenManager                               │    │
+│  ├─────────────────────────────────────────────────────────────────┤    │
+│  │ + garden_name, zone                                             │    │
+│  │ + containers []  ◄──────── HAS-MANY containers                  │    │
+│  │ + cells []       ◄──────── HAS-MANY cells                       │    │
+│  │ + plant_library []  ◄───── HAS-MANY plant types                 │    │
+│  │                                                                  │    │
+│  │ + add_container(container)                                      │    │
+│  │ + create_cell(container, row, col)                              │    │
+│  │ + add_plant_to_library(plant)                                   │    │
+│  │ + get_total_planting_area()                                     │    │
+│  │ + get_available_cells()                                         │    │
+│  │ + get_upcoming_harvests(days)                                   │    │
+│  │ + get_plants_by_category(category)                              │    │
+│  │ + get_garden_summary()                                          │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                                │                                          │
+│                                │ creates/manages                          │
+│                                ▼                                          │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │                         GardenCell                               │    │
+│  ├─────────────────────────────────────────────────────────────────┤    │
+│  │ + cell_id, row, column                                          │    │
+│  │ + container  ◄──────────── HAS-A container reference            │    │
+│  │ + current_plant  ◄───────── HAS-A plant reference               │    │
+│  │ + planting_date, is_occupied                                    │    │
+│  │                                                                  │    │
+│  │ + plant_in_cell(plant, date)                                    │    │
+│  │ + harvest_cell()                                                │    │
+│  │ + get_expected_harvest_date()                                   │    │
+│  │ + get_cell_location()                                           │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+```
+
+## Key Relationships
+
+### INHERITANCE (is-a)
+- RaisedBed **IS-A** PlantingContainer
+- ContainerPot **IS-A** PlantingContainer
+- GreenhousePlanter **IS-A** PlantingContainer
+- Vegetable **IS-A** Plant
+- Herb **IS-A** Plant
+- Flower **IS-A** Plant
+
+### COMPOSITION (has-a / has-many)
+- GardenManager **HAS-MANY** containers
+- GardenManager **HAS-MANY** cells
+- GardenManager **HAS-MANY** plant types (library)
+- GardenCell **HAS-A** container (reference)
+- GardenCell **HAS-A** plant (reference)
+
+### POLYMORPHISM (same method, different behavior)
+- All containers implement `calculate_area()` differently:
+  - RaisedBed: length × width (rectangular)
+  - ContainerPot: π × radius² (circular)
+  - GreenhousePlanter: length × width (rectangular)
+
+- All plants implement `get_spacing_requirement()` differently:
+  - Vegetables: 12-36 inches (varies by type)
+  - Herbs: 6-18 inches (closer spacing)
+  - Flowers: 8-24 inches (compact to spreading)
+
+## Data Flow Example
+
+```
+1. User creates GardenManager
+   └─→ Manager initializes empty containers[], cells[], plant_library[]
+
+2. User adds containers to manager
+   └─→ Manager.add_container(RaisedBed)
+   └─→ Manager.add_container(ContainerPot)
+
+3. User creates cells in containers
+   └─→ Manager.create_cell(container, "A", 1)
+       └─→ Creates GardenCell with container reference
+           └─→ Cell stored in Manager.cells[]
+
+4. User plants in cell
+   └─→ Cell.plant_in_cell(Vegetable("Tomato"))
+       └─→ Cell.current_plant = tomato
+       └─→ Cell.is_occupied = True
+
+5. User checks garden status
+   └─→ Manager.get_garden_summary()
+       └─→ Iterates through containers (polymorphic area calculation)
+       └─→ Counts occupied/available cells
+       └─→ Returns summary statistics
+```
+
+## Why This Architecture Works
+
+### Abstract Layer Benefits
+✓ Enforces consistent interfaces
+✓ Cannot instantiate incomplete classes
+✓ Clear contracts for implementers
+✓ Type safety through ABC module
+
+### Concrete Layer Benefits
+✓ Code reuse through inheritance
+✓ Specialized behavior per type
+✓ Polymorphic method calls
+✓ Easy to extend with new types
+
+### Composition Layer Benefits
+✓ Flexible object relationships
+✓ No artificial inheritance hierarchies
+✓ Clear separation of concerns
+✓ System-level coordination
+
+## Design Pattern Summary
+
+| Pattern | Where Used | Why |
+|---------|-----------|-----|
+| **Abstract Base Class** | AbstractPlantingContainer, AbstractPlant | Enforce interface contracts |
+| **Inheritance** | Container/Plant hierarchies | Code reuse + polymorphism |
+| **Polymorphism** | All calculate/get methods | Type-specific behavior |
+| **Composition** | GardenManager, GardenCell | Flexible relationships |
+| **Template Method** | Abstract methods | Define algorithm structure |
+
+This architecture demonstrates professional OOP design principles applied to a real-world domain, providing a solid foundation for Information Science applications.
