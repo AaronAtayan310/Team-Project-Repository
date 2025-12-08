@@ -14,7 +14,7 @@
 # CURRENT STATUS: Requires multiple external dependencies.
 
 # ==========================================================
-# LIST OF FUNCTION LIBRARY DEPENDENCIES
+# LIST OF CURRENT FUNCTION LIBRARY DEPENDENCIES
 # ==========================================================
 
 # Below lists the current modules the Crime Research Data Pipeline 
