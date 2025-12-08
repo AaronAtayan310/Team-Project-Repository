@@ -5,8 +5,9 @@ Crime Research Data Pipeline - Function Library Demo Script
 This script demonstrates the key functions in our crime research data 
 pipeline library with some practical scenarios.
 
-Author: INST326 Crime Research Data Pipeline Project Team
-Course: INST326 - Object-Oriented Programming for Information Science
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
 Project: Function Library Development (Project 1)
 """
 
