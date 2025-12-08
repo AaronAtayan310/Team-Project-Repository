@@ -1,3 +1,14 @@
+"""
+Crime Research Data Pipeline - Core Data Analysis Class
+
+This module defines the dataAnalysis class.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: OOP Class Implementation (Project 2)
+"""
+
 import pandas as pd
 from typing import Any, Dict, List, Iterator, Optional
 from sklearn.linear_model import LinearRegression
@@ -187,3 +198,4 @@ class dataAnalysis:
             str: A development-useful representation helpful for tasks like debugging.
         """
         return f"dataAnalysis(frame_shape={self.frame.shape}, described_shape={self.described.shape})"
+
