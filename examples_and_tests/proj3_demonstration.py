@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Crime Research Data Pipeline - Core Classes Demo Script
+Crime Research Data Pipeline - Inheritance & Polymorphism Demo Script
 
 This script demonstrates the Project 3 implementation of the crime
 research data pipeline project satisfying all Project 3 requirements:
