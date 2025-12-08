@@ -1,3 +1,14 @@
+"""
+Crime Research Data Pipeline - Core Data Utilities Class
+
+This module defines the dataStorageUtils class.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: OOP Class Implementation (Project 2)
+"""
+
 import pandas as pd
 import pickle
 import logging
