@@ -2,7 +2,7 @@
 """
 Crime Research Data Pipeline - Advanced OOP Demo Script
 
-This script demonstrates our advanced OOP implementation of the crime
+This script demonstrates the advanced OOP implementation of our crime
 research data pipeline project satisfying all Project 3 requirements:
 - Inheritance hierarchies
 - Polymorphic behavior
