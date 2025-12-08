@@ -12,7 +12,7 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## The dataIngestion class
+## The dataIngestion Class
 
 ### `__init__(default_timeout=10, track_sources=True)`
 
@@ -79,7 +79,7 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## The dataCleaner class
+## The dataCleaner Class
 
 ### `__init__(df, verbose=False)`
 
@@ -123,7 +123,7 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## The dataTransformation class
+## The dataTransformation Class
 
 ### `__init__(frame)`
 
@@ -159,7 +159,7 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## The dataAnalysis class
+## The dataAnalysis Class
 
 ### `__init__(frame)`
 
@@ -246,7 +246,7 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## The dataStorageUtils class
+## The dataStorageUtils Class
 
 ### `__init__(base_output_dir=None, log_level=logging.INFO)`
 
