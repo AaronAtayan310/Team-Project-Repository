@@ -9,7 +9,7 @@ Institution: University of Maryland, College Park
 Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
 """
 
-#ABSTRACT derived
+#ABSTRACT DERIVED CLASS
 import pandas as pd
 import numpy as np
 from typing import Optional, List, Union
