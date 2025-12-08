@@ -1,6 +1,6 @@
 # Crime Research Data Pipeline Function Library – Reference Guide
 
-This document provides comprehensive reference information for all functions in the crime research data pipeline library (Project 1). To find the source file in this repository for these functions, use `src` -> `proj1_crime_data_library.py`.
+This document provides comprehensive reference information for all functions in the crime research data pipeline library (Project 1). To find the main file in this repository for the function library to view the definitions of these functions, use `src` -> `proj1_crime_data_library.py`.
 
 ## Table of Contents
 
