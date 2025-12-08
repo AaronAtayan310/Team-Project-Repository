@@ -10,3 +10,51 @@ Course: Object-Oriented Programming for Information Science
 Institution: University of Maryland, College Park
 Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
 """
+
+import unittest
+import sys
+import os
+
+# Add src directory to path so we can import the relevant files
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+from proj3_API_data_source import *
+from proj3_CSV_data_source import *
+from proj3_data_processor import *
+from proj3_data_source import *
+from proj3_database_data_source import *
+from proj3_new_data_cleaning_cls import *
+
+
+class TestInheritance(unittest.TestCase):
+    """Test inheritance hierarchies."""
+    
+    pass
+
+
+class TestPolymorphism(unittest.TestCase):
+    """Test polymorphic behavior across different object types."""
+    
+    pass
+
+
+class TestAbstractBaseClasses(unittest.TestCase):
+    """Test that abstract base classes enforce implementation."""
+
+    pass
+
+
+class TestComposition(unittest.TestCase):
+    """Test composition relationships."""
+    
+    pass
+
+
+class TestSystemIntegration(unittest.TestCase):
+    """Test complete system working together."""
+
+    pass
+
+
+if __name__ == '__main__':
+    unittest.main()
