@@ -1,3 +1,14 @@
+"""
+Crime Research Data Pipeline - Class Definition For CSV Data
+
+This module defines CSVDataSource, an abstract derived class.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
+"""
+
 #ABSTRACT Derived Class
 from pathlib import Path
 import pandas as pd
