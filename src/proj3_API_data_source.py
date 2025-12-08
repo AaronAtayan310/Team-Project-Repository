@@ -1,3 +1,14 @@
+"""
+Crime Research Data Pipeline - Class Definition For API Data
+
+This module defines APIDataSource, an abstract derived class.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
+"""
+
 #ABSTRACT dervied class 
 from pathlib import Path
 import pandas as pd
