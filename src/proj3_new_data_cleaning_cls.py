@@ -1,3 +1,15 @@
+"""
+Crime Research Data Pipeline - Class Definition For Refactored Data Cleaning
+
+This module defines newDataCleaner, an abstract derived class.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
+"""
+
+#ABSTRACT derived
 import pandas as pd
 import numpy as np
 from typing import Optional, List, Union
