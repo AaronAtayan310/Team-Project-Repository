@@ -56,7 +56,7 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-### `validate_csv_path(file_path)` (staticmethod)
+### `@staticmethod validate_csv_path(file_path)`
 
 **Purpose:** Validate whether a given file path points to an existing CSV file.
 
@@ -341,7 +341,7 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-### `generate_timestamped_filename(base_name, extension='.csv')` (staticmethod)
+### `@staticmethod generate_timestamped_filename(base_name, extension='.csv')`
 
 **Purpose:** Generate timestamped filename (format: `YYYY-MM-DD_HH-MM-SS`).
 
