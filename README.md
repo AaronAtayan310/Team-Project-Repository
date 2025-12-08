@@ -204,7 +204,7 @@ File saved as: cleaned_crime_data_2025-10-12_21-04-10.csv
 
 # Overview and organization of Project 1 Function Library
 
-There are, at time of writing, **21 total functions** contained within the crime research data pipeline library (Project 1). An important detail to take note of regarding all functions in the library is that they are each designed to function with complete independence - that is, not relying on other functions in the library to be able to run. In terms of organization, the proj1_crime_data_library.py file uses some comment lines (# ---) to group the 21 functions into 5 categories, with each category representing the common, overarching purpose in the project which that one group of functions (with each function achieving a more niche & specific goal) is intended to fulfill. These categories, and the names of all functions contained within these categories, are as follows...
+There are, at time of writing, **21 total functions** contained within the crime research data pipeline library (Project 1). An important detail to take note of regarding all functions in the library (main function library file found in repo via `src` -> `proj1_crime_data_library.py`) is that they are each designed to function with complete independence - that is, not relying on other functions in the library to be able to run. In terms of organization, the library file uses some comment lines (# ---) to group the 21 functions into 5 categories, with each category representing the common, overarching purpose in the project which that one group of functions (with each function achieving a more niche & specific goal) is intended to fulfill. These categories, and the names of all functions contained within these categories, are as follows...
 
 **1. Data Ingestion**
 - Contains the following 3 functions: load_csv, fetch_api_data, and validate_csv_path.
@@ -223,25 +223,25 @@ There are, at time of writing, **21 total functions** contained within the crime
 
 # Overview and organization of Project 2 Core Classes
 
-The implementation of the crime research data pipeline core classes (Project 2) transforms the crime research data pipeline function library (Project 1) by defining 5 core classes, all relevant in the context of the crime research data pipeline, such that each core class specifically represents the relevant integration of 1 out of the 5 categories of functions as defined in the function library (see : src -> proj1_crime_data_library.py). To elaborate, in each core class many of its methods are intentionally **direct adaptations** of functions from the library category relevant to that core class, adjusted to work syntactically with object-oriented notation. An important detail to take note of regarding these core classes however is that **not every function from every function library category is adapted to be integrated into that category's relevant core class**, although the vast majority appear in these core classes. The organization of which core classes are intended to serve which overarching purposes in the crime research data pipeline as well as which methods from those core classes integrate relevant functions from the function library, is as follows...
+The implementation of the crime research data pipeline core classes (Project 2) transforms the crime research data pipeline function library (Project 1) by defining **5 core classes**, all relevant in the context of the crime research data pipeline, such that each core class specifically represents the relevant integration of 1 out of the 5 categories of functions as defined in the function library (main function library file found in repo via `src` -> `proj1_crime_data_library.py`). To elaborate, in each core class many of its methods are intentionally **direct adaptations** of functions from the library category relevant to that core class, adjusted to work syntactically with object-oriented notation. An important detail to take note of regarding these core classes however is that **not every function from every function library category is adapted to be integrated into that category's relevant core class**, although the vast majority appear in these core classes. The organization of which core classes are intended to serve which overarching purposes in the crime research data pipeline as well as which methods from those core classes integrate relevant functions from the function library, is as follows...
 
-**1. Ingesting Data - The dataIngestion Class (src -> proj2_data_ingestion_cls):**
+**1. Ingesting Data - The dataIngestion Class (`src` -> `proj2_data_ingestion_cls`):**
 - Intended to load crime data from various sources (CSV files, REST APis, etc) into the workspace of users of the project for later usage (research, analysis, etc).
 - Methods load_csv(self, filepath: str), fetch_api_data(self, url: str, params: Optional[Dict[str, Any]] = None, timeout: Optional[int] = None) and @staticmethod validate_csv_path(file_path: str) integrate crime research data pipeline library functions load_csv, fetch_api_data, and validate_csv_path respectively.
 ---
-**2. Cleaning Data - The dataCleaner Class (src -> proj2_data_cleaning_cls):**
+**2. Cleaning Data - The dataCleaner Class (`src` -> `proj2_data_cleaning_cls`):**
 - Intended to clean and preprocess pandas dataframes (the most common form of data for the sake of this project) to enhance the project users convenience of using these dataframes for later tasks (research, analysis, etc) in their workspace.
 - Methods handle_missing_values(self, strategy: str = "mean", columns: Optional[List[str]] = None) and normalize_text_column(self, column: str, remove_special_chars: bool = False) integrate crime research data pipeline library functions handle_missing_values and normalize_text_column respectively.
 ---
-**3. Transforming Data - The dataTransformation Class (src -> proj2_data_transformation_cls):**
+**3. Transforming Data - The dataTransformation Class (`src` -> `proj2_data_transformation_cls`):**
 - Intended to allow project users more simplified execution of very basic data transformation tasks on pandas dataframes (generating new features and scaling existing features).
 - Methods scale_features(self, columns: list[str]) and generate_features(self) integrate crime research data pipeline library functions scale_features and generate_features respectively.
 ---
-**4. Performing Analyses Of Data - The dataAnalysis Class (src -> proj2_data_analysis_cls):**
+**4. Performing Analyses Of Data - The dataAnalysis Class (`src` -> `proj2_data_analysis_cls`):**
 - Intended to allow project users to automate data analysis tasks on pandas dataframes that contain data of particular interest.
 - Methods run_regression(self, y: pd.Series), evaluate_model(self, model: LinearRegression, y_test: pd.Series), calculate_missing_data(self), compute_crime_rate_by_year(self, population_col: str = "population"), top_crime_types(self, n: int = 10) and find_high_crime_areas(self, area_col: str = "neighborhood") integrate crime research data pipeline library functions run_regression, evaluate_model, calculate_missing_data, compute_crime_rate_by_year, top_crime_types, and find_high_crime_areas respectively.
 ---
-**5. Storing Data & Extra Utilities - The dataStorageUtils Class (src -> proj2_data_utilities_cls):**
+**5. Storing Data & Extra Utilities - The dataStorageUtils Class (`src` -> `proj2_data_utilities_cls`):**
 - Intended to automate general data pipeline operations such as serialization, logging, and file management, and also to allow project users to store relevant data in any of multiple formats (CSV, JSON, etc).
 - Methods save_to_csv(self, df: pd.DataFrame, filepath: str, use_timestamp: bool = False, **kwargs), serialize_model(self, model: Any, path: str, metadata: Optional[Dict] = None), log_pipeline_step(self, step_name: str, status: str, extra_info: Optional[Dict] = None) and @staticmethod generate_timestamped_filename(base_name: str, extension: str = ".csv") integrate crime research data pipeline library functions save_to_csv, serialize_model, log_pipeline_step, and generate_timestamped_filename respectively.
 
