@@ -5,8 +5,9 @@ Crime Research Data Pipeline - Core Classes Demo Script
 This script demonstrates the core classes in our crime research data 
 pipeline project.
 
-Author: INST326 Crime Research Data Pipeline Project Team
-Course: INST326 - Object-Oriented Programming for Information Science
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
 Project: OOP Class Implementation (Project 2)
 """
 
