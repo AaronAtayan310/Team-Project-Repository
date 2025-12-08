@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Crime Research Data Pipeline - Advanced OOP Comprehensive Test Suite
 
