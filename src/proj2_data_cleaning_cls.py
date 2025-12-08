@@ -1,3 +1,14 @@
+"""
+Crime Research Data Pipeline - Core Data Cleaning Class
+
+This module defines the dataCleaner class.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: OOP Class Implementation (Project 2)
+"""
+
 import pandas as pd
 import numpy as np
 from typing import Optional, List, Union
