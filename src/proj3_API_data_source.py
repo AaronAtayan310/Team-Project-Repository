@@ -9,7 +9,7 @@ Institution: University of Maryland, College Park
 Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
 """
 
-#ABSTRACT dervied class 
+#ABSTRACT DERIVED CLASS
 from pathlib import Path
 import pandas as pd
 from datetime import datetime
