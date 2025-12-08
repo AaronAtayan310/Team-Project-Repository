@@ -5,9 +5,10 @@ A comprehensive Python framework for automated processing,
 analysis, and visualization of crime datasets to support 
 evidence-based policy making and criminal justice research.
 
-Author: INST326 Crime Research Data Pipeline Project Team
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
 Course: Object-Oriented Programming for Information Science
 Institution: University of Maryland, College Park
+Project: Function Library Development (Project 1)
 """
 
 # Package metadata
