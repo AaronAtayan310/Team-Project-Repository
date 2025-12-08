@@ -1,7 +1,7 @@
 """
-Crime Research Data Pipeline Function Library
+Crime Research Data Pipeline - Function Library Init File
 
-A comprehensive Python framework for automated processing, 
+A comprehensive Python pipeline for automated processing, 
 analysis, and visualization of crime datasets to support 
 evidence-based policy making and criminal justice research.
 
@@ -175,4 +175,5 @@ def get_library_info():
         'categories': list(get_function_categories().keys()),
         'license': __license__
     }
+
 
