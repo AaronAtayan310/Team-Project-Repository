@@ -23,6 +23,8 @@ from proj3_data_processor import *
 from proj3_data_source import *
 from proj3_database_data_source import *
 from proj3_data_cleaning_new import *
+from proj3_data_analysis_new import *
+from proj3_data_transformation_new import *
 
 
 class TestInheritance(unittest.TestCase):
