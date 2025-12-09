@@ -8,6 +8,11 @@ from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 import hashlib
+from src.proj3_data_ingestion_new import newDataIngestion 
+from src.proj3_data_utilities_new import newDataStorageUtils
+from src.proj3_data_cleaning_new import newDataCleaner
+from src.proj3_data_transformation_new import newDataTransformation
+from src.proj3_data_analysis_new import newDataAnalysis 
 
 class DataPipeline:
     """
@@ -25,8 +30,8 @@ class DataPipeline:
     """
     
     def __init__(self, 
-                 ingestion: Optional[dataIngestion] = None,
-                 storage: Optional[dataStorageUtils] = None,
+                 ingestion: Optional[newDataIngestion] = None,
+                 storage: Optional[newDataStorageUtils] = None,
                  verbose: bool = True):
         """
         Initialize the DataPipeline with optional component instances.
@@ -40,8 +45,8 @@ class DataPipeline:
             verbose (bool): Whether to print pipeline progress
         """
         # Composition: Pipeline contains these objects
-        self.ingestion = ingestion or dataIngestion()
-        self.storage = storage or dataStorageUtils()
+        self.ingestion = ingestion or newDataIngestion()
+        self.storage = storage or newDataStorageUtils()
         self.verbose = verbose
         
         # Pipeline state
@@ -97,7 +102,7 @@ class DataPipeline:
             raise ValueError("No data loaded. Call load_data() first.")
         
         # Create cleaner (composition)
-        self.cleaner = dataCleaning(self.data, verbose=self.verbose)
+        self.cleaner = newDataCleaner(self.data, verbose=self.verbose)
         
         # Apply cleaning
         strategy = kwargs.get('strategy', 'mean')
@@ -123,7 +128,7 @@ class DataPipeline:
             raise ValueError("No data loaded. Call load_data() first.")
         
         # Create transformer (composition)
-        self.transformer = dataTransformation(self.data, verbose=self.verbose)
+        self.transformer = newDataTransformation(self.data, verbose=self.verbose)
         
         # Apply transformations
         self.transformer.generate_features()
@@ -147,7 +152,7 @@ class DataPipeline:
             raise ValueError("No data loaded. Call load_data() first.")
         
         # Create analyzer (composition)
-        self.analyzer = dataAnalysis(self.data, verbose=self.verbose)
+        self.analyzer = newDataAnalysis(self.data, verbose=self.verbose)
         self.analyzer.process()
         
         self._log(f"Data analyzed ({len(self.analyzer.processing_history)} operations)")
