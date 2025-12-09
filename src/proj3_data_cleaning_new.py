@@ -1,7 +1,9 @@
 """
 Crime Research Data Pipeline - Class Definition For Refactored Data Cleaning
 
-This module defines newDataCleaner, an abstract derived class.
+This module defines newDataCleaner, an abstract derived class which is also a 
+refactored implementation of the dataCleaner class from the earlier crime 
+research data pipeline core classes implementation.
 
 Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
 Course: Object-Oriented Programming for Information Science
