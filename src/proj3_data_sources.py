@@ -141,6 +141,7 @@ class DatabaseDataSource(AbstractDataSource):
     '''
     Concrete implementation for loading data from databases.
     '''
+    
     def __init__(self, connection_string: str, query: str):
         '''
         Initialize a database data source.
