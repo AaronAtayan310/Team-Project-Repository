@@ -2,9 +2,9 @@
 # ==========================================================
 
 # This file lists the Python packages required to run the Crime
-# Research Data Pipeline Function Library. Like other project's code
-# in the Crime Research Data Pipeline Repository, the library has a 
-# few significant external library dependencies.
+# Research Data Pipeline Function Library. Like future code planned 
+# to be in the Crime Research Data Pipeline Project Repository, the 
+# library has a few significant external library dependencies.
 
 # Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
 # Course: INST326 - Object-Oriented Programming for Information Science
