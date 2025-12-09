@@ -15,7 +15,7 @@ import numpy as np
 from typing import Optional, List, Union
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
-from src.proj3_data_processor import dataProcessor
+from .proj3_data_processor import dataProcessor
 
 class newDataAnalysis(dataProcessor):
     ''' 
