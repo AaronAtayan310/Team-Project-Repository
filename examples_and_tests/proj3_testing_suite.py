@@ -22,7 +22,7 @@ from proj3_CSV_data_source import *
 from proj3_data_processor import *
 from proj3_data_source import *
 from proj3_database_data_source import *
-from proj3_new_data_cleaning_cls import *
+from proj3_data_cleaning_new import *
 
 
 class TestInheritance(unittest.TestCase):
