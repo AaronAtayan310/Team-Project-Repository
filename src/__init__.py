@@ -2,12 +2,13 @@
 Crime Research Data Pipeline - Function Library Init File
 
 This module defines src as a python package for this repository, allowing
-for some key imports throughout the project.
+for key imports throughout all intermittent project implementations and
+later demonstrations of key requirements for each implementation.
 
 Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
 Course: Object-Oriented Programming for Information Science
 Institution: University of Maryland, College Park
-Project: Function Library Development (Project 1)
+Project: All (Projects 1, 2, 3 & 4)
 """
 
 # Package metadata
@@ -15,9 +16,8 @@ __version__ = "1.0.0"
 __author__ = "INST326 Crime Research Data Pipeline Project Team"
 __email__ = "aatayan@terpmail.umd.edu"
 __description__ = "Crime Research Data Pipeline Function Library for INST326"
-__license__ = "MIT"
 
-# Import main functions for easy access
+# Import main functions from the crime research data pipeline library for easy access - Project 1 feature
 from .proj1_crime_data_library import (
     # Data Ingestion Functions
     load_csv,
@@ -51,25 +51,45 @@ from .proj1_crime_data_library import (
     generate_timestamped_filename
 )
 
-# Define what gets imported with "from proj1_crime_data_library import *"
+# Import core classes for easy access - Project 2 feature
+from .proj2_data_analysis_cls import dataAnalysis
+from .proj2_data_cleaning_cls import dataCleaner
+from .proj2_data_ingestion_cls import dataIngestion
+from .proj2_data_transformation_cls import dataTransformation
+from .proj2_data_utilities_cls import dataStorageUtils
+
+# Import refactored & advanced classes for easy access - Project 3 feature
+from .proj3_API_data_source import APIDataSource
+from .proj3_CSV_data_source import CSVDataSource
+from .proj3_data_analysis_new import newDataAnalysis
+from .proj3_data_cleaning_new import newDataCleaner
+from .proj3_data_ingestion_new import newDataIngestion
+from .proj3_data_pipeline import DataPipeline
+from .proj3_data_processor import dataProcessor
+from .proj3_data_source import dataSource
+from .proj3_data_transformation_new import newDataTransformation
+from .proj3_data_utilities_new import newDataStorageUtils
+from .proj3_database_data_source import databaseDataSource
+
+# Define what gets imported with "import *" statements
 __all__ = [
-    # Data Ingestion
+    # Data Ingestion (Initial Work) - Project 1 feature
     'load_csv',
     'fetch_api_data',
     'validate_csv_path',
     
-    # Data Cleaning
+    # Data Cleaning (Initial Work) - Project 1 feature
     'handle_missing_values',
     'normalize_text_column',
     'standardize_column_names',
     'remove_outliers_iqr',
     'clean_crime_data',
     
-    # Data Transformation
+    # Data Transformation (Initial Work) - Project 1 feature
     'scale_features',
     'generate_features',
     
-    # Data Analysis
+    # Data Analysis (Initial Work) - Project 1 feature
     'compute_summary_stats',
     'run_regression',
     'evaluate_model',
@@ -78,14 +98,34 @@ __all__ = [
     'top_crime_types',
     'find_high_crime_areas',
     
-    # Data Storage & Utility
+    # Data Storage & Utility (Initial Work) - Project 1 feature
     'save_to_csv',
     'serialize_model',
     'log_pipeline_step',
-    'generate_timestamped_filename'
+    'generate_timestamped_filename', 
+
+    # Crime Research Data Pipeline Core Classes - Project 2 feature
+    'dataAnalysis',
+    'dataCleaner',
+    'dataIngestion',
+    'dataTransformation',
+    'dataStorageUtils',
+
+    # Crime Research Data Pipeline Refactored & Advanced Classes - Project 3 feature
+    'APIDataSource',
+    'CSVDataSource',
+    'newDataAnalysis',
+    'newDataCleaner',
+    'newDataIngestion',
+    'DataPipeline',
+    'dataProcessor',
+    'dataSource',
+    'newDataTransformation',
+    'newDataStorageUtils',
+    'databaseDataSource'
 ]
 
-# Convenience function groupings for easier access
+# Convenience groupings of functions in the library for easier access - Project 1 feature
 DATA_INGESTION_FUNCTIONS = [
     'load_csv',
     'fetch_api_data',
@@ -122,7 +162,7 @@ DATA_STORAGE_AND_UTILITIES_FUNCTIONS = [
     'generate_timestamped_filename'
 ]
 
-def get_function_categories():
+def get_function_categories(): # Project 1 feature
     """Get a dictionary of function categories and their functions.
     
     Returns:
@@ -141,7 +181,7 @@ def get_function_categories():
         'storage_and_utilities': DATA_STORAGE_AND_UTILITIES_FUNCTIONS
     }
 
-def list_all_functions():
+def list_all_functions(): # Project 1 feature
     """List all available functions in the library.
     
     Returns:
@@ -152,9 +192,10 @@ def list_all_functions():
         >>> print(f"Total functions: {len(functions)}")
         Total functions: 21
     """
-    return sorted(__all__)
+    lib_functions = __all__[:21]
+    return sorted(lib_functions)
 
-def get_library_info():
+def get_library_info(): # Project 1 feature
     """Get library metadata and information.
     
     Returns:
@@ -165,15 +206,12 @@ def get_library_info():
         >>> print(f"Version: {info['version']}")
         Version: 1.0.0
     """
+    lib_functions = __all__[:21]
     return {
         'name': 'Crime Research Data Pipeline Function Library',
         'version': __version__,
         'author': __author__,
         'description': __description__,
-        'total_functions': len(__all__),
+        'total_functions': len(lib_functions),
         'categories': list(get_function_categories().keys()),
-        'license': __license__
     }
-
-
-
