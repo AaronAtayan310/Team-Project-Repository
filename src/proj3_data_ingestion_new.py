@@ -1,5 +1,5 @@
 """
-Crime Research Data Pipeline - Class Definition For Refactored Data Cleaning
+Crime Research Data Pipeline - Class Definition For Refactored Data Ingestion
 
 This module defines the newDataIngestion class, a refactored implementation
 of the dataIngestion class from the earlier crime research data pipeline core
