@@ -16,7 +16,7 @@ import pandas as pd
 import numpy as np
 from typing import Optional, List, Union
 from sklearn.preprocessing import StandardScaler
-from src.proj3_data_processor import dataProcessor 
+from .proj3_data_processor import dataProcessor 
 
 class newDataTransformation(dataProcessor):
     '''
