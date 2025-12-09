@@ -21,11 +21,11 @@ from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 import hashlib
-from src.proj3_data_ingestion_new import newDataIngestion 
-from src.proj3_data_utilities_new import newDataStorageUtils
-from src.proj3_data_cleaning_new import newDataCleaner
-from src.proj3_data_transformation_new import newDataTransformation
-from src.proj3_data_analysis_new import newDataAnalysis 
+from .proj3_data_ingestion_new import newDataIngestion 
+from .proj3_data_utilities_new import newDataStorageUtils
+from .proj3_data_cleaning_new import newDataCleaner
+from .proj3_data_transformation_new import newDataTransformation
+from .proj3_data_analysis_new import newDataAnalysis 
 
 class DataPipeline:
     """
