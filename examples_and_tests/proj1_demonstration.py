@@ -16,7 +16,29 @@ import os
 # Add src directory to path so we can import our library
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from proj1_crime_data_library import *
+from proj1_crime_data_library import (
+    load_csv,
+    fetch_api_data,
+    validate_csv_path,
+    handle_missing_values,
+    normalize_text_column,
+    standardize_column_names,
+    remove_outliers_iqr,
+    clean_crime_data,
+    scale_features,
+    generate_features,
+    compute_summary_stats,
+    run_regression,
+    evaluate_model,
+    calculate_missing_data,
+    compute_crime_rate_by_year,
+    top_crime_types,
+    find_high_crime_areas
+    save_to_csv,
+    serialize_model,
+    log_pipeline_step,
+    generate_timestamped_filename
+)
 
 
 def demo_data_ingestion():
