@@ -20,14 +20,17 @@ import os
 # Add src directory to path so we can import the relevant code files
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from proj3_API_data_source import *
-from proj3_CSV_data_source import *
-from proj3_data_processor import *
-from proj3_data_source import *
-from proj3_database_data_source import *
-from proj3_data_cleaning_new import *
-from proj3_data_analysis_new import *
-from proj3_data_transformation_new import *
+from proj3_API_data_source import APIDataSource
+from proj3_CSV_data_source import CSVDataSource
+from proj3_data_analysis_new import newDataAnalysis
+from proj3_data_cleaning_new import newDataCleaner
+from proj3_data_ingestion_new import newDataIngestion
+from proj3_data_pipeline import DataPipeline
+from proj3_data_processor import dataProcessor
+from proj3_data_source import dataSource
+from proj3_data_transformation_new import newDataTransformation
+from proj3_data_utilities_new import newDataStorageUtils
+from proj3_database_data_source import databaseDataSource
 
 
 def demonstrate_inheritance():
