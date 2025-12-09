@@ -19,11 +19,11 @@ import os
 # Add src directory to path so we can import our core classes
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from proj2_data_analysis_cls import *
-from proj2_data_cleaning_cls import *
-from proj2_data_ingestion_cls import *
-from proj2_data_transformation_cls import *
-from proj2_data_utilities_cls import *
+from proj2_data_analysis_cls import dataAnalysis
+from proj2_data_cleaning_cls import dataCleaner
+from proj2_data_ingestion_cls import dataIngestion
+from proj2_data_transformation_cls import dataTransformation
+from proj2_data_utilities_cls import dataStorageUtils
 
 
 def ingestion_class_demo():
