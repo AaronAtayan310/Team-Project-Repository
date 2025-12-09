@@ -1,3 +1,16 @@
+"""
+Crime Research Data Pipeline - Class Definition For Refactored Data Cleaning
+
+This module defines the newDataIngestion class, a refactored implementation
+of the dataIngestion class from the earlier crime research data pipeline core
+classes implementation.
+
+Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+Course: Object-Oriented Programming for Information Science
+Institution: University of Maryland, College Park
+Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
+"""
+
 import os
 import pandas as pd
 import pickle
