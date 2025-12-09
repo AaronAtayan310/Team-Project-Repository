@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 from datetime import datetime
 from abc import abc, abstractmethod
-from src.proj3_data_source import dataSource
+from .proj3_data_source import dataSource
 
 class databaseDataSource(dataSource):
     '''
