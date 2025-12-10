@@ -66,7 +66,7 @@ from .proj3_data_processors import NewDataAnalysis, NewDataCleaner, NewDataInges
 from .proj3_data_sources import APIDataSource, CSVDataSource, DatabaseDataSource
 from .proj3_data_utilities_new import NewDataStorageUtils
 
-# Define what gets imported with "import *" statements
+# Define what gets imported with "import *" statements - Project 1/2/3/4 feature
 __all__ = [
     # Data Ingestion (Initial Work) - Project 1 feature
     'load_csv',
