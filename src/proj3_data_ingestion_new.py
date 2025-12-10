@@ -163,6 +163,9 @@ class NewDataIngestion:
     def validate_csv_path(file_path: str) -> bool:
         """
         Validate whether a given file path points to an existing CSV file.
+
+        Args: 
+            file_path (str): The actual file path used in validating a given csv file
         """
         if not isinstance(file_path, str):
             raise TypeError("File path must be a string")
