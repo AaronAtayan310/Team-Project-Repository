@@ -52,24 +52,19 @@ from .proj1_crime_data_library import (
 )
 
 # Import core classes for easy access - Project 2 feature
-from .proj2_data_analysis_cls import dataAnalysis
-from .proj2_data_cleaning_cls import dataCleaner
-from .proj2_data_ingestion_cls import dataIngestion
-from .proj2_data_transformation_cls import dataTransformation
-from .proj2_data_utilities_cls import dataStorageUtils
+from .proj2_data_analysis_cls import DataAnalysis
+from .proj2_data_cleaning_cls import DataCleaner
+from .proj2_data_ingestion_cls import DataIngestion
+from .proj2_data_transformation_cls import DataTransformation
+from .proj2_data_utilities_cls import DataStorageUtils
 
 # Import refactored & advanced classes for easy access - Project 3 feature
-from .proj3_API_data_source import APIDataSource
-from .proj3_CSV_data_source import CSVDataSource
-from .proj3_data_analysis_new import newDataAnalysis
-from .proj3_data_cleaning_new import newDataCleaner
-from .proj3_data_ingestion_new import newDataIngestion
+from .proj3_base_classes import AbstractDataProcessor, AbstractDataSource
+from .proj3_data_ingestion_new import NewDataIngestion
 from .proj3_data_pipeline import DataPipeline
-from .proj3_data_processor import dataProcessor
-from .proj3_data_source import dataSource
-from .proj3_data_transformation_new import newDataTransformation
-from .proj3_data_utilities_new import newDataStorageUtils
-from .proj3_database_data_source import databaseDataSource
+from .proj3_data_processors import NewDataAnalysis, NewDataCleaner, NewDataIngestion
+from .proj3_data_sources import APIDataSource, CSVDataSource, DatabaseDataSource
+from .proj3_data_utilities_new import NewDataStorageUtils
 
 # Define what gets imported with "import *" statements
 __all__ = [
@@ -105,24 +100,24 @@ __all__ = [
     'generate_timestamped_filename', 
 
     # Crime Research Data Pipeline Core Classes - Project 2 feature
-    'dataAnalysis',
-    'dataCleaner',
-    'dataIngestion',
-    'dataTransformation',
-    'dataStorageUtils',
+    'DataAnalysis',
+    'DataCleaner',
+    'DataIngestion',
+    'DataTransformation',
+    'DataStorageUtils',
 
     # Crime Research Data Pipeline Refactored & Advanced Classes - Project 3 feature
+    'AbstractDataProcessor',
+    'AbstractDataSource',
+    'NewDataIngestion',
+    'DataPipeline',
+    'NewDataAnalysis',
+    'NewDataCleaner',
+    'NewDataIngestion',
     'APIDataSource',
     'CSVDataSource',
-    'newDataAnalysis',
-    'newDataCleaner',
-    'newDataIngestion',
-    'DataPipeline',
-    'dataProcessor',
-    'dataSource',
-    'newDataTransformation',
-    'newDataStorageUtils',
-    'databaseDataSource'
+    'DatabaseDataSource',
+    'NewDataStorageUtils'
 ]
 
 # Convenience groupings of functions in the library for easier access - Project 1 feature
@@ -215,3 +210,4 @@ def get_library_info(): # Project 1 feature
         'total_functions': len(lib_functions),
         'categories': list(get_function_categories().keys()),
     }
+
