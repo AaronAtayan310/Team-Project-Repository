@@ -1,5 +1,5 @@
 """
-Crime Research Data Pipeline - Advanced OOP Demo Script
+Crime Research Data Pipeline - Refactored & Advanced Classes Demo Script
 
 This script demonstrates the advanced OOP implementation of our crime
 research data pipeline project satisfying all Project 3 requirements:
