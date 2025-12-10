@@ -1,15 +1,8 @@
-# Crime Research Data Pipeline - Advanced OOP Architecture Diagram
-# ==========================================================
-
-# This file lists the crime research data pipeline's inheritance hierarchies 
-# and their rationales, the reasoning behind why specific methods in the 
-# project are polymorphic, and the reasoning behind major compposition vs 
-# inheritance decisions in the project design.  
-
-# Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
-# Course: INST326 - Object-Oriented Programming for Information Science
-# Institution: University of Maryland, College Park
-# Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
+## Crime Research Data Pipeline - Advanced OOP Architecture Diagram
+This file lists the crime research data pipeline's inheritance hierarchies 
+and their rationales, the reasoning behind why specific methods in the 
+project are polymorphic, and the reasoning behind major compposition vs 
+inheritance decisions in the project design.  
 
 ## Complete System Architecture
 
