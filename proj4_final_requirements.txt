@@ -1,0 +1,11 @@
+# Crime Research Data Pipeline - Total Python Dependencies
+# ==========================================================
+
+# This file lists the Python packages required to run the Full Crime
+# Research Data Pipeline Project. As has been expected for the final 
+# product, there is a substantial amount of external library dependencies.
+
+# Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
+# Course: INST326 - Object-Oriented Programming for Information Science
+# Institution: University of Maryland, College Park
+# Project: Capstone Integration & Testing (Project 4)
