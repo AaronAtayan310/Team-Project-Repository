@@ -1,4 +1,4 @@
-## Crime Research Data Pipeline - Refactored & Advanced Class Architecture Diagram
+## Crime Research Data Pipeline - Refactored & Advanced Classes Architecture Diagram
 This file lists the crime research data pipeline's inheritance hierarchies 
 and their rationales, the reasoning behind why specific methods in the 
 project are polymorphic, and the reasoning behind major compposition vs 
