@@ -4,25 +4,25 @@ This document provides comprehensive reference information for all crime researc
 
 ## Table of Contents
 
-1. [Class I (`src -> proj2_data_ingestion_cls.py`) : dataIngestion](#the-dataingestion-class)
-2. [Class II (`src -> proj2_data_cleaning_cls.py`) : dataCleaner](#the-datacleaner-class)
-3. [Class III (`src -> proj2_data_transformation_cls.py`) : dataTransformation](#the-datatransformation-class)
-4. [Class IV (`src -> proj2_data_analysis_cls.py`) : dataAnalysis](#the-dataanalysis-class)
-5. [Class V (`src -> proj2_data_utilities_cls.py`) : dataStorageUtils](#the-datastorageutils-class)
+1. [Class I (`src -> proj2_data_ingestion_cls.py`) : DataIngestion](#the-dataingestion-class)
+2. [Class II (`src -> proj2_data_cleaning_cls.py`) : DataCleaner](#the-datacleaner-class)
+3. [Class III (`src -> proj2_data_transformation_cls.py`) : DataTransformation](#the-datatransformation-class)
+4. [Class IV (`src -> proj2_data_analysis_cls.py`) : DataAnalysis](#the-dataanalysis-class)
+5. [Class V (`src -> proj2_data_utilities_cls.py`) : DataStorageUtils](#the-datastorageutils-class)
 
 ---
 
-## The dataIngestion Class
+## The DataIngestion Class
 
 ### `__init__(default_timeout=10, track_sources=True)`
 
-**Purpose:** Initialize an object of the dataIngestion class. Objects are intended to load crime data from various sources (CSV files, REST APis, etc) into the workspace of project users for later usage (research, analysis, etc). 
+**Purpose:** Initialize an object of the DataIngestion class. Objects are intended to load crime data from various sources (CSV files, REST APis, etc) into the workspace of project users for later usage (research, analysis, etc). 
 
 **Parameters:**
 - `default_timeout` (int): Default timeout for API requests in seconds. Must be positive integer
 - `track_sources` (bool): Whether to track uploaded sources
 
-**Returns:** `dataIngestion` instance
+**Returns:** `DataIngestion` object / instance
 
 **Raises:** `TypeError` if parameters are wrong types, `ValueError` if timeout ≤ 0
 
@@ -79,17 +79,17 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## The dataCleaner Class
+## The DataCleaner Class
 
 ### `__init__(df, verbose=False)`
 
-**Purpose:** Initialize an object of the dataCleaner class. Objects are intended to clean and preprocess pandas dataframes (the most common form of data for the sake of this project) to enhance the project users convenience of using these dataframes for later tasks (research, analysis, etc) in their workspace. 
+**Purpose:** Initialize an object of the DataCleaner class. Objects are intended to clean and preprocess pandas dataframes (the most common form of data for the sake of this project) to enhance the project users convenience of using these dataframes for later tasks (research, analysis, etc) in their workspace. 
 
 **Parameters:**
 - `df` (pd.DataFrame): The DataFrame to clean
 - `verbose` (bool): Print information about cleaning operations
 
-**Returns:** `dataCleaner` instance
+**Returns:** `DataCleaner` object / instance
 
 **Raises:** `TypeError` if df not DataFrame, `ValueError` if df empty
 
@@ -103,7 +103,7 @@ This document provides comprehensive reference information for all crime researc
 - `strategy` (str): 'mean', 'median', 'mode', 'drop', 'forward_fill', 'backward_fill'
 - `columns` (list[str], optional): Specific columns to apply strategy to
 
-**Returns:** `dataCleaner` – Self for method chaining
+**Returns:** `DataCleaner` – Self for method chaining
 
 **Raises:** `ValueError` if invalid strategy
 
@@ -117,22 +117,22 @@ This document provides comprehensive reference information for all crime researc
 - `column` (str): Column to normalize
 - `remove_special_chars` (bool): Remove non-alphanumeric characters
 
-**Returns:** `dataCleaner` – Self for method chaining
+**Returns:** `DataCleaner` – Self for method chaining
 
 **Raises:** `ValueError` if column doesn't exist
 
 ---
 
-## The dataTransformation Class
+## The DataTransformation Class
 
 ### `__init__(frame)`
 
-**Purpose:** Initialize an object of the dataTransformation class. Objects are intended to allow project users more simplified execution of very basic data transformation tasks on pandas dataframes (generating new features and scaling existing features).
+**Purpose:** Initialize an object of the DataTransformation class. Objects are intended to allow project users more simplified execution of very basic data transformation tasks on pandas dataframes (generating new features and scaling existing features).
 
 **Parameters:**
 - `frame` (pd.DataFrame): Input DataFrame for transformation
 
-**Returns:** `dataTransformation` instance
+**Returns:** `DataTransformation` object / instance
 
 **Raises:** `ValueError` if frame not DataFrame
 
@@ -159,16 +159,16 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## The dataAnalysis Class
+## The DataAnalysis Class
 
 ### `__init__(frame)`
 
-**Purpose:** Initialize an object of the dataAnalysis class. Objects are intended to allow project users to automate data analysis tasks on pandas dataframes that contain data of particular interest.
+**Purpose:** Initialize an object of the DataAnalysis class. Objects are intended to allow project users to automate data analysis tasks on pandas dataframes that contain data of particular interest.
 
 **Parameters:**
 - `frame` (pd.DataFrame): DataFrame containing data to analyze
 
-**Returns:** `dataAnalysis` instance
+**Returns:** `DataAnalysis` object / instance
 
 **Raises:** `ValueError` if frame not DataFrame
 
@@ -246,17 +246,17 @@ This document provides comprehensive reference information for all crime researc
 
 ---
 
-## The dataStorageUtils Class
+## The DataStorageUtils Class
 
 ### `__init__(base_output_dir=None, log_level=logging.INFO)`
 
-**Purpose:** Initialize an object of the dataStorageUtils class. Objects are intended to automate general data pipeline operations such as serialization, logging, and file management, and also to allow project users to store relevant data in any of multiple formats (CSV, JSON, etc).
+**Purpose:** Initialize an object of the DataStorageUtils class. Objects are intended to automate general data pipeline operations such as serialization, logging, and file management, and also to allow project users to store relevant data in any of multiple formats (CSV, JSON, etc).
 
 **Parameters:**
 - `base_output_dir` (str, optional): Base directory for outputs
 - `log_level` (int): Logging level
 
-**Returns:** `dataStorageUtils` instance
+**Returns:** `DataStorageUtils` object / instance
 
 ---
 
