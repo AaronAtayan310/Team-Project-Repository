@@ -1,5 +1,5 @@
 """
-Crime Research Data Pipeline - Advanced OOP Comprehensive Test Suite
+Crime Research Data Pipeline - Refactored & Advanced Classes Comprehensive Test Suite
 
 This script tests inheritance, polymorphism, abstract base classes, and composition for
 the advanced OOP implementation of the Crime Research Data Pipeline.
