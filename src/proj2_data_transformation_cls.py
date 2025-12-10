@@ -1,7 +1,7 @@
 """
 Crime Research Data Pipeline - Core Data Transformation Class
 
-This module defines the dataTransformation class.
+This module defines the DataTransformation class.
 
 Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
 Course: Object-Oriented Programming for Information Science
@@ -12,7 +12,7 @@ Project: OOP Class Implementation (Project 2)
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
 
-class dataTransformation:
+class DataTransformation:
     """
     This class allows for transforming dataframes into scaled or more feature complete versions.
 
@@ -21,7 +21,7 @@ class dataTransformation:
     """
     def __init__(self, frame):
         """
-        Initialize the dataTransformation class.
+        Initialize an object of the DataTransformation class.
 
         Args:
             frame: A pandas dataframe containing the data we are working with, holding relevant data.
@@ -74,7 +74,7 @@ class dataTransformation:
 
     def __str__(self):
         """
-        Returns a string representation of the dataTransformation object (the current state of the data being transformed).
+        Returns a string representation of the DataTransformation object (the current state of the data being transformed).
 
         Returns:
             str: A readable description of the object.
@@ -86,9 +86,9 @@ class dataTransformation:
 
     def __repr__(self):
         """
-        Returns a developer-targeted string representation of the dataTransformation object.
+        Returns a developer-targeted string representation of the DataTransformation object.
 
         Returns:
             str: A development-useful description showing the class name and the dataframe shape.
         """
-        return f"dataTransformation(frame=pd.DataFrame(shape={self.frame.shape}))"
+        return f"DataTransformation(frame=pd.DataFrame(shape={self.frame.shape}))"
