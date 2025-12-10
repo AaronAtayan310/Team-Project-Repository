@@ -19,18 +19,18 @@ from abc import abc, abstractmethod
 
 
 class APIDataSource(AbstractDataSource):
-    '''
+    """
     Concrete implementation for loading data from REST APIs.
-    '''
+    """
 
     def __init__(self, url: str, params: Optional[Dict] = None):
-        '''
+        """
         Initialize an API data source.
 
         Args:
             url (str): API endpoint URL
             params (Optional[Dict]): Query parameters
-        '''
+        """
         super().__init__()
         self.url = url
         self.params = params or {}
@@ -38,18 +38,18 @@ class APIDataSource(AbstractDataSource):
         self._source_metadata['url'] = url
     
     def validate_source(self) -> bool:
-        '''
+        """
         Validate that the URL is formed correctly.
 
         Returns:
             bool: True if valid
-        '''
+        """
         is_valid = self.url.startswith(('http://', 'https://'))
         self._source_metadata['validated'] = is_valid
         return is_valid
     
     def load(self) -> pd.DataFrame:
-        '''
+        """
         Load data from API endpoint.
 
         Returns:
@@ -58,7 +58,7 @@ class APIDataSource(AbstractDataSource):
         Raises:
             ValueError: If URL is invalid
             ImportError: If requests library is not available
-        '''
+        """
         if not self.validate_source():
             raise ValueError(f"Invalid API URL")
 
@@ -86,30 +86,30 @@ class APIDataSource(AbstractDataSource):
 
 
 class CSVDataSource(AbstractDataSource):
-    '''
+    """
     Concrete implementation for loading data from CSV files,
     demonstrating polymorphic behavior.
-    '''
+    """
 
     def __init__(self, filepath: str):
-        '''
+        """
         Initialize a CSV data source.
         
         Args:
             filepath(str): Path to the CSV file
-        '''
+        """
         super().__init__()
         self.filepath = filepath
         self._source_metadata['type'] = 'csv'
         self._source_metadata['filepath'] = filepath
 
     def validate_source(self) -> bool:
-        '''
+        """
         Validate that the CSV file exists and is readable.
 
         Returns:
             bool: True if valid
-        '''
+        """
         path = Path(self.filepath)
         is_valid = path.exists() and path.suffix.lower() == '.csv'
         self._source_metadata['validated'] = is_valid
@@ -117,7 +117,7 @@ class CSVDataSource(AbstractDataSource):
         return is_valid
 
     def load(self) -> pd.DataFrame:
-        '''
+        """
         Load data from CSV file.
 
         Returns:
@@ -125,7 +125,7 @@ class CSVDataSource(AbstractDataSource):
         
         Raises:
             FileNotFoundError: If file doesn't exist
-        '''
+        """
         if not self.validate_source():
             raise FileNotFoundError(f"CSV file not found: {self.filepath}")
         
@@ -138,37 +138,37 @@ class CSVDataSource(AbstractDataSource):
 
 
 class DatabaseDataSource(AbstractDataSource):
-    '''
+    """
     Concrete implementation for loading data from databases.
-    '''
+    """
     
     def __init__(self, connection_string: str, query: str):
-        '''
+        """
         Initialize a database data source.
         
         Args:
             connection_string (str): Database connection string
             query (str): SQL query to execute
-        '''
+        """
         super().__init__()
         self.connection_string = connection_string
         self.query = query
         self._source_metadata['type'] = 'database'
 
     def validate_source(self) -> bool:
-        '''
+        """
         Validate that connection string and query are provided.
 
         Returns:
             bool: True if valid
-        '''
+        """
         is_valid = bool(self.connection_string and self.query)
         self._source_metadata['validated'] = is_valid
         
         return is_valid
 
     def load(self) -> pd.DataFrame:
-        '''
+        """
         Load data from a database.
 
         Returns:
@@ -176,7 +176,7 @@ class DatabaseDataSource(AbstractDataSource):
         
         Raises:
             FILL-IN-BLANK
-        '''
+        """
         if not self.validate_source():
             # raise FILL-IN-BLANK
 
