@@ -190,11 +190,9 @@ class DatabaseDataSource(AbstractDataSource):
             from sqlalchemy import create_engine
         except ImportError:
             raise ImportError(
-                "SQLAlchemy is required for database connections. "
-                "Install it with: pip install sqlalchemy in Terminal/Command Prompt"
+                "SQLAlchemy is required for database connections - Install it with: pip install sqlalchemy in Terminal/Command Prompt  "
             )
 
-<<<<<<< HEAD
         # Attempt to connect and load data
         try:
             # Create database engine
@@ -227,6 +225,5 @@ class DatabaseDataSource(AbstractDataSource):
                 f"Connection: {self.connection_string}, "
                 f"Error: {str(e)}"
             ) from e        
-=======
+
         return df
->>>>>>> c0740e531a8db11d9b6185da1ace52bf263a216d
