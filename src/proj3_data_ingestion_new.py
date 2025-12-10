@@ -2,7 +2,7 @@
 Crime Research Data Pipeline - Class Definition For Refactored Data Ingestion
 
 This module defines the NewDataIngestion class, a refactored implementation
-of the dataIngestion class from the earlier crime research data pipeline core
+of the DataIngestion class from the earlier crime research data pipeline core
 classes implementation.
 
 Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
@@ -31,7 +31,7 @@ class NewDataIngestion:
 
     def __init__(self, default_timeout: int = 10, track_sources: bool = True):
         """
-        Initialize an object of the dataIngestion class.
+        Initialize an object of the NewDataIngestion class.
         
         Args:
             default_timeout (int): Default timeout for API requests
@@ -189,11 +189,11 @@ class NewDataIngestion:
     
     def __str__(self) -> str:
         """
-        Return a string representation of the DataIngestion object.
+        Return a string representation of the NewDataIngestion object.
         """
         sources_count = len(self._data_sources)
         cached_count = len(self._loaded_data)
         tracking_status = "enabled" if self._track_sources else "disabled"
-        return (f"dataIngestion (timeout={self._default_timeout}s, "
+        return (f"NewDataIngestion (timeout={self._default_timeout}s, "
                 f"tracking={tracking_status}, sources_loaded={sources_count}, "
                 f"cached={cached_count})")
