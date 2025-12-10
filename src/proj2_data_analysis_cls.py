@@ -1,7 +1,7 @@
 """
 Crime Research Data Pipeline - Core Data Analysis Class
 
-This module defines the dataAnalysis class.
+This module defines the DataAnalysis class.
 
 Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
 Course: Object-Oriented Programming for Information Science
@@ -14,21 +14,21 @@ from typing import Any, Dict, List, Iterator, Optional
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-class dataAnalysis:
+class DataAnalysis:
     """
     This class uses pandas dataframes holding data of interest and inegrates them with instance methods allowing analysis of the data.
 
     Attributes:
         frame (pd.DataFrame): A pandas dataframe containing the data we are working with.
         __described (pd.DataFrame): Description of the dataframe we are working with, a
-        a dataframe showing mean, deviation, so forth for the different columns.
+        dataframe showing mean, deviation, so forth for the different columns
     """
     def __init__(self, frame):
         """
-        Initialize the dataAnalysis class.
+        Initialize the an object of the DataAnalysis class.
 
         Args:
-            frame: A pandas dataframe containing the data we are working with, holding relevant data.
+            frame: A pandas dataframe containing the data we are working with, holding relevant data
         """
         self._frame = None
         self.frame = frame
@@ -47,10 +47,10 @@ class dataAnalysis:
         Sets the value of the dataframe we are working with.
 
         Args:
-            val: The value we are trying to assign to the dataframe.
+            val: The value we are trying to assign to the dataframe
 
         Raises:
-            ValueError: If val is anything other than a pandas dataframe.
+            ValueError: If val is anything other than a pandas dataframe
         """
         if not(isinstance(val, pd.DataFrame)):
             raise ValueError('Data to analyze must be in DataFrame format, no other format is acceptable.')
@@ -68,10 +68,10 @@ class dataAnalysis:
         Fit a simple linear regression model.
 
         Args:
-            y (pd.Series): Target variable.
+            y (pd.Series): Target variable
 
         Returns:
-            LinearRegression: Trained regression model.
+            model (LinearRegression): Trained regression model
         """
         model = LinearRegression()
         model.fit(self.frame, y)
@@ -82,11 +82,11 @@ class dataAnalysis:
         Evaluate a trained regression model using Mean Squared Error (MSE).
 
         Args:
-            model (LinearRegression): Trained model.
-            y_test (pd.Series): Test targets.
+            model (LinearRegression): Trained model
+            y_test (pd.Series): Test targets
 
         Returns:
-            dict: Dictionary with evaluation metrics.
+            dict: Dictionary with evaluation metrics
         """
         predictions = model.predict(self.frame)
         mse = mean_squared_error(y_test, predictions)
@@ -97,13 +97,13 @@ class dataAnalysis:
         Calculate the percentage of missing data in each column of a DataFrame.
 
         Args:
-            df (pd.DataFrame): The DataFrame to analyze.
+            df (pd.DataFrame): The DataFrame to analyze
 
         Returns:
-            pd.Series: A Series containing the percentage of missing data per column.
+            pd.Series: A Series containing the percentage of missing data per column
 
         Raises:
-            TypeError: If 'df' is not a pandas DataFrame.
+            TypeError: If 'df' is not a pandas DataFrame
         """
         return (self.frame.isnull().sum() / len(self.frame)) * 100
         
@@ -112,10 +112,10 @@ class dataAnalysis:
         Compute annual crime rates per 100,000 people.
 
         Args:
-            population_col (str): Column name representing population data.
+            population_col (str): Column name representing population data
 
         Returns:
-            pd.DataFrame: DataFrame with columns ['year', 'crime_count', 'crime_rate'].
+            yearly_data (pd.DataFrame): DataFrame with columns ['year', 'crime_count', 'crime_rate']
         """
         df = self.frame.copy()
         if "date" not in df.columns:
@@ -136,10 +136,10 @@ class dataAnalysis:
         Identify the top N most frequent crime types.
 
         Args:
-            n (int): The number of top crime types to return.
+            n (int): The number of top crime types to return
 
         Returns:
-            pd.DataFrame: DataFrame with columns ['crime_type', 'count'].
+            pd.DataFrame: DataFrame with columns ['crime_type', 'count']
         """
         if "crime_type" not in self.frame.columns:
             raise ValueError("The dataset must include a 'crime_type' column.")
@@ -157,10 +157,10 @@ class dataAnalysis:
         Identify the areas with the highest number of reported crimes.
 
         Args:
-            area_col (str): The name of the column representing geographic areas.
+            area_col (str): The name of the column representing geographic areas, defaulted to "neighborhood"
 
         Returns:
-            pd.DataFrame: DataFrame of areas sorted by descending crime count.
+            area_stats (pd.DataFrame): DataFrame of areas sorted by descending crime count
         """
         if area_col not in self.frame.columns:
             raise ValueError(f"'{area_col}' column not found in dataset.")
@@ -175,10 +175,10 @@ class dataAnalysis:
 
     def __str__(self):
         """
-        Returns a string representation of the dataAnalysis object (the source and description dataframes, in string form).
+        Returns a string representation of the DataAnalysis object (the source and description dataframes, in string form).
 
         Returns:
-            str: A readable description of the object.
+            str: A readable description of the object
         """
         source = str(self.frame)
         description = str(self.described)
@@ -192,10 +192,11 @@ class dataAnalysis:
 
     def __repr__(self):
         """
-        Returns a developer-targeted string representation of the dataAnalysis object, summarizing key information on the releated dataframe.
+        Returns a developer-targeted string representation of the DataAnalysis object, summarizing key information on the releated dataframe.
 
         Returns:
-            str: A development-useful representation helpful for tasks like debugging.
+            str: A development-useful representation helpful for tasks like debugging
         """
-        return f"dataAnalysis(frame_shape={self.frame.shape}, described_shape={self.described.shape})"
+        return f"DataAnalysis(frame_shape={self.frame.shape}, described_shape={self.described.shape})"
+
 
