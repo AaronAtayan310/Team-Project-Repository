@@ -245,6 +245,8 @@ The implementation of the crime research data pipeline core classes (Project 2) 
 - Intended to automate general data pipeline operations such as serialization, logging, and file management, and also to allow project users to store relevant data in any of multiple formats (CSV, JSON, etc).
 - Methods save_to_csv(self, df: pd.DataFrame, filepath: str, use_timestamp: bool = False, **kwargs), serialize_model(self, model: Any, path: str, metadata: Optional[Dict] = None), log_pipeline_step(self, step_name: str, status: str, extra_info: Optional[Dict] = None) and @staticmethod generate_timestamped_filename(base_name: str, extension: str = ".csv") integrate crime research data pipeline library functions save_to_csv, serialize_model, log_pipeline_step, and generate_timestamped_filename respectively.
 
+# Overview and organization of Project 3 implementations
+
 # Project contribution guidelines for team members
 1. Ensure you have the latest code
 2. Make your changes in the appropriate module
