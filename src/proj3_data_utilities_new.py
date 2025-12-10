@@ -24,13 +24,14 @@ import hashlib
 
 class newDataStorageUtils:
     """
-    Utility class for data pipeline storage operations.
-    
-    Handles serialization, file management, and logging for the pipeline.
+    Refactored utility class for data pipeline storage operations, handling serialization, 
+    file management, and logging for the pipeline.
     """
     
     def __init__(self, base_output_dir: Optional[str] = None, log_level: int = logging.INFO):
-        """Initialize the dataStorageUtils class."""
+        """
+        Initialize an object of the dataStorageUtils class.
+        """
         self.base_output_dir = Path(base_output_dir) if base_output_dir else Path.cwd()
         self.base_output_dir.mkdir(parents=True, exist_ok=True)
         
@@ -39,16 +40,30 @@ class newDataStorageUtils:
     
     @staticmethod
     def _setup_logging(log_level: int) -> None:
-        """Configure logging for the pipeline."""
+        """
+        Configure logging for the pipeline.
+
+        Args:
+            log_level (int): A number representing the level that logging should occur at
+        """
         logging.basicConfig(
             level=log_level,
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S"
         )
     
-    def save_to_csv(self, df: pd.DataFrame, filepath: str, 
-                    use_timestamp: bool = False, **kwargs) -> Path:
-        """Save a DataFrame to a CSV file."""
+    def save_to_csv(self, df: pd.DataFrame, filepath: str, use_timestamp: bool = False, **kwargs) -> Path:
+        """
+        Save a DataFrame to a CSV file.
+
+        Args:
+            df (pd.DataFrame): The DataFrame containing the information we want saved to a CSV
+            filepath (str): The filepath needed to locate the csv file that will hold the info
+            use_timestamp (bool): Whether or not to generate a usage timestamp, defaulted to False
+
+        Returns:
+            path (Path): A Path object representing how to find the csv
+        """
         path = Path(filepath)
         
         if use_timestamp:
@@ -63,7 +78,15 @@ class newDataStorageUtils:
         return path
     
     def load_from_csv(self, filepath: str, **kwargs) -> pd.DataFrame:
-        """Load a DataFrame from a CSV file."""
+        """
+        Load a DataFrame from a CSV file.
+
+        Args:
+            filepath (str): The file path used to load the CSV data into a dataframe
+
+        Returns:
+            df (pd.DataFrame): The dataframe holding the information retrieved from the csv
+        """
         path = Path(filepath)
         if not path.exists():
             raise FileNotFoundError(f"CSV file not found: {path}")
@@ -73,7 +96,17 @@ class newDataStorageUtils:
         return df
     
     def serialize_model(self, model: Any, path: str, metadata: Optional[Dict] = None) -> Path:
-        """Serialize (save) a model object to disk using pickle."""
+        """
+        Serialize (save) a model object to disk using pickle.
+
+        Args:
+            model (Any): The model to work with
+            path (str): The filepath used to identify the model
+            metadata (Optional[Dict]): Metadata chararcterizing the model (optional, defaults to None)
+
+        Returns:
+            path (Path): A path object represeting how to find the model after saving
+        """
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -90,7 +123,15 @@ class newDataStorageUtils:
         return path
     
     def deserialize_model(self, path: str) -> Any:
-        """Deserialize (load) a model object from disk."""
+        """
+        Deserialize (load) a model object from disk.
+
+        Args:
+            path (str): The needed file path to load the model object
+
+        Returns:
+            model (Any): The model itself loaded from the disk using the given file path
+        """
         path = Path(path)
         if not path.exists():
             raise FileNotFoundError(f"Model file not found: {path}")
@@ -103,7 +144,16 @@ class newDataStorageUtils:
     
     @staticmethod
     def generate_timestamped_filename(base_name: str, extension: str = ".csv") -> str:
-        """Generate a timestamped filename."""
+        """
+        Generate a timestamped filename.
+
+        Args:
+            base_name (str): The basic name (no extension yet) the timestamped file should be represented by
+            extension (str): The file extension specific to this timestamped file, defaulted to csv
+
+        Returns:
+            str: The timestamped filename with the basic name and appropiate file path
+        """
         if not isinstance(base_name, str) or not isinstance(extension, str):
             raise TypeError("Base name and extension must be strings")
         
