@@ -460,8 +460,9 @@ class NewDataCleaner(AbstractDataProcessor):
 
 class NewDataTransformation(AbstractDataProcessor):
     """
-    Class for transforming DataFrames through scaling and feature engineering, inheriting
-    from AbstractDataProcessor and specializes in feature transformation operations
+    Class for transforming DataFrames through scaling and feature 
+    engineering, inheriting from AbstractDataProcessor and specializing 
+    in feature transformation operations.
     """
 
     def __init__(self, frame: pd.DataFrame, verbose: bool = False):
