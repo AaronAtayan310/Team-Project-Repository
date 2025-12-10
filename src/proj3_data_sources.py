@@ -15,7 +15,7 @@ from typing import Any, Dict, List, Optional, Union
 from pathlib import Path
 import pandas as pd
 from datetime import datetime
-from abc import abc, abstractmethod
+from abc import ABC, abstractmethod
 
 
 class APIDataSource(AbstractDataSource):
@@ -191,9 +191,38 @@ class DatabaseDataSource(AbstractDataSource):
         except ImportError:
             raise ImportError(
                 "SQLAlchemy is required for database connections. "
-                "Install it with: pip install sqlalchemy"
+                "Install it with: pip install sqlalchemy in Terminal/Command Prompt"
             )
 
-        # INSERT IMPLEMENTATION HERE INCLUDING DEFINITION FOR df
-
-        return df
+        # Attempt to connect and load data
+        try:
+            # Create database engine
+            engine = create_engine(self.connection_string)
+            
+            # Execute query and load into DataFrame
+            df = pd.read_sql(self.query, engine)
+            
+            # Update metadata with successful load information
+            self._source_metadata['rows_loaded'] = len(df)
+            self._source_metadata['columns_loaded'] = len(df.columns)
+            self._source_metadata['column_names'] = list(df.columns)
+            self._source_metadata['load_time'] = datetime.now().isoformat()
+            self._source_metadata['status'] = 'success'
+            
+            # Close the connection
+            engine.dispose()
+            
+            return df
+            
+        except Exception as e:
+            # Update metadata with error information
+            self._source_metadata['status'] = 'failed'
+            self._source_metadata['error'] = str(e)
+            self._source_metadata['error_type'] = type(e).__name__
+            
+            # Re-raise with more context
+            raise Exception(
+                f"Failed to load data from database. "
+                f"Connection: {self.connection_string}, "
+                f"Error: {str(e)}"
+            ) from e        
