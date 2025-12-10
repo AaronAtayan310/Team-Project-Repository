@@ -20,19 +20,19 @@ from sklearn.preprocessing import StandardScaler
 
 
 class NewDataAnalysis(AbstractDataProcessor):
-    ''' 
+    """ 
     Class for statistical analysis and machine learning on DataFrames, inheritng
     from AbstractDataProcessor and specializes in analytical operations.
-    '''
+    """
 
     def __init__(self, frame: pd.DataFrame, verbose: bool = False):
-        ''' 
+        """ 
         Initalize the NewDataAnalysis object.
         
         Args:
             frame (pd.DataFrame): The DataFrame to analyze
             verbose (bool): If True, print analysis information
-        '''
+        """
         super().__init__(frame, verbose)
         self.__described = self._frame.describe()
         self._models = {} #This will store trained models
@@ -40,30 +40,30 @@ class NewDataAnalysis(AbstractDataProcessor):
 
     @property
     def described(self) -> pd.DataFrame:
-        ''' 
+        """ 
         Get description of DataFrame.
-        '''
+        """
         return self.__described
     
     def process(self) -> 'NewDataAnalysis':
-        ''' 
+        """ 
         Perform default analysis: update description stats.
         
         Returns:
             NewDataAnalysis: Self for method chaining
-        '''
+        """
         self._log_operation("Starting default analysis process")
         self.__described = self._frame.describe()
 
         return self
     
     def validate(self) -> bool:
-        ''' 
+        """ 
         Validate that the DataFrame has sufficient data for analysis.
         
         Returns:
             bool: True if DataFrame has enough rows and numeric columns
-        '''
+        """
         has_enough_rows = len(self._frame) >= 2
         has_numeric = len(self._frame.select_dtypes(include=[np.number]).columns) > 0
         is_valid = has_enough_rows and has_numeric
@@ -78,7 +78,7 @@ class NewDataAnalysis(AbstractDataProcessor):
         return is_valid
     
     def run_regression(self, y: pd.Series, model_name: str = "default") -> LinearRegression:
-        ''' 
+        """ 
         Fit a simple linear regression model.
         
         Args:
@@ -87,7 +87,7 @@ class NewDataAnalysis(AbstractDataProcessor):
         
         Returns:
             LinearRegression: Trained regression model
-        '''
+        """
         model = LinearRegression()
         model.fit(self._frame. y)
         self._models[model_name] = model
@@ -96,7 +96,7 @@ class NewDataAnalysis(AbstractDataProcessor):
         return model
     
     def evaluate_model(self, model: LinearRegression, y_test: pd.Series) -> Dict[str, float]:
-        ''' 
+        """ 
         Evaluate a trained regression model using Mean Squared Error.
         
         Args:
@@ -105,7 +105,7 @@ class NewDataAnalysis(AbstractDataProcessor):
             
         Returns:
             dict: Dictionary with evaluation metrics
-        '''
+        """
         predictions = model.predict(self._frame)
         mse = mean_squared_error(y_test, predictions)
         self._log_operation(f"Model evaluated: MSE = {mse:.4f}")
@@ -113,16 +113,16 @@ class NewDataAnalysis(AbstractDataProcessor):
         return {"mse": mse}
 
     def calculate_missing_data(self) -> pd.Series:
-        ''' 
+        """ 
         Calculate the percentage of missing data in each column.
 
         Returns:
             pd.Series: A series containing the percentage of missing data
-        '''
+        """
         return (self._frame.isnull().sum() / len(self._frame)) * 100
     
     def compute_crime_rate_by_year(self, population_col: str = "population") -> pd.DataFrame:
-        '''
+        """
         Compute annual crime rates per 100,000 people.
         
         Args:
@@ -130,7 +130,7 @@ class NewDataAnalysis(AbstractDataProcessor):
             
         Returns:
             pd.DataFrame: DataFrame with columns ['year', 'crime_count', 'crime_rate']
-        '''
+        """
         df = self._frame.copy()
         if "date" not in df.columns:
             raise ValueError("The dataset must contain a 'date' column.")
@@ -148,7 +148,7 @@ class NewDataAnalysis(AbstractDataProcessor):
         return yearly_data
     
     def top_crime_types(self, n: int = 10) -> pd.DataFrame:
-        ''' 
+        """ 
         Identify the top N most frequeny crime types.
 
         Args:
@@ -156,7 +156,7 @@ class NewDataAnalysis(AbstractDataProcessor):
             
         Returns:
             pd.DataFrame: DataFrame with column ['crime_type', 'count']
-        '''
+        """
         if "crime_type" not in self._frame.columns:
             raise ValueError("The dataset must include a 'crime_type' column")
         
@@ -173,7 +173,7 @@ class NewDataAnalysis(AbstractDataProcessor):
         return result
     
      def find_high_crime_areas(self, area_col: str = "neighborhood") -> pd.DataFrame:
-        '''
+        """
         Identify the areas with the highest number of reported crimes.
         
         Args:
@@ -181,7 +181,7 @@ class NewDataAnalysis(AbstractDataProcessor):
             
         Returns:
             pd.DataFrame: DataFrame of areas sorted by descending crime count
-        '''
+        """
         if area_col not in self._frame.columns:
             raise ValueError(f"'{area_col}' column not found in dataset.")
         
@@ -196,12 +196,12 @@ class NewDataAnalysis(AbstractDataProcessor):
         return area_stats
     
     def __str__(self) -> str:
-        '''
+        """
         Return a string representation of the NewDataAnalysis object.
 
         Returns:
             str: A readable, user-oriented string representation of the object.
-        '''
+        """
         lines = [
             "NewDataAnalysis (inherits from AbstractDataProcessor)",
             "=" * 60,
@@ -217,14 +217,14 @@ class NewDataAnalysis(AbstractDataProcessor):
 
 
 class NewDataCleaner(AbstractDataProcessor):
-    '''
+    """
     Class for cleaning and preprocessing Pandas dataframes that 
     provides methods for missing values, standardizing column names, 
     normalizing text, removing outliers, and other common tasks.
-    '''
+    """
 
     def __init__(self, df: pd.DataFrame, verbose: bool = False):
-        '''
+        """
         Initialize the data cleaner with a DataFrame.
 
         Args:
@@ -234,7 +234,7 @@ class NewDataCleaner(AbstractDataProcessor):
         Raises:
             TypeError: If df is not a pandas DataFrame
             ValueError: If df is empty 
-        '''
+        """
         if not isinstance(df, pd.DataFrame):
             raise TypeError("Input must be a pandas DataFrame")
         if df.empty:
@@ -246,69 +246,69 @@ class NewDataCleaner(AbstractDataProcessor):
     
     @property
     def df(self) -> pd.DataFrame:
-        '''
+        """
         Get the current DataFrame.
-        '''
+        """
         return self._df
     
     @df.setter
     def df(self, value: pd.DataFrame):
-        '''
+        """
         Set the DataFrame with validation.
 
         Args:
             value (pd.DataFrame): What the dataframe, df, should look like after setter usage.
-        '''
+        """
         if not isinstance(value, pd.DataFrame):
             raise TypeError("Value must be a pandas DataFrame")
         self._df = value
 
     @property
     def original_shape(self) -> tuple:
-        '''
+        """
         Get the original shape of the DataFrame.
-        '''
+        """
         return self._original_shape
     
     @property
     def cleaning_history(self) -> List[str]:
-        '''
+        """
         Get the history of cleaning operations.
-        '''
+        """
         return self.processing_history
         
     @property
     def verbose(self) -> bool:
-        '''
+        """
         Get verbose setting.
-        '''
+        """
         return self._verbose
     
     @verbose.setter
     def verbose(self, value: bool):
-        '''
+        """
         Set verbose setting.
 
         Args:
             value (bool): What the setting should match after setter usage.
-        '''
+        """
         if not isinstance(value, bool):
             raise TypeError("Verbose must be a boolean")
         self._verbose = value
 
     def _log_operation(self, operation: str):
-        '''
+        """
         Log a cleaning operation to the history.
 
         Args:
             operation (str): Operation to be logged.
-        '''
+        """
         self._cleaning_history.append(operation)
         if self._verbose:
             print(f"[NewDataCleaner] {operation}")
 
     def handle_missing_values(self, strategy: str = "mean", columns: Optional[List[str]] = None) -> 'NewDataCleaner':
-        '''
+        """
         Handle missing values in the DataFrame using a given strategy.
 
         Args:
@@ -320,7 +320,7 @@ class NewDataCleaner(AbstractDataProcessor):
             
         Raises:
             ValueError: If strategy is invalid
-        '''
+        """
         valid_strategies = ['mean', 'median', 'mode', 'drop', 'forward_fill', 'backward_fill']
         if strategy not in valid_strategies:
             raise ValueError(f"Invalid Strategy. Choose from {valid_strategies}")
@@ -371,7 +371,7 @@ class NewDataCleaner(AbstractDataProcessor):
         return self
     
     def normalize_text_column(self, column: str, remove_special_chars: bool = False) -> 'NewDataCleaner':
-        '''
+        """
         Normalize the text in a specified column.
 
         Args:
@@ -383,7 +383,7 @@ class NewDataCleaner(AbstractDataProcessor):
             
         Raises:
             ValueError: If column doesn't exist in DataFrame
-        '''
+        """
         if column not in self._df.columns:
             raise ValueError(f"Column '{column}' not found")
         
@@ -396,12 +396,12 @@ class NewDataCleaner(AbstractDataProcessor):
         return self
     
     def __str__(self) -> str:
-        '''
+        """
         Returns a string representation of the NewDataCleaner object.
 
         Returns:
             str: Formatted summary
-        '''
+        """
 
         missing_values = self._df.isnull().sum().sum()
         missing_pct = (
@@ -427,23 +427,23 @@ class NewDataCleaner(AbstractDataProcessor):
         return "\n".join(lines)
     
     def process(self) -> 'NewDataCleaner':
-        '''
+        """
         Perform default cleaning process: handle missing values with mean strat.
         
         Returns:
             NewDataCleaner: Self for method chaining
-        '''
+        """
         self._log_operation("Starting default cleaning process")
         self.handle_missing_values(strategy = 'mean')
         return self
     
     def validate(self) -> bool:
-        '''
+        """
         Validate that the DataFrame is in a clean state.
 
         Returns:
             bool: True if no missing values and no duplicate rows
-        '''
+        """
         has_no_missing = self._frame.isnull().sum().sum() == 0
         has_no_duplicates = not self._frame.duplicated().any()
         is_valid = has_no_missing and has_no_duplicates
@@ -459,42 +459,42 @@ class NewDataCleaner(AbstractDataProcessor):
 
 
 class NewDataTransformation(AbstractDataProcessor):
-    '''
+    """
     Class for transforming DataFrames through scaling and feature engineering, inheriting
     from AbstractDataProcessor and specializes in feature transformation operations
-    '''
+    """
 
     def __init__(self, frame: pd.DataFrame, verbose: bool = False):
-        ''' 
+        """ 
         Initialize the NewDataTransformation object.
         
         Args:
             frame (pd.DataFrame): The DataFrame to transform
             verbose (bool): If True, print transformation information
-        '''
+        """
         super().__init__(frame, verbose)
         self.scalers = {}
         self._log_operastion("NewDataTransformation object initialized")
 
     def process(self) -> 'NewDataTransformation':
-        '''
+        """
         Perform default transformation: generate features.
         
         Returns:
             NewDataTransformation: Self for method chaining
-        '''
+        """
         self._log_operation("Starting default process")
         self.generate_features()
         
         return self
     
     def validate(self) -> bool:
-        ''' 
+        """ 
         Validates that the DataFrame has no infinite values and appropriate dtypes.
         
         Returns:
             bool: True if DataFrame is valid for transformation
-        '''
+        """
         has_no_inf = not np.isinf(self._frame.select_dtypes(include=[np.number])).any().any()
         has_numeric = len(self.frame.select_dtypes(include=[np.number]).columns) > 0
         is_valid = has_no_inf and has_numeric
@@ -509,7 +509,7 @@ class NewDataTransformation(AbstractDataProcessor):
         return is_valid
     
     def scale_features(self, columns: List[str]) -> 'NewDataTransformation':
-        ''' 
+        """ 
         Scale the features of the DataFrame using StandardScaler.
         
         Args:
@@ -517,7 +517,7 @@ class NewDataTransformation(AbstractDataProcessor):
             
         Returns:
             NewDataTransformation: Self for method chaining
-        '''
+        """
         df = self.frame.copy()
         scaler = StandardScaler()
         df[columns] = scaler.fit_transform(df[columns])
@@ -531,12 +531,12 @@ class NewDataTransformation(AbstractDataProcessor):
         return self
     
     def generate_features(self) -> 'NewDataTransformation':
-        ''' 
+        """ 
         Generate new derived features based on existing data.
         
         Returns:
             NewDataTransformation: Self for method chaining
-        '''
+        """
         df = self._frame.copy()
         features_added = []
 
@@ -554,9 +554,9 @@ class NewDataTransformation(AbstractDataProcessor):
         return self
     
     def __str__(self) -> str:
-        '''
+        """
         Return a string representation of the NewDataTransformation object.
-        '''
+        """
         lines = [
             "NewDataTransformation (inherits from AbstractDataProcessor)",
             "=" * 60,
