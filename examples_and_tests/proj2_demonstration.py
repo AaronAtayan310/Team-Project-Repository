@@ -19,25 +19,25 @@ import os
 # Add src directory to path so we can import our core classes
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from proj2_data_analysis_cls import dataAnalysis
-from proj2_data_cleaning_cls import dataCleaner
-from proj2_data_ingestion_cls import dataIngestion
-from proj2_data_transformation_cls import dataTransformation
-from proj2_data_utilities_cls import dataStorageUtils
+from proj2_data_analysis_cls import DataAnalysis
+from proj2_data_cleaning_cls import DataCleaner
+from proj2_data_ingestion_cls import DataIngestion
+from proj2_data_transformation_cls import DataTransformation
+from proj2_data_utilities_cls import DataStorageUtils
 
 
 def ingestion_class_demo():
-    """Demonstrate the basic capabilities of the dataIngestion class such as printing objects via _str__ or __repr__, loading & validating csv files, fetching API data, etc."""
+    """Demonstrate the basic capabilities of the DataIngestion class such as printing objects via _str__ or __repr__, loading & validating csv files, fetching API data, etc."""
     print("❗ DATA INGESTION CLASS DEMO")
     print("=" * 50)
     
     # Create an instance
-    ingestion = dataIngestion()
+    ingestion = DataIngestion()
     print(ingestion)
     print(repr(ingestion))
     
     # Validate a CSV path
-    is_valid = dataIngestion.validate_csv_path("example.csv")
+    is_valid = DataIngestion.validate_csv_path("example.csv")
     print(f"CSV path valid: {is_valid}")
     
     # Load CSV (example - will fail if file doesn't exist)
@@ -50,7 +50,7 @@ def ingestion_class_demo():
     print(f"Data sources: {ingestion._data_sources}")
 
     # Demonstrate different initialization options
-    ingestion_custom = dataIngestion(default_timeout=5, track_sources=False)
+    ingestion_custom = DataIngestion(default_timeout=5, track_sources=False)
     print("\nCustom initialized instance:")
     print(ingestion_custom)
     print(f"Custom timeout: {ingestion_custom.default_timeout}")
@@ -74,7 +74,7 @@ def ingestion_class_demo():
 
 
 def cleaning_class_demo():
-    """Demonstrate core dataCleaner class capabilities like initialization, handling missing values, text normalization, and object string representations."""
+    """Demonstrate core DataCleaner class capabilities like initialization, handling missing values, text normalization, and object string representations."""
     print("\n\n❗ DATA CLEANING CLASS DEMO")
     print("=" * 50)
     
@@ -90,7 +90,7 @@ def cleaning_class_demo():
     print(df)
 
     # Initialize cleaner
-    cleaner = dataCleaner(df, verbose=True)
+    cleaner = DataCleaner(df, verbose=True)
     print("\nCleaner __repr__ output:")
     print(repr(cleaner))
 
@@ -110,7 +110,7 @@ def cleaning_class_demo():
 
 
 def transformation_class_demo():
-    """Demonstrate key dataTransformation class operations such as feature scaling, feature generation, and object representations on a small sample DataFrame."""
+    """Demonstrate key DataTransformation class operations such as feature scaling, feature generation, and object representations on a small sample DataFrame."""
     print("\n\n❗ DATA TRANSFORMATION CLASS DEMO")
     print("=" * 50)
     
@@ -126,7 +126,7 @@ def transformation_class_demo():
     print(df)
 
     # Initialize transformer
-    transformer = dataTransformation(df)
+    transformer = DataTransformation(df)
     print("\nTransformer __repr__ output before transformations:")
     print(repr(transformer))
 
@@ -146,7 +146,7 @@ def transformation_class_demo():
 
 
 def analysis_class_demo():
-    """Showcase key dataAnalysis class features including regression fitting, model evaluation, missing data calculation, and crime-specific aggregations."""
+    """Showcase key DataAnalysis class features including regression fitting, model evaluation, missing data calculation, and crime-specific aggregations."""
     print("\n\n❗ DATA ANALYSIS CLASS DEMO")
     print("=" * 50)
     
@@ -164,7 +164,7 @@ def analysis_class_demo():
     y = pd.Series([5.0, 10.0, 15.0, 20.0])
 
     # Initialize analysis object
-    analysis = dataAnalysis(df)
+    analysis = DataAnalysis(df)
     print("Analysis __repr__ output:")
     print(repr(analysis))
 
@@ -204,13 +204,13 @@ def analysis_class_demo():
 
 
 def utilities_class_demo():
-    """Demonstrate dataStorageUtils class functionalities for CSV/JSON IO, model serialization, hashing, and manifest creation by using some temporary files."""
+    """Demonstrate DataStorageUtils class functionalities for CSV/JSON IO, model serialization, hashing, and manifest creation by using some temporary files."""
     print("\n\n❗ DATA UTILITIES CLASS DEMO")
     print("=" * 50)
     
     # Use a temporary directory so our demo does not cause clutter
     with tempfile.TemporaryDirectory() as tmpdir:
-        utils = dataStorageUtils(base_output_dir=tmpdir)
+        utils = DataStorageUtils(base_output_dir=tmpdir)
         print("Utilities __repr__ output:")
         print(repr(utils))
 
