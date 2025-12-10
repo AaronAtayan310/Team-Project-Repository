@@ -169,7 +169,7 @@ class DatabaseDataSource(AbstractDataSource):
 
     def load(self) -> pd.DataFrame:
         """
-        Load data from a database
+        Load data from a database (ex: SQL relational databases).
 
         Returns:
             pd.DataFrame: Loaded data
@@ -194,6 +194,7 @@ class DatabaseDataSource(AbstractDataSource):
                 "Install it with: pip install sqlalchemy in Terminal/Command Prompt"
             )
 
+<<<<<<< HEAD
         # Attempt to connect and load data
         try:
             # Create database engine
@@ -226,3 +227,6 @@ class DatabaseDataSource(AbstractDataSource):
                 f"Connection: {self.connection_string}, "
                 f"Error: {str(e)}"
             ) from e        
+=======
+        return df
+>>>>>>> c0740e531a8db11d9b6185da1ace52bf263a216d
