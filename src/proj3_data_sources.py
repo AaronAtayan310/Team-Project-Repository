@@ -169,7 +169,7 @@ class DatabaseDataSource(AbstractDataSource):
 
     def load(self) -> pd.DataFrame:
         """
-        Load data from a database
+        Load data from a database (ex: SQL relational databases).
 
         Returns:
             pd.DataFrame: Loaded data
@@ -193,7 +193,5 @@ class DatabaseDataSource(AbstractDataSource):
                 "SQLAlchemy is required for database connections. "
                 "Install it with: pip install sqlalchemy"
             )
-
-        # INSERT IMPLEMENTATION HERE INCLUDING DEFINITION FOR df
 
         return df
