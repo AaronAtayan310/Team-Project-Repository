@@ -1,8 +1,8 @@
 """
 Crime Research Data Pipeline - Class Definition For Refactored Data Utilities
 
-This module defines the newDataStorageUtils class, a refactored implementation
-of the dataStorageUtils class from the earlier crime research data pipeline core
+This module defines the NewDataStorageUtils class, a refactored implementation
+of the DataStorageUtils class from the earlier crime research data pipeline core
 classes implementation.
 
 Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
@@ -22,7 +22,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 import hashlib
 
-class newDataStorageUtils:
+class NewDataStorageUtils:
     """
     Refactored utility class for data pipeline storage operations, handling serialization, 
     file management, and logging for the pipeline.
@@ -30,7 +30,7 @@ class newDataStorageUtils:
     
     def __init__(self, base_output_dir: Optional[str] = None, log_level: int = logging.INFO):
         """
-        Initialize an object of the dataStorageUtils class.
+        Initialize an object of the NewDataStorageUtils class.
         """
         self.base_output_dir = Path(base_output_dir) if base_output_dir else Path.cwd()
         self.base_output_dir.mkdir(parents=True, exist_ok=True)
