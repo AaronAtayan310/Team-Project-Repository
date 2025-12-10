@@ -169,16 +169,30 @@ class DatabaseDataSource(AbstractDataSource):
 
     def load(self) -> pd.DataFrame:
         """
-        Load data from a database.
+        Load data from a database
 
         Returns:
             pd.DataFrame: Loaded data
         
         Raises:
-            FILL-IN-BLANK
+            ValueError: If source validation fails
+            ImportError: If SQLAlchemy is not installed
+            Exception: If database connection or query execution fails
         """
         if not self.validate_source():
-            # raise FILL-IN-BLANK
+            raise ValueError(
+                "Invalid Database Configuration"
+                "Connection string and query must be provided"
+            )
+
+        # Checking if SQLAlchemy is available
+        try:
+            from sqlalchemy import create_engine
+        except ImportError:
+            raise ImportError(
+                "SQLAlchemy is required for database connections. "
+                "Install it with: pip install sqlalchemy"
+            )
 
         # INSERT IMPLEMENTATION HERE INCLUDING DEFINITION FOR df
 
