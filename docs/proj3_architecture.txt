@@ -1,4 +1,4 @@
-# Crime Research Data Pipeline - Inheritance, Polymorphism, Abstract Class & Composition Architecture
+# Crime Research Data Pipeline - Advanced OOP Architecture Diagram
 # ==========================================================
 
 # This file lists the crime research data pipeline's inheritance hierarchies 
@@ -11,200 +11,197 @@
 # Institution: University of Maryland, College Park
 # Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
 
-# IMPORTANT - ALL TEXT BELOW IS EXAMPLE TEXT SHOWING DOCUMENT STRUCTURE FROM 
-# PROF. DEMPWOLF, REPLACE ALL TEXT BELOW WITH INFO RELEVANT TO CRIME RESEARCH 
-# DATA PIPELINE LATER ON
-
-# Garden Management System - Architecture Diagram
-
 ## Complete System Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────────────────────────────┐
 │                          ABSTRACT BASE LAYER                             │
 │                     (Defines Interface Contracts)                        │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                           │
-│  ┌────────────────────────────────┐  ┌─────────────────────────────┐   │
-│  │ AbstractPlantingContainer      │  │ AbstractPlant                │   │
-│  ├────────────────────────────────┤  ├─────────────────────────────┤   │
-│  │ + container_id                 │  │ + plant_id                   │   │
-│  │ + name, dimensions, location   │  │ + common_name, scientific    │   │
-│  │                                │  │ + days_to_maturity           │   │
-│  │ @abstractmethod                │  │                              │   │
-│  │ + calculate_area()             │  │ @abstractmethod              │   │
-│  │ + calculate_volume()           │  │ + get_spacing_requirement()  │   │
-│  │ + get_drainage_type()          │  │ + get_water_frequency()      │   │
-│  └────────────────────────────────┘  │ + get_harvest_method()       │   │
-│             ▲                         │ + is_frost_sensitive()       │   │
-│             │                         └─────────────────────────────┘   │
-│             │ inherits                         ▲                         │
-│             │                                  │ inherits                │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ┌────────────────────────────────┐  ┌─────────────────────────────┐     │
+│  │ AbstractDataProcessor          │  │ AbstractDataSource          │     │
+│  ├────────────────────────────────┤  ├─────────────────────────────┤     │
+│  │ + frame (DataFrame)            │  │ + metadata (Dict)           │     │
+│  │ + processing_history (List)    │  │                             │     │
+│  │ + verbose (bool)               │  │ @abstractmethod             │     │
+│  │                                │  │ + load() → DataFrame        │     │
+│  │ @abstractmethod                │  │ + validate_source() → bool  │     │
+│  │ + process() → self             │  │                             │     │
+│  │ + validate() → bool            │  └─────────────────────────────┘     │
+│  └────────────────────────────────┘            ▲                         │
+│             ▲                                  │ inherits                │
+│             │ inherits                         │                         │
 └─────────────┼──────────────────────────────────┼─────────────────────────┘
               │                                  │
 ┌─────────────┼──────────────────────────────────┼─────────────────────────┐
 │             │         CONCRETE IMPLEMENTATION LAYER                      │
 │             │              (Inheritance & Polymorphism)                  │
 ├─────────────┴──────────────────────────────────┴─────────────────────────┤
-│                                                                           │
-│  ┌─────────────────┐  ┌──────────────┐  ┌────────────────────────┐     │
-│  │   RaisedBed     │  │ ContainerPot │  │ GreenhousePlanter      │     │
-│  ├─────────────────┤  ├──────────────┤  ├────────────────────────┤     │
-│  │ + material      │  │ + diameter   │  │ + has_heating          │     │
-│  │ + is_mobile=F   │  │ + has_holes  │  │ + has_light            │     │
-│  │                 │  │ + is_mobile=T│  │ + climate_controlled=T │     │
-│  │ calculate_area()│  │              │  │                        │     │
-│  │   → L × W       │  │ calculate_   │  │ calculate_area()       │     │
-│  │                 │  │   area()     │  │   → L × W              │     │
-│  │ get_drainage()  │  │   → π × r²   │  │                        │     │
-│  │   → Excellent   │  │              │  │ get_drainage()         │     │
-│  └─────────────────┘  │ get_drainage │  │   → Controlled         │     │
-│                       │   → Good/Poor│  │                        │     │
-│                       └──────────────┘  │ can_grow_year_round()  │     │
-│                                         └────────────────────────┘     │
-│                                                                           │
-│  ┌──────────────┐    ┌──────────────┐    ┌─────────────────────┐      │
-│  │  Vegetable   │    │     Herb     │    │      Flower         │      │
-│  ├──────────────┤    ├──────────────┤    ├─────────────────────┤      │
-│  │ +harvest_type│    │+is_perennial │    │ + bloom_color       │      │
-│  │ +category    │    │+category     │    │ + attracts_poll...  │      │
-│  │              │    │              │    │ + category          │      │
-│  │get_spacing() │    │get_spacing() │    │ get_spacing()       │      │
-│  │  → 12-36"    │    │  → 6-18"     │    │   → 8-24"           │      │
-│  │              │    │              │    │                     │      │
-│  │get_watering()│    │get_watering()│    │ get_watering()      │      │
-│  │  → Daily     │    │  → 2-3 days  │    │   → Daily blooming  │      │
-│  └──────────────┘    └──────────────┘    └─────────────────────┘      │
-│                                                                           │
-└───────────────────────────────────────────────────────────────────────────┘
+│                                                                          │
+│  ┌─────────────────┐  ┌──────────────┐  ┌────────────────────────┐       │
+│  │ NewDataAnalysis │  │NewDataCleaner│  │ NewDataTransformation  │       │
+│  ├─────────────────┤  ├──────────────┤  ├────────────────────────┤       │
+│  │ + described     │  │ + original_  │  │ + scalers              │       │
+│  │ + models        │  │   shape      │  │                        │       │
+│  │                 │  │ + cleaning_  │  │ process()              │       │
+│  │ process()       │  │   history    │  │ → generate_features()  │       │
+│  │ → describe()    │  │              │  │ scale_features()       │       │
+│  │                 │  │ process()    │  │ → StandardScaler       │       │
+│  │ crime_rate_     │  │ → mean/median│  │                        │       │
+│  │ by_year()       │  │ /drop rows   │  │ validate()             │       │
+│  │ top_crime_      │  │ normalize_   │  │ → no inf values        │       │
+│  │ types()         │  │ text()       │  │                        │       │
+│  └─────────────────┘  └──────────────┘  └────────────────────────┘       │
+│                                                                          │
+│  ┌─────────────────┐    ┌──────────────┐    ┌─────────────────────┐      │
+│  │  APIDataSource  │    │ CSVDataSource│    │ DatabaseDataSource  │      │
+│  ├─────────────────┤    ├──────────────┤    ├─────────────────────┤      │
+│  │ + url, params   │    │ + filepath   │    │ + conn_string       │      │
+│  │                 │    │              │    │ + query             │      │
+│  │ load()          │    │ load()       │    │ load()              │      │
+│  │ → requests.get  │    │ → pd.read_csv│    │ → SQLAlchemy        │      │
+│  │ → JSON→DataFrame│    │              │    │ → pd.read_sql       │      │
+│  │ validate_       │    │ validate_    │    │ validate_           │      │
+│  │ source()        │    │ source()     │    │ source()            │      │
+│  │ → http(s) URL   │    │ → file exists│    │ → conn+query valid  │      │
+│  └─────────────────┘    └──────────────┘    └─────────────────────┘      │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
                                  │
                                  │ used by
                                  ▼
 ┌───────────────────────────────────────────────────────────────────────────┐
-│                       COMPOSITION LAYER                                    │
-│                   (System Coordination)                                    │
+│                       COMPOSITION LAYER                                   │
+│                   (System Coordination)                                   │
 ├───────────────────────────────────────────────────────────────────────────┤
 │                                                                           │
-│  ┌─────────────────────────────────────────────────────────────────┐    │
-│  │                      GardenManager                               │    │
-│  ├─────────────────────────────────────────────────────────────────┤    │
-│  │ + garden_name, zone                                             │    │
-│  │ + containers []  ◄──────── HAS-MANY containers                  │    │
-│  │ + cells []       ◄──────── HAS-MANY cells                       │    │
-│  │ + plant_library []  ◄───── HAS-MANY plant types                 │    │
-│  │                                                                  │    │
-│  │ + add_container(container)                                      │    │
-│  │ + create_cell(container, row, col)                              │    │
-│  │ + add_plant_to_library(plant)                                   │    │
-│  │ + get_total_planting_area()                                     │    │
-│  │ + get_available_cells()                                         │    │
-│  │ + get_upcoming_harvests(days)                                   │    │
-│  │ + get_plants_by_category(category)                              │    │
-│  │ + get_garden_summary()                                          │    │
-│  └─────────────────────────────────────────────────────────────────┘    │
+│  ┌─────────────────────────────────────────────────────────────────┐      │
+│  │                      DataPipeline                               │      │
+│  ├─────────────────────────────────────────────────────────────────┤      │
+│  │ + ingestion: NewDataIngestion                                   │      │
+│  │ + storage: NewDataStorageUtils                                  │      │
+│  │ + cleaner/transformer/analyzer (dynamic)                        │      │
+│  │ + data (current DataFrame)                                      │      │
+│  │ + pipeline_history                                              │      │
+│  │                                                                 │      │
+│  │ + load_data(source) → polymorphic load                          │      │
+│  │ + clean()/transform()/analyze() → composition                   │      │
+│  │ + save_results() → storage utils                                │      │
+│  │ + run_full_pipeline() → end-to-end                              │      │
+│  │ + get_summary() → pipeline metrics                              │      │
+│  └─────────────────────────────────────────────────────────────────┘      │
 │                                │                                          │
-│                                │ creates/manages                          │
+│                                │ orchestrates                             │
 │                                ▼                                          │
-│  ┌─────────────────────────────────────────────────────────────────┐    │
-│  │                         GardenCell                               │    │
-│  ├─────────────────────────────────────────────────────────────────┤    │
-│  │ + cell_id, row, column                                          │    │
-│  │ + container  ◄──────────── HAS-A container reference            │    │
-│  │ + current_plant  ◄───────── HAS-A plant reference               │    │
-│  │ + planting_date, is_occupied                                    │    │
-│  │                                                                  │    │
-│  │ + plant_in_cell(plant, date)                                    │    │
-│  │ + harvest_cell()                                                │    │
-│  │ + get_expected_harvest_date()                                   │    │
-│  │ + get_cell_location()                                           │    │
-│  └─────────────────────────────────────────────────────────────────┘    │
+│  ┌─────────────────────────────────────────────────────────────────┐      │
+│  │                    NewDataIngestion                             │      │
+│  ├─────────────────────────────────────────────────────────────────┤      │
+│  │ + default_timeout                                               │      │
+│  │ + track_sources                                                 │      │
+│  │ + data_sources[], loaded_data{}                                 │      │
+│  │                                                                 │      │
+│  │ + load_from_source(source) → polymorphic                        │      │
+│  │ + load_csv() → CSVDataSource                                    │      │
+│  │ + fetch_api_data()                                              │      │
+│  └─────────────────────────────────────────────────────────────────┘      │
 │                                                                           │
+│  ┌─────────────────────────────────────────────────────────────────┐      │
+│  │                  NewDataStorageUtils                            │      │
+│  ├─────────────────────────────────────────────────────────────────┤      │
+│  │ + base_output_dir                                               │      │
+│  │ + logger                                                        │      │
+│  │                                                                 │      │
+│  │ + save_to_csv() → timestamped filenames                         │      │
+│  │ + serialize_model() → pickle + JSON metadata                    │      │
+│  │ + generate_timestamped_filename()                               │      │
+│  └─────────────────────────────────────────────────────────────────┘      │
 └───────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Key Relationships
 
 ### INHERITANCE (is-a)
-- RaisedBed **IS-A** PlantingContainer
-- ContainerPot **IS-A** PlantingContainer
-- GreenhousePlanter **IS-A** PlantingContainer
-- Vegetable **IS-A** Plant
-- Herb **IS-A** Plant
-- Flower **IS-A** Plant
+- NewDataAnalysis **IS-A** AbstractDataProcessor
+- NewDataCleaner **IS-A** AbstractDataProcessor  
+- NewDataTransformation **IS-A** AbstractDataProcessor
+- APIDataSource **IS-A** AbstractDataSource
+- CSVDataSource **IS-A** AbstractDataSource
+- DatabaseDataSource **IS-A** AbstractDataSource
 
 ### COMPOSITION (has-a / has-many)
-- GardenManager **HAS-MANY** containers
-- GardenManager **HAS-MANY** cells
-- GardenManager **HAS-MANY** plant types (library)
-- GardenCell **HAS-A** container (reference)
-- GardenCell **HAS-A** plant (reference)
+- DataPipeline **HAS-A** NewDataIngestion (data loading)
+- DataPipeline **HAS-A** NewDataStorageUtils (file I/O)
+- DataPipeline **HAS-MANY** processors (cleaner/transformer/analyzer - dynamic)
+- NewDataIngestion **HAS-MANY** data_sources[] + loaded_data{}
+- AbstractDataProcessor **HAS-A** frame (DataFrame) + processing_history[]
 
 ### POLYMORPHISM (same method, different behavior)
-- All containers implement `calculate_area()` differently:
-  - RaisedBed: length × width (rectangular)
-  - ContainerPot: π × radius² (circular)
-  - GreenhousePlanter: length × width (rectangular)
+- All processors implement `process()` differently:
+  - NewDataAnalysis: statistical description + crime analytics
+  - NewDataCleaner: missing value strategies + text normalization
+  - NewDataTransformation: feature generation + StandardScaler
 
-- All plants implement `get_spacing_requirement()` differently:
-  - Vegetables: 12-36 inches (varies by type)
-  - Herbs: 6-18 inches (closer spacing)
-  - Flowers: 8-24 inches (compact to spreading)
+- All sources implement `load()` differently:
+  - APIDataSource: requests.get() → JSON → DataFrame
+  - CSVDataSource: pd.read_csv() → file validation
+  - DatabaseDataSource: SQLAlchemy → pd.read_sql()
 
 ## Data Flow Example
 
 ```
-1. User creates GardenManager
-   └─→ Manager initializes empty containers[], cells[], plant_library[]
+1. User creates DataPipeline
+   └─→ Pipeline initializes with NewDataIngestion + NewDataStorageUtils
 
-2. User adds containers to manager
-   └─→ Manager.add_container(RaisedBed)
-   └─→ Manager.add_container(ContainerPot)
+2. User loads data polymorphically
+   └─→ pipeline.load_data(CSVDataSource("crime.csv"))
+   └─→ NewDataIngestion.load_from_source() → CSVDataSource.load()
+   └─→ DataFrame cached in pipeline.data
 
-3. User creates cells in containers
-   └─→ Manager.create_cell(container, "A", 1)
-       └─→ Creates GardenCell with container reference
-           └─→ Cell stored in Manager.cells[]
+3. Pipeline coordinates processing via composition
+   └─→ pipeline.clean(strategy='mean') → NewDataCleaner created
+   └─→ pipeline.transform(['crime_count']) → NewDataTransformation
+   └─→ pipeline.analyze() → NewDataAnalysis
 
-4. User plants in cell
-   └─→ Cell.plant_in_cell(Vegetable("Tomato"))
-       └─→ Cell.current_plant = tomato
-       └─→ Cell.is_occupied = True
+4. Results saved through composition
+   └─→ pipeline.save_results("output.csv", use_timestamp=True)
+   └─→ NewDataStorageUtils.save_to_csv() → timestamped filename
 
-5. User checks garden status
-   └─→ Manager.get_garden_summary()
-       └─→ Iterates through containers (polymorphic area calculation)
-       └─→ Counts occupied/available cells
-       └─→ Returns summary statistics
+5. User checks pipeline status
+   └─→ pipeline.get_summary()
+   └─→ Returns metrics across all components (inheritance polymorphism)
 ```
 
 ## Why This Architecture Works
 
 ### Abstract Layer Benefits
-✓ Enforces consistent interfaces
-✓ Cannot instantiate incomplete classes
-✓ Clear contracts for implementers
-✓ Type safety through ABC module
+✓ Enforces consistent DataFrame processing/loading interfaces
+✓ Cannot instantiate incomplete processor/source classes
+✓ Clear contracts for future extensions (new sources/processors)
+✓ Type safety through Python ABC module
 
 ### Concrete Layer Benefits
-✓ Code reuse through inheritance
-✓ Specialized behavior per type
-✓ Polymorphic method calls
-✓ Easy to extend with new types
+✓ Specialized crime analytics (crime_rate_by_year, top_crime_types)
+✓ Polymorphic data loading (CSV/API/DB interchangeable)
+✓ Domain-specific validation (URL format, file existence, SQL syntax)
+✓ Easy extension with new processor/source types
 
 ### Composition Layer Benefits
-✓ Flexible object relationships
-✓ No artificial inheritance hierarchies
-✓ Clear separation of concerns
-✓ System-level coordination
+✓ Fluent method chaining (pipeline.load().clean().transform().save())
+✓ Dependency injection for testability
+✓ Dynamic processor creation (no fixed processor hierarchy)
+✓ Centralized pipeline orchestration + logging
 
 ## Design Pattern Summary
 
-| Pattern | Where Used | Why |
-|---------|-----------|-----|
-| **Abstract Base Class** | AbstractPlantingContainer, AbstractPlant | Enforce interface contracts |
-| **Inheritance** | Container/Plant hierarchies | Code reuse + polymorphism |
-| **Polymorphism** | All calculate/get methods | Type-specific behavior |
-| **Composition** | GardenManager, GardenCell | Flexible relationships |
-| **Template Method** | Abstract methods | Define algorithm structure |
+| Pattern                  | Where Used                                | Why                                 |
+|--------------------------|-------------------------------------------|-------------------------------------|
+| **Abstract Base Class**  | AbstractDataProcessor, AbstractDataSource | Enforce interface contracts         |
+| **Inheritance**          | Processor/Source hierarchies              | Code reuse + polymorphism           |
+| **Polymorphism**         | process()/load() methods                  | Source/processor-specific behavior  |
+| **Composition**          | DataPipeline, NewDataIngestion            | Flexible component coordination     |
+| **Fluent Interface**     | Method chaining (return self)             | Readable pipeline syntax            |
+| **Dependency Injection** | DataPipeline constructor                  | Testability + flexibility           |
+| **Template Method**      | Abstract process()/validate()             | Define pipeline algorithm structure |
 
-This architecture demonstrates professional OOP design principles applied to a real-world domain, providing a solid foundation for Information Science applications.
+This architecture demonstrates professional OOP design principles applied to real crime research pipelines, providing a solid foundation for an application that has real relevance to Information Science.
