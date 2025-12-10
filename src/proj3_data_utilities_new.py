@@ -60,6 +60,7 @@ class NewDataStorageUtils:
             df (pd.DataFrame): The DataFrame containing the information we want saved to a CSV
             filepath (str): The filepath needed to locate the csv file that will hold the info
             use_timestamp (bool): Whether or not to generate a usage timestamp, defaulted to False
+            **kawrgs: Addtional arguments as needed
 
         Returns:
             path (Path): A Path object representing how to find the csv
@@ -83,6 +84,7 @@ class NewDataStorageUtils:
 
         Args:
             filepath (str): The file path used to load the CSV data into a dataframe
+            **kawrgs: Addtional arguments as needed
 
         Returns:
             df (pd.DataFrame): The dataframe holding the information retrieved from the csv
@@ -149,7 +151,7 @@ class NewDataStorageUtils:
 
         Args:
             base_name (str): The basic name (no extension yet) the timestamped file should be represented by
-            extension (str): The file extension specific to this timestamped file, defaulted to csv
+            extension (str): The file extension specific to this timestamped file, defaulted to ".csv"
 
         Returns:
             str: The timestamped filename with the basic name and appropiate file path
