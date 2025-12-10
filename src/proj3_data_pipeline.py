@@ -1,7 +1,7 @@
 """
 Crime Research Data Pipeline - Class Definition For Data Pipelines
 
-This module defines dataPipeline, an composition-based class that acts as a sort
+This module defines DataPipeline, an composition-based class that acts as a sort
 of "master" class for the advanced OOP & refactoring implementation of the crime 
 research data pipeline, relating to several other classes.
 
