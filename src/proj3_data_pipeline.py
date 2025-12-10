@@ -21,11 +21,10 @@ from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 import hashlib
-from .proj3_data_ingestion_new import newDataIngestion 
-from .proj3_data_utilities_new import newDataStorageUtils
-from .proj3_data_cleaning_new import newDataCleaner
-from .proj3_data_transformation_new import newDataTransformation
-from .proj3_data_analysis_new import newDataAnalysis 
+from .proj3_data_ingestion_new import NewDataIngestion 
+from .proj3_data_utilities_new import NewDataStorageUtils
+from .proj3_data_processors import NewDataCleaner, NewDataTransformation, NewDataAnalysis 
+
 
 class DataPipeline:
     """
@@ -35,19 +34,16 @@ class DataPipeline:
     instances of other classes and coordinating their interactions.
 
     Composition relationships:
-    - DataPipeline HAS-A dataIngestion (for loading data)
-    - DataPipeline HAS-A dataCleaning (for cleaning data)
-    - DataPipeline HAS-A dataTransformation (for transforming data)
-    - DataPipeline HAS-A dataAnalysis (for analyzing data)
-    - DataPipeline HAS-A dataStorageUtils (for saving results)
+    - DataPipeline HAS-A NewDataIngestion (for loading data)
+    - DataPipeline HAS-A NewDataCleaning (for cleaning data)
+    - DataPipeline HAS-A NewDataTransformation (for transforming data)
+    - DataPipeline HAS-A NewDataAnalysis (for analyzing data)
+    - DataPipeline HAS-A NewDataStorageUtils (for saving results)
     """
     
-    def __init__(self, 
-                 ingestion: Optional[newDataIngestion] = None,
-                 storage: Optional[newDataStorageUtils] = None,
-                 verbose: bool = True):
+    def __init__(self, ingestion: Optional[NewDataIngestion] = None, storage: Optional[NewDataStorageUtils] = None, verbose: bool = True):
         """
-        Initialize the DataPipeline with optional component instances.
+        Initialize an object of the DataPipeline class, with optional component instances.
         
         This demonstrates DEPENDENCY INJECTION - components are injected rather
         than created internally, allowing for flexibility and testability.
@@ -58,8 +54,8 @@ class DataPipeline:
             verbose (bool): Whether to print pipeline progress
         """
         # Composition: Pipeline contains these objects
-        self.ingestion = ingestion or newDataIngestion()
-        self.storage = storage or newDataStorageUtils()
+        self.ingestion = ingestion or NewDataIngestion()
+        self.storage = storage or NewDataStorageUtils()
         self.verbose = verbose
         
         # Pipeline state
@@ -72,7 +68,12 @@ class DataPipeline:
         self._log("DataPipeline initialized")
     
     def _log(self, message: str):
-        """Log a pipeline operation."""
+        """
+        Log a pipeline operation.
+
+        Args:
+            message (str): A simple statement defining what pipeline operation is being executed.
+        """
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_entry = f"[{timestamp}] {message}"
         self.pipeline_history.append(log_entry)
@@ -81,10 +82,10 @@ class DataPipeline:
     
     def load_data(self, source, source_name: Optional[str] = None) -> 'DataPipeline':
         """
-        Load data into the pipeline using a DataSource (polymorphic).
+        Load data into the pipeline using an AbstractDataSource (polymorphic).
         
         Args:
-            source: A DataSource object or filepath string
+            source: An AbstractDataSource object or filepath string
             source_name (Optional[str]): Name for the data source
             
         Returns:
@@ -95,7 +96,7 @@ class DataPipeline:
             self.data = self.ingestion.load_csv(source)
             self._log(f"Loaded data from CSV: {source}")
         else:
-            # Assume it's a DataSource object
+            # Assume it's an AbstractDataSource object
             self.data = self.ingestion.load_from_source(source, source_name)
             self._log(f"Loaded data from {source.__class__.__name__}")
         
@@ -115,7 +116,7 @@ class DataPipeline:
             raise ValueError("No data loaded. Call load_data() first.")
         
         # Create cleaner (composition)
-        self.cleaner = newDataCleaner(self.data, verbose=self.verbose)
+        self.cleaner = NewDataCleaner(self.data, verbose=self.verbose)
         
         # Apply cleaning
         strategy = kwargs.get('strategy', 'mean')
@@ -141,7 +142,7 @@ class DataPipeline:
             raise ValueError("No data loaded. Call load_data() first.")
         
         # Create transformer (composition)
-        self.transformer = newDataTransformation(self.data, verbose=self.verbose)
+        self.transformer = NewDataTransformation(self.data, verbose=self.verbose)
         
         # Apply transformations
         self.transformer.generate_features()
@@ -165,7 +166,7 @@ class DataPipeline:
             raise ValueError("No data loaded. Call load_data() first.")
         
         # Create analyzer (composition)
-        self.analyzer = newDataAnalysis(self.data, verbose=self.verbose)
+        self.analyzer = NewDataAnalysis(self.data, verbose=self.verbose)
         self.analyzer.process()
         
         self._log(f"Data analyzed ({len(self.analyzer.processing_history)} operations)")
@@ -191,14 +192,12 @@ class DataPipeline:
         
         return self
     
-    def run_full_pipeline(self, source, output_path: str, 
-                          clean_strategy: str = 'mean',
-                          scale_columns: Optional[List[str]] = None) -> pd.DataFrame:
+    def run_full_pipeline(self, source, output_path: str, clean_strategy: str = 'mean', scale_columns: Optional[List[str]] = None) -> pd.DataFrame:
         """
         Run the complete pipeline in one call.
         
         Args:
-            source: Data source (filepath or DataSource object)
+            source: Data source (filepath or AbstractDataSource object)
             output_path (str): Where to save results
             clean_strategy (str): Cleaning strategy to use
             scale_columns (Optional[List[str]]): Columns to scale
@@ -237,7 +236,12 @@ class DataPipeline:
         return summary
     
     def __str__(self) -> str:
-        """Return a string representation of the pipeline."""
+        """
+        Return a string representation of the pipeline.
+
+        Returns:
+            str: A useful, user-oriented string that summarizes the pipeline
+        """
         lines = [
             "DataPipeline (Composition Pattern)",
             "=" * 70,
