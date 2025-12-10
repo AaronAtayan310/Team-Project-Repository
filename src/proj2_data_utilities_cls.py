@@ -26,11 +26,11 @@ class DataStorageUtils:
     
     def __init__(self, base_output_dir: Optional[str] = None, log_level: int = logging.INFO):
         """
-        Initialize the DataStorageUtils class.
+        Initialize an object of the DataStorageUtils class.
         
         Args:
-            base_output_dir (Optional[str]): Base directory for outputs. Defaults to current directory.
-            log_level (int): Logging level. Defaults to logging.INFO.
+            base_output_dir (Optional[str]): Base directory for outputs, defaulted to current directory
+            log_level (int): Number showing logging level, defaulted to logging.INFO
         """
         self.base_output_dir = Path(base_output_dir) if base_output_dir else Path.cwd()
         self.base_output_dir.mkdir(parents=True, exist_ok=True)
@@ -40,7 +40,12 @@ class DataStorageUtils:
     
     @staticmethod
     def _setup_logging(log_level: int) -> None:
-        """Configure logging for the pipeline."""
+        """
+        Configure logging for the pipeline.
+
+        Args:
+            log_level (int): Number showing the level that logging should occur at
+        """
         logging.basicConfig(
             level=log_level,
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -48,19 +53,18 @@ class DataStorageUtils:
         )
     
     # CSV Operations
-    def save_to_csv(self, df: pd.DataFrame, filepath: str, 
-                    use_timestamp: bool = False, **kwargs) -> Path:
+    def save_to_csv(self, df: pd.DataFrame, filepath: str, use_timestamp: bool = False, **kwargs) -> Path:
         """
         Save a DataFrame to a CSV file.
         
         Args:
-            df (pd.DataFrame): DataFrame to save.
-            filepath (str): Destination file path.
-            use_timestamp (bool): Whether to add timestamp to filename.
+            df (pd.DataFrame): DataFrame to save
+            filepath (str): Destination file path
+            use_timestamp (bool): Whether to add timestamp to filename
             **kwargs: Additional arguments passed to pd.DataFrame.to_csv()
         
         Returns:
-            Path: The actual path where the file was saved.
+            path (Path): Path object showing the actual path where the file was saved
         """
         path = Path(filepath)
         
@@ -80,11 +84,11 @@ class DataStorageUtils:
         Load a DataFrame from a CSV file.
         
         Args:
-            filepath (str): Source file path.
+            filepath (str): Source file path
             **kwargs: Additional arguments passed to pd.read_csv()
         
         Returns:
-            pd.DataFrame: Loaded DataFrame.
+            df (pd.DataFrame): Loaded DataFrame
         """
         path = Path(filepath)
         if not path.exists():
@@ -100,12 +104,12 @@ class DataStorageUtils:
         Serialize (save) a model object to disk using pickle.
         
         Args:
-            model (Any): Trained model.
-            path (str): File path to save the model.
-            metadata (Optional[Dict]): Optional metadata to save alongside model.
+            model (Any): Trained model
+            path (str): File path to save the model
+            metadata (Optional[Dict]): Descriptive metadata to save alongside model (optional, defaulted to None)
         
         Returns:
-            Path: The path where the model was saved.
+            path (Path): A Patch object showing the actual he path where the model was saved
         """
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -127,10 +131,10 @@ class DataStorageUtils:
         Deserialize (load) a model object from disk.
         
         Args:
-            path (str): File path to load the model from.
+            path (str): File path to load the model from
         
         Returns:
-            Any: Loaded model object.
+            model (Any): Loaded model object
         """
         path = Path(path)
         if not path.exists():
@@ -143,15 +147,14 @@ class DataStorageUtils:
         return model
     
     # Logging Functions
-    def log_pipeline_step(self, step_name: str, status: str, 
-                         extra_info: Optional[Dict] = None) -> None:
+    def log_pipeline_step(self, step_name: str, status: str, extra_info: Optional[Dict] = None) -> None:
         """
         Log a pipeline step for monitoring purposes.
         
         Args:
-            step_name (str): Name of the step.
-            status (str): Status message (e.g., 'started', 'completed', 'failed').
-            extra_info (Optional[Dict]): Additional information to log.
+            step_name (str): Name of the step
+            status (str): Status message (e.g., 'started', 'completed', 'failed')
+            extra_info (Optional[Dict]): Additional information to log
         """
         message = f"Step '{step_name}' - Status: {status}"
         
@@ -173,14 +176,14 @@ class DataStorageUtils:
         Generate a timestamped filename with a given base name and extension.
         
         Args:
-            base_name (str): The base name of the file (without extension).
-            extension (str, optional): The file extension to append. Defaults to '.csv'.
+            base_name (str): The base name of the file (without extension)
+            extension (str): The file extension to append, defaulted to ".csv"
         
         Returns:
-            str: The generated filename including the timestamp and extension.
+            str: The generated filename including the timestamp and extension
         
         Raises:
-            TypeError: If 'base_name' or 'extension' is not a string.
+            TypeError: If 'base_name' or 'extension' is not a string
         """
         if not isinstance(base_name, str) or not isinstance(extension, str):
             raise TypeError("Base name and extension must be strings")
@@ -192,19 +195,18 @@ class DataStorageUtils:
         return f"{base_name}_{timestamp}{extension}"
     
     # Additional Utility Functions
-    def save_to_json(self, data: Union[Dict, list], filepath: str, 
-                     use_timestamp: bool = False, **kwargs) -> Path:
+    def save_to_json(self, data: Union[Dict, list], filepath: str, use_timestamp: bool = False, **kwargs) -> Path:
         """
         Save data to a JSON file.
         
         Args:
-            data (Union[Dict, list]): Data to save.
-            filepath (str): Destination file path.
-            use_timestamp (bool): Whether to add timestamp to filename.
+            data (Union[Dict, list]): Data to save
+            filepath (str): Destination file path
+            use_timestamp (bool): Whether to add timestamp to filename
             **kwargs: Additional arguments passed to json.dump()
         
         Returns:
-            Path: The actual path where the file was saved.
+            path (Path): The actual path obeject showing where the file was saved
         """
         path = Path(filepath)
         
@@ -227,10 +229,10 @@ class DataStorageUtils:
         Load data from a JSON file.
         
         Args:
-            filepath (str): Source file path.
+            filepath (str): Source file path
         
         Returns:
-            Union[Dict, list]: Loaded data.
+            data (Union[Dict, list]): Loaded data
         """
         path = Path(filepath)
         if not path.exists():
@@ -247,11 +249,11 @@ class DataStorageUtils:
         Compute hash of a file for integrity checking.
         
         Args:
-            filepath (str): Path to the file.
-            algorithm (str): Hash algorithm to use. Defaults to 'sha256'.
+            filepath (str): Path to the file
+            algorithm (str): Hash algorithm to use, defaulted to 'sha256'
         
         Returns:
-            str: Hexadecimal hash string.
+            hash_value (str): Hexadecimal hash string
         """
         path = Path(filepath)
         if not path.exists():
@@ -266,17 +268,16 @@ class DataStorageUtils:
         self.logger.info(f"Computed {algorithm} hash for {path}: {hash_value}")
         return hash_value
     
-    def create_pipeline_manifest(self, manifest_data: Dict, 
-                                 filepath: Optional[str] = None) -> Path:
+    def create_pipeline_manifest(self, manifest_data: Dict, filepath: Optional[str] = None) -> Path:
         """
         Create a manifest file documenting pipeline execution.
         
         Args:
-            manifest_data (Dict): Manifest information (e.g., steps, timestamps, file paths).
-            filepath (Optional[str]): Custom path for manifest. Defaults to timestamped file.
+            manifest_data (Dict): Manifest information (e.g., steps, timestamps, file paths)
+            filepath (Optional[str]): Custom path for manifest. Defaults to timestamped file
         
         Returns:
-            Path: Path where manifest was saved.
+            Path: Path where manifest was saved
         """
         if filepath is None:
             filepath = self.base_output_dir / self.generate_timestamped_filename(
@@ -291,10 +292,10 @@ class DataStorageUtils:
         Calculate total size of a directory in bytes.
         
         Args:
-            dirpath (str): Directory path.
+            dirpath (str): Directory path
         
         Returns:
-            int: Total size in bytes.
+            int: Total size in bytes
         """
         path = Path(dirpath)
         if not path.exists():
@@ -309,7 +310,7 @@ class DataStorageUtils:
         Return a user-readable string representation of the DataStorageUtils object.
         
         Returns:
-            str: A readable description including the base output directory.
+            str: A readable description including the base output directory
         """
         return f"DataStorageUtils(base_output_dir='{self.base_output_dir}')"
 
@@ -318,6 +319,6 @@ class DataStorageUtils:
         Return a developer-targeted string representation of the DataStorageUtils object.
         
         Returns:
-            str: A readable description that is valuable for debugging, showing constructor-valid arguments.
+            str: A readable description that is valuable for debugging, showing constructor-valid arguments
         """
         return f"DataStorageUtils(base_output_dir={repr(self.base_output_dir)})"
