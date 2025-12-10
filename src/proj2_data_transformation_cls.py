@@ -17,14 +17,14 @@ class DataTransformation:
     This class allows for transforming dataframes into scaled or more feature complete versions.
 
     Attributes:
-        frame (pd.DataFrame): A pandas dataframe containing the data we are working with, holding relevant data.
+        frame (pd.DataFrame): A pandas dataframe containing the data we are working with, holding relevant data
     """
     def __init__(self, frame):
         """
         Initialize an object of the DataTransformation class.
 
         Args:
-            frame: A pandas dataframe containing the data we are working with, holding relevant data.
+            frame: A pandas dataframe containing the data we are working with, holding relevant data
         """
         self._frame = None
         self.frame = frame
@@ -42,10 +42,10 @@ class DataTransformation:
         Sets the value of the dataframe we are working with.
 
         Args:
-            val: The value we are trying to assign to the dataframe.
+            val (pd.DataFrame): The value we are trying to assign to the dataframe
 
         Raises:
-            ValueError: If val is anything other than a pandas dataframe.
+            ValueError: If val is anything other than a pandas dataframe
         """
         if not(isinstance(val, pd.DataFrame)):
             raise ValueError('Data to transform must be in DataFrame format, no other format is acceptable.')
@@ -56,7 +56,7 @@ class DataTransformation:
         Scales the features of the dataframe we are working with.
 
         Args:
-            columns (list[str]): Columns to scale.
+            columns (list[str]): Columns to scale
         """
         df = self.frame.copy()
         scaler = StandardScaler()
@@ -77,7 +77,7 @@ class DataTransformation:
         Returns a string representation of the DataTransformation object (the current state of the data being transformed).
 
         Returns:
-            str: A readable description of the object.
+            str: A readable description of the object
         """
         source = str(self.frame)
         print('Current state of data being transformed:')
@@ -89,6 +89,6 @@ class DataTransformation:
         Returns a developer-targeted string representation of the DataTransformation object.
 
         Returns:
-            str: A development-useful description showing the class name and the dataframe shape.
+            str: A development-useful description showing the class name and the dataframe shape
         """
         return f"DataTransformation(frame=pd.DataFrame(shape={self.frame.shape}))"
