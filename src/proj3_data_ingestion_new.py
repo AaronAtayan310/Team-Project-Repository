@@ -25,18 +25,18 @@ from .proj3_data_sources import CSVDataSource
 
 
 class NewDataIngestion:
-'''
+"""
     Refactored class for core data ingestion features in the data pipeline.
-'''
+"""
 
     def __init__(self, default_timeout: int = 10, track_sources: bool = True):
-        '''
-        Initialize the dataIngestion class.
+        """
+        Initialize an object of the dataIngestion class.
         
         Args:
             default_timeout (int): Default timeout for API requests
             track_sources (bool): Whether to track loaded sources
-        '''
+        """
         if not isinstance(default_timeout, int):
             raise TypeError("default_timeout must be an integer")
         if default_timeout <= 0:
@@ -51,25 +51,25 @@ class NewDataIngestion:
     
     @property
     def default_timeout(self) -> int:
-        '''
+        """
         Get default timeout for API requests.
-        '''
+        """
         return self._default_timeout
     
     @default_timeout.setter
     def default_timeout(self, value: int):
-        '''
+        """
         Set the default timeout for API requests.
 
         Args:
             value (int): What we want the default timeout to match after setter usage.
-        '''
+        """
         if not isinstance(value, int) or value <= 0:
             raise ValueError("default_timeout must be a positive integer")
         self._default_timeout = value
     
     def load_from_source(self, source, source_name: Optional[str] = None) -> pd.DataFrame:
-        '''
+        """
         Load data using a AbstractDataSource object (polymorphic method).
         
         This method demonstrates polymorphism: it accepts any AbstractDataSource subclass
@@ -84,7 +84,7 @@ class NewDataIngestion:
             
         Raises:
             TypeError: If source is not a AbstractDataSource instance
-        '''
+        """
         # In a real implementation, would check isinstance(source, AbstractDataSource)
         if not hasattr(source, 'load') or not hasattr(source, 'validate_source'):
             raise TypeError("source must be a AbstractDataSource object with load() and validate_source() methods")
@@ -113,7 +113,7 @@ class NewDataIngestion:
         return df
     
     def load_csv(self, filepath: str) -> pd.DataFrame:
-        '''
+        """
         Convenience method to load CSV using CSVDataSource.
         
         Args:
@@ -121,14 +121,13 @@ class NewDataIngestion:
             
         Returns:
             pd.DataFrame: Loaded data
-        '''
+        """
         # Create a CSVDataSource and delegate to it (composition in action)
         csv_source = CSVDataSource(filepath)
         return self.load_from_source(csv_source, source_name=filepath)
     
-    def fetch_api_data(self, url: str, params: Optional[Dict[str, Any]] = None,
-                      timeout: Optional[int] = None) -> Dict[str, Any]:
-        '''
+    def fetch_api_data(self, url: str, params: Optional[Dict[str, Any]] = None, timeout: Optional[int] = None) -> Dict[str, Any]:
+        """
         Fetch JSON data from a REST API endpoint.
         
         Args:
@@ -138,7 +137,7 @@ class NewDataIngestion:
             
         Returns:
             dict: Parsed JSON response
-        '''
+        """
         if not isinstance(url, str):
             raise TypeError("URL must be a string")
         if params is not None and not isinstance(params, dict):
@@ -162,15 +161,15 @@ class NewDataIngestion:
     
     @staticmethod
     def validate_csv_path(file_path: str) -> bool:
-        '''
+        """
         Validate whether a given file path points to an existing CSV file.
-        '''
+        """
         if not isinstance(file_path, str):
             raise TypeError("File path must be a string")
         return os.path.isfile(file_path) and file_path.lower().endswith(".csv")
     
     def get_loaded_data(self, source_name: str) -> Optional[pd.DataFrame]:
-        '''
+        """
         Retrieve previously loaded data from cache.
         
         Args:
@@ -178,20 +177,20 @@ class NewDataIngestion:
             
         Returns:
             Optional[pd.DataFrame]: Cached DataFrame or None
-        '''
+        """
         return self._loaded_data.get(source_name)
     
     def clear_sources(self):
-        '''
+        """
         Clear the list of tracked data sources and cached data.
-        '''
+        """
         self._data_sources.clear()
         self._loaded_data.clear()
     
     def __str__(self) -> str:
-        '''
+        """
         Return a string representation of the DataIngestion object.
-        '''
+        """
         sources_count = len(self._data_sources)
         cached_count = len(self._loaded_data)
         tracking_status = "enabled" if self._track_sources else "disabled"
