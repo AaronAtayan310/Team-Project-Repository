@@ -1,7 +1,7 @@
 """
 Crime Research Data Pipeline - Core Data Ingestion Class
 
-This module defines the dataIngestion class.
+This module defines the DataIngestion class.
 
 Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
 Course: Object-Oriented Programming for Information Science
@@ -14,29 +14,28 @@ from typing import Dict, Any, Optional
 import pandas as pd
 import requests
 
-class dataIngestion:
-    ''' 
-    This class loads data from various sources including 
-    CSV files and REST APIs
+class DataIngestion:
+    """ 
+    This class loads data from various sources including CSV files and REST APIs.
 
     Attributes:
-        default_timeout (int): Default timeout for API requests in seconds.
-        data_sources (list): List of successfully loaded data sources.
-    '''
+        default_timeout (int): Default timeout for API requests in seconds
+        data_sources (list): List of successfully loaded data sources
+    """
 
     def __init__(self, default_timeout: int = 10, track_sources: bool = True):
-        '''
-        Initialize the dataIngestion class
+        """
+        Initialize an object of the DataIngestion class.
 
         Args:
-            default_timeout(int): Default timeout for API requests in seconds. Must be positive integer
-                                  Defaults to 10 seconds.
-            track_sources(bool): Whether to track uploaded sources or not. Default = True
+            default_timeout(int): Default timeout for API requests in seconds. Must be a 
+                                  positive integer, and is defaulted to 10 seconds
+            track_sources(bool): Whether or not to track uploaded sources, defaulted to True
         
         Raises:
             TypeError: If default_timeout is not an integer and if track_sources is not a boolean
             ValueError: If default_timeout is not a positive integer
-        '''
+        """
         if not isinstance(default_timeout, int):
             raise TypeError("default_timeout must be an integer")
         if default_timeout <= 0:
@@ -50,23 +49,23 @@ class dataIngestion:
 
     @property
     def default_timeout(self) -> int:
-        ''' 
-        Gets default_timeout for API requests
-        '''
+        """ 
+        Gets default_timeout for API requests.
+        """
         return self._default_timeout
     
     @default_timeout.setter
     def default_timeout(self, value: int):
-        '''
-        Set the default timeout for API requests
+        """
+        Set the default timeout for API requests.
 
         Args:
-            value (int): New timeout value in seconds.
+            value (int): New timeout value in seconds
         
         Raises:
-            TypeError: If value is not an integer.
-            ValueError: If value is not positive.
-        '''
+            TypeError: If value is not an integer
+            ValueError: If value is not positive
+        """
         if not isinstance(value, int):
             raise TypeError("default_timeout must be an integer")
         if value <= 0:
@@ -76,34 +75,34 @@ class dataIngestion:
     
     @property
     def track_sources(self) -> bool:
-        '''
-        Get whether source tracking is enabled
-        '''
+        """
+        Get whether source tracking is enabled.
+        """
         return self._track_sources
     
     @track_sources.setter
     def track_sources(self, value: bool):
-        '''
-        Set whether to track data sources
-        '''
+        """
+        Set whether to track data sources.
+        """
         if not isinstance(value, bool):
             raise TypeError("track_sources must be a boolean")
         self._track_sources = value
     
     def load_csv(self, filepath: str) -> pd.DataFrame:
-        '''
+        """
         Load a CSV file into a pandas DataFrame.
 
         Args:
-            filepath (str): Path to the CSV file.
+            filepath (str): Path to the CSV file
 
         Returns:
-            pd.DataFrame: Loaded data as a DataFrame.
+            pd.DataFrame: Loaded data as a DataFrame
 
         Raises:
             TypeError: If file is not a string
-            FileNotFoundError: If the file does not exist.
-        '''
+            FileNotFoundError: If the file does not exist
+        """
         if not isinstance(filepath, str):
             raise TypeError("The filepath must be a string")
         
@@ -122,23 +121,20 @@ class dataIngestion:
 
         return df
     
-    def fetch_api_data(self, url: str,
-            params: Optional[Dict[str, Any]] = None,
-            timeout: Optional[int] = None
-    ) -> Dict[str, Any]:
-        '''
+    def fetch_api_data(self, url: str, params: Optional[Dict[str, Any]] = None, timeout: Optional[int] = None) -> Dict[str, Any]:
+        """
         Fetch JSON data from a REST API endpoint.
 
         Args:
             url (str): the API URL
-            params (dict, optional): Query parameters to include in the request
-            timeout (int, optional): Request timeout in seconds. If None, uses default_timeout
+            params (Optional[Dict[str, Any]]): Query parameters to include in the request (optional, defaulted to None)
+            timeout (Optional[int]): Request timeout in seconds (optional, defaulted to None)
         Returns:
             dict: Parsed JSON response
         Raises:
             TypeError: If URL is not a string or params is not a dict
             requests.RequestException: if the API request fails
-        '''
+        """
         if not isinstance(url, str):
             raise TypeError("URL must be a string")
         if params is not None and not isinstance(params, dict):
@@ -162,17 +158,16 @@ class dataIngestion:
     
     @staticmethod
     def validate_csv_path(file_path: str) -> bool:
-        '''
-        Validate whether a given file path points to an existing CSV file
+        """
+        Validate whether a given file path points to an existing CSV file.
 
         Args:
-            file_path (str): The path to the file being validated.
+            file_path (str): The path to the file being validated
         Returns:
-            bool: True if the file exists and has a '.csv' extension,
-            False otherwise.
+            bool: True if the file exists and has a '.csv' extension, False otherwise
         Raises:
-            TypeError: If 'file_path' is not a string.
-        '''
+            TypeError: If 'file_path' is not a string
+        """
         if not isinstance(file_path, str):
             raise TypeError("File path must be a string")
         
@@ -180,29 +175,29 @@ class dataIngestion:
     
 
     def clear_sources(self):
-        '''
-        Clears the list of tracked data sources
-        '''
+        """
+        Clears the list of tracked data sources.
+        """
         self._data_sources.clear()
 
     def __str__(self) -> str:
-        '''
-        Return a string representation of the DataIngestion object
+        """
+        Return a string representation of the DataIngestion object.
 
         Returns:
-            str: A readable description of the object.
-        '''
+            str: A readable description of the object
+        """
         sources_count = len(self._data_sources)
         tracking_status = "enabled" if self._track_sources else "disabled"
         return (f"DataIngestion (timeout= {self._default_timeout}s, "
                 f"tracking= {tracking_status}, sources_loaded = {sources_count})")
     
     def __repr__(self) -> str:
-        '''
-        Return a detailed string representation of the DataIngestion object
+        """
+        Return a detailed string representation of the DataIngestion object.
 
         Returns:
-            str: A string that could be used to recreate the object.
-        '''
+            str: A string that could be used to recreate the DataIngestion object
+        """
         return (f"DataIngestion(default_timeout={self._default_timeout}, "
                 f"track_sources={self._track_sources})")
