@@ -1,7 +1,7 @@
 """
 Crime Research Data Pipeline - Core Data Utilities Class
 
-This module defines the dataStorageUtils class.
+This module defines the DataStorageUtils class.
 
 Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
 Course: Object-Oriented Programming for Information Science
@@ -18,7 +18,7 @@ from datetime import datetime
 from typing import Any, Dict, Optional, Union
 import hashlib
 
-class dataStorageUtils:
+class DataStorageUtils:
     """
     Utility class for data pipeline operations including storage, serialization,
     logging, and file management.
@@ -26,7 +26,7 @@ class dataStorageUtils:
     
     def __init__(self, base_output_dir: Optional[str] = None, log_level: int = logging.INFO):
         """
-        Initialize the dataStorageUtils class.
+        Initialize the DataStorageUtils class.
         
         Args:
             base_output_dir (Optional[str]): Base directory for outputs. Defaults to current directory.
@@ -306,18 +306,18 @@ class dataStorageUtils:
         
     def __str__(self):
         """
-        Return a user-readable string representation of the dataStorageUtils object.
+        Return a user-readable string representation of the DataStorageUtils object.
         
         Returns:
             str: A readable description including the base output directory.
         """
-        return f"dataStorageUtils(base_output_dir='{self.base_output_dir}')"
+        return f"DataStorageUtils(base_output_dir='{self.base_output_dir}')"
 
     def __repr__(self):
         """
-        Return a developer-targeted string representation of the dataStorageUtils instance.
+        Return a developer-targeted string representation of the DataStorageUtils object.
         
         Returns:
             str: A readable description that is valuable for debugging, showing constructor-valid arguments.
         """
-        return f"dataStorageUtils(base_output_dir={repr(self.base_output_dir)})"
+        return f"DataStorageUtils(base_output_dir={repr(self.base_output_dir)})"
