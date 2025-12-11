@@ -19,7 +19,7 @@ This document provides comprehensive reference information for all functions in 
 **Purpose:** Load a CSV file into a pandas DataFrame.
 
 **Parameters:**
-- `filepath` (str): Path to the CSV file.
+- `filepath` (str): Path to the CSV file
 
 **Returns:** `pd.DataFrame` – Loaded data as a DataFrame
 
@@ -58,7 +58,7 @@ This document provides comprehensive reference information for all functions in 
 
 ### handle_missing_values(df, strategy='mean')
 
-**Purpose:** Handle missing values in a DataFrame using a specified strategy.
+**Purpose:** Handle missing values in a DataFrame using a specified strategy. When 'mean' or 'median' strategies are used, **only numeric columns** are imputed.
 
 **Parameters:**
 - `df` (pd.DataFrame): Input DataFrame
@@ -105,18 +105,19 @@ This document provides comprehensive reference information for all functions in 
 
 **Returns:** `pd.DataFrame` – DataFrame with outliers removed
 
-**Raises:** `TypeError` if `df` is not a DataFrame  
-**Raises:** `ValueError` if `column` is not found
+**Raises:**
+- `TypeError` if `df` is not a DataFrame  
+- `ValueError` if `column` is not found
 
 ---
 
 ### clean_crime_data(df)
 
 **Purpose:** Perform general cleaning on a crime dataset. Steps:
-- Standardize column names
-- Drop duplicate rows
-- Remove records with missing essential values
-- Convert date columns to datetime
+- Standardize column names.
+- Drop duplicate rows.
+- Remove records with missing essential values.
+- Convert date columns to datetime.
 
 **Parameters:**
 - `df` (pd.DataFrame): Raw crime dataset
