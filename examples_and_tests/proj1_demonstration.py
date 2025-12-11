@@ -164,16 +164,16 @@ def demo_data_analysis():
     print("\nMissing data:")
     print(calculate_missing_data(df))
 
-    cleaned_df = clean_crime_data(df) # clean the DataFrame so column names are standardized for the successive functions 
+    cleaned_df = clean_crime_data(df) # clean the DataFrame so column names are standardized as needed for the successive functions 
     
     print("\nCrime rate by year calculation:")
     print(compute_crime_rate_by_year(cleaned_df))
 
     print("\nTop crime types:")
-    print(top_crime_types(cleaned_df, n=3)) # Must use cleaned_df for 'crime_type' reliability
+    print(top_crime_types(cleaned_df, n=3)) 
 
     print("\nHigh crime area detection:")
-    print(find_high_crime_areas(cleaned_df)) # Must use cleaned_df for 'neighborhood' reliability
+    print(find_high_crime_areas(cleaned_df)) 
 
 
 def demo_data_storage_utilities():
