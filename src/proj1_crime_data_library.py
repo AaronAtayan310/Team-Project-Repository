@@ -101,15 +101,21 @@ def handle_missing_values(df: pd.DataFrame, strategy: str = "mean") -> pd.DataFr
         pd.DataFrame: Cleaned DataFrame
     """
     cleaned_df = df.copy()
+    valid_strategies = {"mean", "median", "drop"}
 
-    if strategy == "mean":
-        cleaned_df.fillna(cleaned_df.mean(numeric_only=True), inplace=True)
-    elif strategy == "median":
-        cleaned_df.fillna(cleaned_df.median(numeric_only=True), inplace=True)
-    elif strategy == "drop":
-        cleaned_df.dropna(inplace=True)
-    else:
+    if strategy not in valid_strategies:
         raise ValueError("Invalid strategy. Choose 'mean', 'median', or 'drop'.")
+
+    if strategy == "drop":
+        cleaned_df.dropna(inplace=True)
+    elif strategy == "mean":
+        fill_values = cleaned_df.mean(numeric_only=True) # only fill numeric columns with non-NaN means
+        fill_values = fill_values.dropna() # Drop means that are NaN (i.e., column was all missing)
+        cleaned_df.fillna(fill_values, inplace=True)
+    elif strategy == "median":
+        fill_values = cleaned_df.median(numeric_only=True) # only fill numeric columns with non-NaN medians
+        fill_values = fill_values.dropna() # drop medians that are NaN
+        cleaned_df.fillna(fill_values, inplace=True)
 
     return cleaned_df
 
@@ -193,13 +199,20 @@ def clean_crime_data(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Cleaned DataFrame ready for analysis
     """
-    df.columns = standardize_column_names(df.columns)
+    df.columns = standardize_column_names(df.columns) # standardize column names first and assign them back to the DataFrame
+    
+    date_col = "date" # use the standardized column names for subsequent checks
+    crime_type_col = "crime_type"
+    
     df = df.drop_duplicates()
-    if "date" in df.columns:
-        df["date"] = pd.to_datetime(df["date"], errors="coerce")
-        df = df.dropna(subset=["date"])
-    if "crime_type" in df.columns:
-        df = df.dropna(subset=["crime_type"])
+    
+    if date_col in df.columns:
+        df[date_col] = pd.to_datetime(df[date_col], errors="coerce") 
+        df = df.dropna(subset=[date_col]) # drop rows where date conversion resulted in NaT
+        
+    if crime_type_col in df.columns:
+        df = df.dropna(subset=[crime_type_col])
+        
     return df.reset_index(drop=True)
 
 
@@ -317,21 +330,26 @@ def compute_crime_rate_by_year(df: pd.DataFrame, population_col: str = "populati
 
     Args:
         df (pd.DataFrame): The crime dataset containing 'date' and 'population' columns
-        population_col (str): Column name representing population data
+        population_col (str): Column name representing population data, defaulted to "population"
 
     Returns:
         pd.DataFrame: DataFrame with columns ['year', 'crime_count', 'crime_rate']
     """
-    if "date" not in df.columns:
+    date_col = "date"
+    
+    if date_col not in df.columns:
         raise ValueError("The dataset must contain a 'date' column.")
     if population_col not in df.columns:
         raise ValueError(f"Missing '{population_col}' column for population data.")
 
-    df["year"] = pd.to_datetime(df["date"]).dt.year
+    df[date_col] = pd.to_datetime(df[date_col], errors="coerce") # convert date column to datetime objects (handling if not already done)
+    df["year"] = df[date_col].dt.year
+    
     yearly_data = df.groupby("year").agg(
         crime_count=("crime_type", "count"),
-        population=(population_col, "mean")
+        population=(population_col, "first")  # use 'first' for population to reflect one consistent value per year
     ).reset_index()
+    yearly_data = yearly_data.dropna(subset=['population'])  # handle cases where population data might still be missing for a given year
     yearly_data["crime_rate"] = (yearly_data["crime_count"] / yearly_data["population"]) * 100000
     return yearly_data
 
@@ -409,6 +427,7 @@ def serialize_model(model: Any, path: str) -> None:
         pickle.dump(model, file)
 
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s") # initialize log config outside the function so its only called once
 def log_pipeline_step(step_name: str, status: str) -> None:
     """
     Log a pipeline step for monitoring purposes.
@@ -417,7 +436,6 @@ def log_pipeline_step(step_name: str, status: str) -> None:
         step_name (str): Name of the step
         status (str): Status message (e.g., 'started', 'completed', 'failed')
     """
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
     logging.info(f"Step '{step_name}' - Status: {status}")
 
 
