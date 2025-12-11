@@ -33,7 +33,7 @@ from proj1_crime_data_library import (
     calculate_missing_data,
     compute_crime_rate_by_year,
     top_crime_types,
-    find_high_crime_areas
+    find_high_crime_areas, 
     save_to_csv,
     serialize_model,
     log_pipeline_step,
@@ -164,22 +164,26 @@ def demo_data_analysis():
     print("\nMissing data:")
     print(calculate_missing_data(df))
 
+    cleaned_df = clean_crime_data(df) # clean the DataFrame so column names are standardized for the successive functions 
+    
     print("\nCrime rate by year calculation:")
-    print(compute_crime_rate_by_year(df))
+    print(compute_crime_rate_by_year(cleaned_df))
 
     print("\nTop crime types:")
-    print(top_crime_types(df, n=3))
+    print(top_crime_types(cleaned_df, n=3)) # Must use cleaned_df for 'crime_type' reliability
 
     print("\nHigh crime area detection:")
-    print(find_high_crime_areas(df))
+    print(find_high_crime_areas(cleaned_df)) # Must use cleaned_df for 'neighborhood' reliability
 
 
 def demo_data_storage_utilities():
     """\n\n❗ Demonstrate utility capabilities for storage and logging."""
     print("DATA STORAGE & UTILITIES DEMO")
     print("=" * 50)
+    
     import pandas as pd
     import pickle
+    import os
 
     # Demo DataFrame to save
     df = pd.DataFrame({'a': [1, 2], 'b': [3, 4]})
@@ -204,6 +208,12 @@ def demo_data_storage_utilities():
     # Generate a timestamped filename
     timestamped_name = generate_timestamped_filename("summary_report")
     print(f"\nTimestamped filename generated: {timestamped_name}")
+
+    if os.path.exists(filename): # cleanup files created by the demo
+        os.remove(filename)
+    if os.path.exists(model_file):
+        os.remove(model_file)
+    print("\nCleanup complete: temporary files removed.")
 
     
 def main():
