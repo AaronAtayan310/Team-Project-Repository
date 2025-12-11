@@ -74,12 +74,12 @@ Below are practical examples of how to use the most important functions in the l
 1. Validate and Load a CSV File
 
 ```python
-from proj1_crime_data_library import validate_csv_path, load_crime_data
+from proj1_crime_data_library import validate_csv_path, load_csv
 
 file_path = "data/crime_data.csv"
 
 if validate_csv_path(file_path):
-    df = load_crime_data(file_path)
+    df = load_csv(file_path)
     print("Data successfully loaded!")
 else:
     print("Invalid file path or format.")
