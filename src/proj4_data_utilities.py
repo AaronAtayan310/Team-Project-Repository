@@ -24,7 +24,7 @@ import uuid
 import shutil
 
 
-class FinalDataStorageUtils:
+class CrimeDataStorageUtils:
     """
     Enhanced utility class for data pipeline storage operations.
     
