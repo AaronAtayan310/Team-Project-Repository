@@ -10,9 +10,11 @@ Project: OOP Class Implementation (Project 2)
 """
 
 import pandas as pd
+import numpy as np
 from typing import Any, Dict, List, Iterator, Optional
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
+
 
 class DataAnalysis:
     """
@@ -32,7 +34,7 @@ class DataAnalysis:
         """
         self._frame = None
         self.frame = frame
-        self.__described = self.frame.describe()
+        self.__described = self.frame.describe(include=np.number) # initial calculation of __described (will be overwritten by setter, but necessary for constructor)
 
     @property
     def frame(self):
@@ -55,6 +57,7 @@ class DataAnalysis:
         if not(isinstance(val, pd.DataFrame)):
             raise ValueError('Data to analyze must be in DataFrame format, no other format is acceptable.')
         self._frame = val
+        self.__described = self._frame.describe(include=np.number) # ensure __described is updated whenever the frame changes
 
     @property
     def described(self) -> pd.DataFrame:
@@ -73,8 +76,13 @@ class DataAnalysis:
         Returns:
             model (LinearRegression): Trained regression model
         """
+        X = self.frame.select_dtypes(include=np.number).dropna(axis=1) # select numeric columns from the instance frame to use as features (X)
+        
+        if X.empty or len(X) != len(y):
+             raise ValueError("Feature DataFrame (self.frame) must contain compatible numeric columns and match the length of the target variable (y).")
+
         model = LinearRegression()
-        model.fit(self.frame, y)
+        model.fit(X, y) 
         return model
         
     def evaluate_model(self, model: LinearRegression, y_test: pd.Series) -> Dict[str, float]:
@@ -88,7 +96,12 @@ class DataAnalysis:
         Returns:
             dict: Dictionary with evaluation metrics
         """
-        predictions = model.predict(self.frame)
+        X_predict = self.frame.select_dtypes(include=np.number).dropna(axis=1) # select the same set of numeric features used for training
+
+        if len(X_predict) != len(y_test):
+             raise ValueError("Feature DataFrame (self.frame) used for prediction must match the length of the test target variable (y_test).")
+
+        predictions = model.predict(X_predict)
         mse = mean_squared_error(y_test, predictions)
         return {"mse": mse}
         
@@ -118,16 +131,21 @@ class DataAnalysis:
             yearly_data (pd.DataFrame): DataFrame with columns ['year', 'crime_count', 'crime_rate']
         """
         df = self.frame.copy()
+        
         if "date" not in df.columns:
             raise ValueError("The dataset must contain a 'date' column.")
         if population_col not in df.columns:
             raise ValueError(f"Missing '{population_col}' column for population data.")
 
-        df["year"] = pd.to_datetime(df["date"]).dt.year
+        df["date"] = pd.to_datetime(df["date"], errors='coerce') # convert date column to datetime objects
+        df = df.dropna(subset=['date']) 
+
+        df["year"] = df["date"].dt.year
         yearly_data = df.groupby("year").agg(
             crime_count=("crime_type", "count"),
-            population=(population_col, "mean")
+            population=(population_col, "first") # 'first' for keeping population data integrity per year
         ).reset_index()
+
         yearly_data["crime_rate"] = (yearly_data["crime_count"] / yearly_data["population"]) * 100000
         return yearly_data
         
@@ -143,15 +161,16 @@ class DataAnalysis:
         """
         if "crime_type" not in self.frame.columns:
             raise ValueError("The dataset must include a 'crime_type' column.")
-        df = self.frame.copy()
-        return (
-            df["crime_type"]
+        
+        crime_counts = (
+            self.frame["crime_type"] 
             .value_counts()
             .head(n)
-            .reset_index()
-            .rename(columns={"index": "crime_type", "crime_type": "count"})
+            .reset_index(name='count') # name the count column explicitly
+            .rename(columns={"index": "crime_type"}) 
         )
-      
+        return crime_counts
+        
     def find_high_crime_areas(self, area_col: str = "neighborhood") -> pd.DataFrame:
         """
         Identify the areas with the highest number of reported crimes.
@@ -164,9 +183,9 @@ class DataAnalysis:
         """
         if area_col not in self.frame.columns:
             raise ValueError(f"'{area_col}' column not found in dataset.")
-        df = self.frame.copy()
+        
         area_stats = (
-            df.groupby(area_col)
+            self.frame.groupby(area_col)
             .size()
             .reset_index(name="crime_count")
             .sort_values(by="crime_count", ascending=False)
@@ -182,13 +201,7 @@ class DataAnalysis:
         """
         source = str(self.frame)
         description = str(self.described)
-        print('Source of data:')
-        print('\n')
-        print(source)
-        print('\n')
-        print('Description of data:')
-        print('\n')
-        print(description)
+        return f"Source of data:\n\n{source}\n\nDescription of data:\n\n{description}"
 
     def __repr__(self):
         """
@@ -198,5 +211,3 @@ class DataAnalysis:
             str: A development-useful representation helpful for tasks like debugging
         """
         return f"DataAnalysis(frame_shape={self.frame.shape}, described_shape={self.described.shape})"
-
-
