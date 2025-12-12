@@ -58,7 +58,7 @@ class DataProcessor(ABC):
         
         # Data management
         self._frame = frame.copy()
-        self._original_frame = frame.copy()  # Keep original for comparison
+        self._original_frame = frame.copy()  # keep original for comparison
         
         # Temporal tracking
         self._created_at = datetime.now()
