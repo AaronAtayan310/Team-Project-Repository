@@ -25,7 +25,7 @@ from sklearn.metrics import mean_squared_error
 
 
 # =============================================================================
-# Data Ingesiton Functions
+# Data Ingestion Functions
 # =============================================================================
 
 def load_csv(filepath: str) -> pd.DataFrame:
