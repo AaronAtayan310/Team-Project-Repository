@@ -42,7 +42,7 @@ from .proj1_crime_data_library import (
     calculate_missing_data,
     compute_crime_rate_by_year,
     top_crime_types,
-    find_high_crime_areas
+    find_high_crime_areas, 
     
     # Data Storage & Utility Functions
     save_to_csv,
@@ -62,7 +62,7 @@ from .proj2_data_utilities_cls import DataStorageUtils
 from .proj3_base_classes import AbstractDataProcessor, AbstractDataSource
 from .proj3_data_ingestion_new import NewDataIngestion
 from .proj3_data_pipeline import DataPipeline
-from .proj3_data_processors import NewDataAnalysis, NewDataCleaner, NewDataIngestion
+from .proj3_data_processors import NewDataAnalysis, NewDataCleaner, NewDataTransformation
 from .proj3_data_sources import APIDataSource, CSVDataSource, DatabaseDataSource
 from .proj3_data_utilities_new import NewDataStorageUtils
 
@@ -210,4 +210,5 @@ def get_library_info(): # Project 1 feature
         'total_functions': len(lib_functions),
         'categories': list(get_function_categories().keys()),
     }
+
 
