@@ -32,8 +32,7 @@ class APIDataSource(DataSource):
     - Connection testing
     """
     
-    def __init__(self, url: str, params: Optional[Dict] = None, 
-                 timeout: int = 10, name: Optional[str] = None):
+    def __init__(self, url: str, params: Optional[Dict] = None, timeout: int = 10, name: Optional[str] = None):
         """
         Initialize an enhanced API data source.
         
