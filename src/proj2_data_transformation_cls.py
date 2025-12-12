@@ -11,26 +11,31 @@ Project: OOP Class Implementation (Project 2)
 
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
+from typing import List, Union 
+
 
 class DataTransformation:
     """
-    This class allows for transforming dataframes into scaled or more feature complete versions.
+    This class allows for transforming dataframes into scaled or more feature-complete versions.
 
     Attributes:
         frame (pd.DataFrame): A pandas dataframe containing the data we are working with, holding relevant data
     """
-    def __init__(self, frame):
+    def __init__(self, frame: pd.DataFrame):
         """
         Initialize an object of the DataTransformation class.
 
         Args:
             frame: A pandas dataframe containing the data we are working with, holding relevant data
+        
+        Raises:
+            TypeError: If the input 'frame' is not a pandas DataFrame.
         """
-        self._frame = None
+        self._frame = None 
         self.frame = frame
 
     @property
-    def frame(self):
+    def frame(self) -> pd.DataFrame:
         """
         Gets the dataframe we are working with.
         """
@@ -45,19 +50,26 @@ class DataTransformation:
             val (pd.DataFrame): The value we are trying to assign to the dataframe
 
         Raises:
-            ValueError: If val is anything other than a pandas dataframe
+            TypeError: If val is anything other than a pandas dataframe
         """
-        if not(isinstance(val, pd.DataFrame)):
-            raise ValueError('Data to transform must be in DataFrame format, no other format is acceptable.')
+        if not isinstance(val, pd.DataFrame):
+            raise TypeError('Data to transform must be in DataFrame format, no other format is acceptable.')
         self._frame = val
 
-    def scale_features(self, columns: list[str]):
+    def scale_features(self, columns: List[str]):
         """
-        Scales the features of the dataframe we are working with.
+        Scales the features of the dataframe we are working with using StandardScaler (Z-score scaling).
 
         Args:
-            columns (list[str]): Columns to scale
+            columns (list[str]): Columns to scale. Must contain numeric data.
+        
+        Raises:
+            KeyError: If any column in the list is not found in the DataFrame.
         """
+        missing_cols = [col for col in columns if col not in self.frame.columns] # ensure columns exist before copying
+        if missing_cols:
+            raise KeyError(f"Columns not found in DataFrame: {missing_cols}")
+            
         df = self.frame.copy()
         scaler = StandardScaler()
         df[columns] = scaler.fit_transform(df[columns])
@@ -65,26 +77,25 @@ class DataTransformation:
 
     def generate_features(self):
         """
-        Generate new derived features based on the data we are working with, update the dataframe to include them.
+        Generate new derived features based on the data we are working with, update the dataframe to include them, 
+        specifically generating 'value_per_count' if 'value' and 'count' columns exist.
         """
         df = self.frame.copy()
         if "value" in df.columns and "count" in df.columns:
-            df["value_per_count"] = df["value"] / (df["count"] + 1e-9)
+            df["value_per_count"] = df["value"].astype(float) / (df["count"].astype(float) + 1e-9)
         self.frame = df
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns a string representation of the DataTransformation object (the current state of the data being transformed).
 
         Returns:
-            str: A readable description of the object
+            str: A readable description of the object.
         """
-        source = str(self.frame)
-        print('Current state of data being transformed:')
-        print('\n')
-        print(source)
+        summary = f"DataTransformation object summary (Shape: {self.frame.shape}):\n"
+        return summary + str(self.frame)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         Returns a developer-targeted string representation of the DataTransformation object.
 
