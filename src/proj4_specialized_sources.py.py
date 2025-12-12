@@ -19,7 +19,7 @@ from datetime import datetime
 import time
 
 
-class FinalAPIDataSource(DataSource):
+class APICrimeDataSource(DataSource):
     """
     Enhanced concrete implementation for loading data from REST APIs, inheriting from DataSource to gain UUID-based 
     identification, Temporal tracking, Registry pattern, Load history, and Data lineage tracking.
@@ -193,7 +193,7 @@ class FinalAPIDataSource(DataSource):
         return f"{self._name} (API: {self.url}): {status}"
 
 
-class FinalCSVDataSource(DataSource):
+class CSVCrimeDataSource(DataSource):
     """
     Enhanced concrete implementation for loading data from CSV files, inheriting from DataSource to gain UUID-based 
     identification, Temporal tracking, Registry pattern, Load history, and Data lineage tracking.
@@ -328,7 +328,7 @@ class FinalCSVDataSource(DataSource):
         return f"{self._name} (CSV: {path}): {status}"
 
 
-class FinalDatabaseDataSource(DataSource):
+class DatabaseCrimeDataSource(DataSource):
     """
     Enhanced concrete implementation for loading data from databases, inheriting from DataSource to gain UUID-based 
     identification, Temporal tracking, Registry pattern, Load history, and Data lineage tracking.
