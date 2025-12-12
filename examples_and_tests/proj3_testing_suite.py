@@ -243,7 +243,7 @@ class TestSystemIntegration(unittest.TestCase):
     """Test complete system working together."""
 
     def setUp(self):
-    """Set up simple mock data for end-to-end testing."""
+        """Set up simple mock data for end-to-end testing."""
         self.raw_df = pd.DataFrame({
             'numeric_col': [10.0, 20.0, np.nan],
             'count': [1, 2, 3],
