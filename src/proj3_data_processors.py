@@ -89,7 +89,7 @@ class NewDataAnalysis(AbstractDataProcessor):
             LinearRegression: Trained regression model
         """
         model = LinearRegression()
-        model.fit(self._frame. y)
+        model.fit(self._frame, y)
         self._models[model_name] = model
         self._log_operation(f"Trained regression model '{model_name}'")
         
@@ -149,24 +149,27 @@ class NewDataAnalysis(AbstractDataProcessor):
     
     def top_crime_types(self, n: int = 10) -> pd.DataFrame:
         """ 
-        Identify the top N most frequeny crime types.
-
+        Identify the top N most frequent crime types.
+    
         Args:
             n (int): The number of top crime types to return
             
         Returns:
-            pd.DataFrame: DataFrame with column ['crime_type', 'count']
+            pd.DataFrame: DataFrame with columns ['crime_type', 'count']
         """
         if "crime_type" not in self._frame.columns:
             raise ValueError("The dataset must include a 'crime_type' column")
-        
+    
         result = (
             self._frame["crime_type"]
             .value_counts()
             .head(n)
             .reset_index()
-            .rename(columns={"crime_type": "count", "index": "crime_type"})
+            .rename(columns={"index": "crime_type", "count": "count"})  # Fixed: index contains crime types, count contains counts
         )
+    
+        if 'crime_type' not in result.columns: # ensure columns are named correctly regardless of pandas version
+            result.columns = ['crime_type', 'count']
 
         self._log_operation(f"Identified top {n} crime types")
 
@@ -228,7 +231,7 @@ class NewDataCleaner(AbstractDataProcessor):
         Initialize the data cleaner with a DataFrame.
 
         Args:
-            df (pd.DataFrame): The DataFrame to clean.
+            df (pd.DataFrame): The DataFrame to clean
             verbose (bool): If True, print information about cleaning operations
             
         Raises:
@@ -242,26 +245,9 @@ class NewDataCleaner(AbstractDataProcessor):
         
         super().__init__(df, verbose)
         self._original_shape = df.shape
-        self._log_operation("NewDataCleaner object Initalized")
+        self._log_operation("NewDataCleaner object Initialized")
     
-    @property
-    def df(self) -> pd.DataFrame:
-        """
-        Get the current DataFrame.
-        """
-        return self._df
-    
-    @df.setter
-    def df(self, value: pd.DataFrame):
-        """
-        Set the DataFrame with validation.
-
-        Args:
-            value (pd.DataFrame): What the dataframe, df, should look like after setter usage.
-        """
-        if not isinstance(value, pd.DataFrame):
-            raise TypeError("Value must be a pandas DataFrame")
-        self._df = value
+    # this line would be the place to implement a frame property but this is inherited instead
 
     @property
     def original_shape(self) -> tuple:
@@ -275,7 +261,7 @@ class NewDataCleaner(AbstractDataProcessor):
         """
         Get the history of cleaning operations.
         """
-        return self.processing_history
+        return self.processing_history  # Uses inherited property
         
     @property
     def verbose(self) -> bool:
@@ -290,22 +276,13 @@ class NewDataCleaner(AbstractDataProcessor):
         Set verbose setting.
 
         Args:
-            value (bool): What the setting should match after setter usage.
+            value (bool): What the setting should match after setter usage
         """
         if not isinstance(value, bool):
             raise TypeError("Verbose must be a boolean")
         self._verbose = value
 
-    def _log_operation(self, operation: str):
-        """
-        Log a cleaning operation to the history.
-
-        Args:
-            operation (str): Operation to be logged.
-        """
-        self._cleaning_history.append(operation)
-        if self._verbose:
-            print(f"[NewDataCleaner] {operation}")
+    # this line would be the place to implement an operation logging method but that is inherited instead
 
     def handle_missing_values(self, strategy: str = "mean", columns: Optional[List[str]] = None) -> 'NewDataCleaner':
         """
@@ -325,47 +302,47 @@ class NewDataCleaner(AbstractDataProcessor):
         if strategy not in valid_strategies:
             raise ValueError(f"Invalid Strategy. Choose from {valid_strategies}")
         
-        target_df = self._df[columns] if columns else self._df
-        missing_before = self._df.isnull().sum().sum()
+        target_df = self._frame[columns] if columns else self._frame
+        missing_before = self._frame.isnull().sum().sum()
 
         if strategy == "mean":
             if columns:
-                self._df[columns] = self._df[columns].fillna(self._df[columns].mean(numeric_only=True))
+                self._frame[columns] = self._frame[columns].fillna(self._frame[columns].mean(numeric_only=True))
             else:
-                self._df.fillna(self._df.mean(numeric_only=True), inplace=True)
+                self._frame.fillna(self._frame.mean(numeric_only=True), inplace=True)
         
         elif strategy == "median":
             if columns:
-                self._df[columns] = self._df[columns].fillna(self._df[columns].median(numeric_only=True))
+                self._frame[columns] = self._frame[columns].fillna(self._frame[columns].median(numeric_only=True))
             else:
-                self._df.fillna(self._df.median(numeric_only=True), inplace=True)
+                self._frame.fillna(self._frame.median(numeric_only=True), inplace=True)
         
         elif strategy == "mode":
             if columns:
                 for col in columns:
-                    if not self._df[col].mode().empty:
-                        self._df[col].fillna(self._df[col].mode()[0], inplace=True)
+                    if not self._frame[col].mode().empty:
+                        self._frame[col].fillna(self._frame[col].mode()[0], inplace=True)
             else:
-                for col in self._df.columns:
-                    if not self._df[col].mode().empty:
-                        self._df[col].fillna(self._df[col].mode()[0], inplace=True)
+                for col in self._frame.columns:
+                    if not self._frame[col].mode().empty:
+                        self._frame[col].fillna(self._frame[col].mode()[0], inplace=True)
         
         elif strategy == "drop":
-            self._df.dropna(subset=columns, inplace=True)
+            self._frame.dropna(subset=columns, inplace=True)
         
         elif strategy == "forward_fill":
             if columns:
-                self._df[columns] = self._df[columns].fillna(method='ffill')
+                self._frame[columns] = self._frame[columns].fillna(method='ffill')
             else:
-                self._df.fillna(method='ffill', inplace=True)
+                self._frame.fillna(method='ffill', inplace=True)
         
         elif strategy == "backward_fill":
             if columns:
-                self._df[columns] = self._df[columns].fillna(method='bfill')
+                self._frame[columns] = self._frame[columns].fillna(method='bfill')
             else:
-                self._df.fillna(method='bfill', inplace=True)
+                self._frame.fillna(method='bfill', inplace=True)
 
-        missing_after = self._df.isnull().sum().sum()
+        missing_after = self._frame.isnull().sum().sum()
         cols_msg = f" in columns {columns}" if columns else ""
         self._log_operation(f"Handled missing values using '{strategy}' strategy{cols_msg}")
         return self
@@ -384,13 +361,13 @@ class NewDataCleaner(AbstractDataProcessor):
         Raises:
             ValueError: If column doesn't exist in DataFrame
         """
-        if column not in self._df.columns:
+        if column not in self._frame.columns:
             raise ValueError(f"Column '{column}' not found")
         
-        self._df[column] = self._df[column].astype(str).str.lower().str.strip()
+        self._frame[column] = self._frame[column].astype(str).str.lower().str.strip()
 
         if remove_special_chars:
-            self._df[column] = self._df[column].str.replace(r'[^a-z0-9\s]', '', regex = True)
+            self._frame[column] = self._frame[column].str.replace(r'[^a-z0-9\s]', '', regex=True)
 
         self._log_operation(f"Normalized text column '{column}'")
         return self
@@ -403,23 +380,23 @@ class NewDataCleaner(AbstractDataProcessor):
             str: Formatted summary
         """
 
-        missing_values = self._df.isnull().sum().sum()
+        missing_values = self._frame.isnull().sum().sum()
         missing_pct = (
-            missing_values / (self._df.shape[0] * self._df.shape[1])) * 100 if self._df.size > 0 else 0
+            missing_values / (self._frame.shape[0] * self._frame.shape[1])) * 100 if self._frame.size > 0 else 0
         
         lines = [
             "NewDataCleaner Summary",
             "=" * 50,
-            f"Current Shape: {self._df.shape[0]} rows × {self._df.shape[1]} columns",
+            f"Current Shape: {self._frame.shape[0]} rows × {self._frame.shape[1]} columns",
             f"Original Shape: {self._original_shape[0]} rows × {self._original_shape[1]} columns",
             f"Missing Values: {missing_values} ({missing_pct:.2f}%)",
-            f"Operations Performed: {len(self._cleaning_history)}",
+            f"Operations Performed: {len(self._processing_history)}",
             "=" * 50
         ]
 
-        if self._cleaning_history:
+        if self._processing_history:
             lines.append("Cleaning History:")
-            for i, operation in enumerate(self._cleaning_history, 1):
+            for i, operation in enumerate(self._processing_history, 1):
                 lines.append(f"  {i}. {operation}")
         else:
             lines.append("No cleaning operations performed")
@@ -434,7 +411,7 @@ class NewDataCleaner(AbstractDataProcessor):
             NewDataCleaner: Self for method chaining
         """
         self._log_operation("Starting default cleaning process")
-        self.handle_missing_values(strategy = 'mean')
+        self.handle_missing_values(strategy='mean')
         return self
     
     def validate(self) -> bool:
@@ -475,7 +452,7 @@ class NewDataTransformation(AbstractDataProcessor):
         """
         super().__init__(frame, verbose)
         self.scalers = {}
-        self._log_operastion("NewDataTransformation object initialized")
+        self._log_operation("NewDataTransformation object initialized")
 
     def process(self) -> 'NewDataTransformation':
         """
