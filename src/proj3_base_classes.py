@@ -75,7 +75,7 @@ class AbstractDataProcessor(ABC):
         """
         return self._processing_history.copy()
     
-    def _log_operations(self, operation: str):
+    def _log_operation(self, operation: str):
         """
         Log operation to history.
         
