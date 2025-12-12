@@ -166,9 +166,9 @@ class DataAnalysis:
             self.frame["crime_type"] 
             .value_counts()
             .head(n)
-            .reset_index(name='count') # name the count column explicitly
-            .rename(columns={"index": "crime_type"}) 
+            .reset_index()
         )
+        crime_counts.columns = ['crime_type', 'count']
         return crime_counts
         
     def find_high_crime_areas(self, area_col: str = "neighborhood") -> pd.DataFrame:
@@ -211,3 +211,4 @@ class DataAnalysis:
             str: A development-useful representation helpful for tasks like debugging
         """
         return f"DataAnalysis(frame_shape={self.frame.shape}, described_shape={self.described.shape})"
+
