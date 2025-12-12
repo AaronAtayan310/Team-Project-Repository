@@ -41,11 +41,11 @@ class DataStorageUtils:
         """
         if not isinstance(log_level, int):
             raise TypeError("log_level must be an integer (e.g., logging.INFO)")
-        self._base_output_dir: Path = Path.cwd()
-        self.base_output_dir = base_output_dir if base_output_dir else str(Path.cwd())
-        self._setup_logging(log_level)
         self._log_level = log_level
         self.logger = logging.getLogger(__name__)
+        self._setup_logging(log_level)
+        self._base_output_dir: Path = Path.cwd()
+        self.base_output_dir = base_output_dir if base_output_dir else str(Path.cwd())
     
     @property
     def base_output_dir(self) -> Path:

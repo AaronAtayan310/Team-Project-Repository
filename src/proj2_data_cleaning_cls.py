@@ -135,7 +135,7 @@ class DataCleaner:
         elif strategy == "mode":
             cols_to_fill = columns if columns is not None else self._df.columns # mode must be calculated and applied column by column for non-numeric data
             for col in cols_to_fill:
-                if not self._df[col].mode().empty:
+                if len(self._df[col].mode()) > 0:
                     self._df[col].fillna(self._df[col].mode()[0], inplace=True) # impute using the first mode value
         
         elif strategy == "drop":
@@ -143,15 +143,15 @@ class DataCleaner:
         
         elif strategy == "forward_fill":
             if columns:
-                self._df.loc[:, columns] = self._df[columns].fillna(method='ffill') # update the DataFrame slice correctly
+                self._df.loc[:, columns] = self._df[columns].ffill() # update the DataFrame slice correctly, work with pandas 2.0+
             else:
-                self._df.fillna(method='ffill', inplace=True)
+                self._df.ffill(inplace=True)
         
         elif strategy == "backward_fill":
             if columns:
-                self._df.loc[:, columns] = self._df[columns].fillna(method='bfill') # update the DataFrame slice correctly
+                self._df.loc[:, columns] = self._df[columns].bfill() # update the DataFrame slice correctly, work with pandas 2.0+
             else:
-                self._df.fillna(method='bfill', inplace=True)
+                self._df.bfill(inplace=True)
 
         missing_after = self._df.isnull().sum().sum()
         cols_msg = f" in columns {columns}" if columns else ""

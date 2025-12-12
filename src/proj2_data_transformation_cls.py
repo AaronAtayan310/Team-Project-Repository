@@ -69,6 +69,10 @@ class DataTransformation:
         missing_cols = [col for col in columns if col not in self.frame.columns] # ensure columns exist before copying
         if missing_cols:
             raise KeyError(f"Columns not found in DataFrame: {missing_cols}")
+
+        non_numeric = [col for col in columns if not pd.api.types.is_numeric_dtype(self.frame[col])] # quick validation check
+        if non_numeric:
+            raise TypeError(f"Columns must contain numeric data: {non_numeric}")
             
         df = self.frame.copy()
         scaler = StandardScaler()
