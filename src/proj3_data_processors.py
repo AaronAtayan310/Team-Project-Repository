@@ -451,7 +451,7 @@ class NewDataTransformation(AbstractDataProcessor):
             verbose (bool): If True, print transformation information
         """
         super().__init__(frame, verbose)
-        self.scalers = {}
+        self._scalers = {}
         self._log_operation("NewDataTransformation object initialized")
 
     def process(self) -> 'NewDataTransformation':
@@ -500,11 +500,10 @@ class NewDataTransformation(AbstractDataProcessor):
         scaler = StandardScaler()
         df[columns] = scaler.fit_transform(df[columns])
 
-        #Storing scaler for future use:
-        self._scalers[tuple(columns)] = scaler
+        self._scalers[tuple(columns)] = scaler # store scaler for future use
 
         self._frame = df
-        self._log_operations(f"Scaled features: {columns}")
+        self._log_operation(f"Scaled features: {columns}")
 
         return self
     
