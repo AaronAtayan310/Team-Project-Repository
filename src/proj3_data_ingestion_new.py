@@ -25,9 +25,9 @@ from .proj3_data_sources import CSVDataSource
 
 
 class NewDataIngestion:
-"""
+    """
     Refactored class for core data ingestion features in the data pipeline.
-"""
+    """
 
     def __init__(self, default_timeout: int = 10, track_sources: bool = True):
         """
