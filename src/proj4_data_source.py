@@ -4,7 +4,7 @@ Crime Research Data Pipeline - Enhanced Data Source Base Class
 This module defines the finalized base class for all data sources with
 advanced features including UUID tracking, temporal metadata, registry
 pattern, and comprehensive source management capabilities. Refactored
-version of the base class seen in proj3_base_classes.
+version of AbstractDataSource as seen in proj3_base_classes.
 
 Author: INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)
 Course: Object-Oriented Programming for Information Science
@@ -178,7 +178,7 @@ class DataSource(ABC):
         Get comprehensive load statistics for this source.
         
         Returns:
-            Dict: Load statistics including timing, success rates, etc.
+            Dict: Load statistics including timing, success rates, etc
         """
         if not self._load_history:
             return {
