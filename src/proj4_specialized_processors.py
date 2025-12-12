@@ -268,12 +268,8 @@ class CrimeDataAnalysis(DataProcessor):
             .value_counts()
             .head(n)
             .reset_index()
-            .rename(columns={"index": "crime_type", "count": "count"})
         )
-        
-        # Ensure columns are named correctly regardless of pandas version
-        if 'crime_type' not in result.columns:
-            result.columns = ['crime_type', 'count']
+        result.columns = ['crime_type', 'count']
         
         duration = time.time() - start_time
         self._log_operation(f"Identified top {n} crime types", duration=duration)
@@ -424,11 +420,11 @@ class CrimeDataCleaner(DataProcessor):
         elif strategy == "mode":
             if columns:
                 for col in columns:
-                    if not self._frame[col].mode().empty:
+                    if len(self._frame[col].mode()) > 0:
                         self._frame[col].fillna(self._frame[col].mode()[0], inplace=True)
             else:
                 for col in self._frame.columns:
-                    if not self._frame[col].mode().empty:
+                    if len(self._frame[col].mode()) > 0:
                         self._frame[col].fillna(self._frame[col].mode()[0], inplace=True)
         
         elif strategy == "drop":
@@ -436,15 +432,15 @@ class CrimeDataCleaner(DataProcessor):
         
         elif strategy == "forward_fill":
             if columns:
-                self._frame[columns] = self._frame[columns].fillna(method='ffill')
+                self._frame[columns] = self._frame[columns].ffill()
             else:
-                self._frame.fillna(method='ffill', inplace=True)
+                self._frame.ffill(inplace=True)
         
         elif strategy == "backward_fill":
             if columns:
-                self._frame[columns] = self._frame[columns].fillna(method='bfill')
+                self._frame[columns] = self._frame[columns].bfill()
             else:
-                self._frame.fillna(method='bfill', inplace=True)
+                self._frame.bfill(inplace=True)
         
         missing_after = self._frame.isnull().sum().sum()
         duration = time.time() - start_time
