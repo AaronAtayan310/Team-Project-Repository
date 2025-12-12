@@ -195,16 +195,10 @@ class FinalAPIDataSource(DataSource):
 
 class FinalCSVDataSource(DataSource):
     """
-    Enhanced concrete implementation for loading data from CSV files.
+    Enhanced concrete implementation for loading data from CSV files, inheriting from DataSource to gain UUID-based 
+    identification, Temporal tracking, Registry pattern, Load history, and Data lineage tracking.
     
-    Inherits from DataSource to gain:
-    - UUID-based identification
-    - Temporal tracking
-    - Registry pattern
-    - Load history
-    - Data lineage tracking
-    
-    Adds CSV-specific features:
+    Demonstrates:
     - File information (size, modified date)
     - Parse options support
     - Encoding detection
