@@ -15,13 +15,17 @@ import logging
 import json
 from pathlib import Path
 from datetime import datetime
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, List
 import hashlib
+
 
 class DataStorageUtils:
     """
-    Utility class for data pipeline operations including storage, serialization,
-    logging, and file management.
+    Utility class for data pipeline operations including storage, serialization, logging, and file management.
+    
+    Attributes:
+        base_output_dir (pathlib.Path): The base directory where all generated files (CSV, JSON, models) will be saved
+        log_level (int): The current minimum level for logging messages (e.g., logging.INFO)
     """
     
     def __init__(self, base_output_dir: Optional[str] = None, log_level: int = logging.INFO):
@@ -31,28 +35,64 @@ class DataStorageUtils:
         Args:
             base_output_dir (Optional[str]): Base directory for outputs, defaulted to current directory
             log_level (int): Number showing logging level, defaulted to logging.INFO
-        """
-        self.base_output_dir = Path(base_output_dir) if base_output_dir else Path.cwd()
-        self.base_output_dir.mkdir(parents=True, exist_ok=True)
         
+        Raises:
+            TypeError: If log_level is not an integer
+        """
+        if not isinstance(log_level, int):
+            raise TypeError("log_level must be an integer (e.g., logging.INFO)")
+        self._base_output_dir: Path = Path.cwd()
+        self.base_output_dir = base_output_dir if base_output_dir else str(Path.cwd())
         self._setup_logging(log_level)
+        self._log_level = log_level
         self.logger = logging.getLogger(__name__)
     
+    @property
+    def base_output_dir(self) -> Path:
+        """Gets the base directory for file outputs."""
+        return self._base_output_dir
+    
+    @base_output_dir.setter
+    def base_output_dir(self, value: Optional[str]):
+        """
+        Sets the base directory, ensuring it is a Path object and exists.
+        
+        Args:
+            value (Optional[str]): The path string to set
+        
+        Raises:
+            TypeError: If the value is not a string or None
+        """
+        if value is not None and not isinstance(value, str):
+            raise TypeError("base_output_dir must be a string or None.")
+            
+        new_path = Path(value) if value else Path.cwd()
+        new_path.mkdir(parents=True, exist_ok=True)
+        self._base_output_dir = new_path
+    
+        if hasattr(self, 'logger'):
+             self.logger.info(f"Base output directory set to: {self._base_output_dir}")
+        
+    @property
+    def log_level(self) -> int:
+        """Gets the current logging level."""
+        return self._log_level
+        
     @staticmethod
     def _setup_logging(log_level: int) -> None:
         """
-        Configure logging for the pipeline.
+        Configure logging for the pipeline, ensuring it is configured only once.
 
         Args:
             log_level (int): Number showing the level that logging should occur at
         """
-        logging.basicConfig(
-            level=log_level,
-            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S"
-        )
+        if not logging.getLogger().hasHandlers(): # ensure logging is not configured multiple times
+            logging.basicConfig(
+                level=log_level,
+                format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+                datefmt="%Y-%m-%d %H:%M:%S"
+            )
     
-    # CSV Operations
     def save_to_csv(self, df: pd.DataFrame, filepath: str, use_timestamp: bool = False, **kwargs) -> Path:
         """
         Save a DataFrame to a CSV file.
@@ -65,13 +105,19 @@ class DataStorageUtils:
         
         Returns:
             path (Path): Path object showing the actual path where the file was saved
+            
+        Raises:
+            TypeError: If df is not a DataFrame
         """
+        if not isinstance(df, pd.DataFrame):
+            raise TypeError("Input must be a pandas DataFrame.")
+            
         path = Path(filepath)
         
         if use_timestamp:
             base_name = path.stem
             extension = path.suffix
-            timestamped_name = self.generate_timestamped_filename(base_name, extension)
+            timestamped_name = DataStorageUtils.generate_timestamped_filename(base_name, extension) 
             path = path.parent / timestamped_name
         
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -89,6 +135,9 @@ class DataStorageUtils:
         
         Returns:
             df (pd.DataFrame): Loaded DataFrame
+            
+        Raises:
+            FileNotFoundError: If the file does not exist
         """
         path = Path(filepath)
         if not path.exists():
@@ -98,7 +147,6 @@ class DataStorageUtils:
         self.logger.info(f"CSV loaded from: {path} (shape: {df.shape})")
         return df
     
-    # Model Serialization
     def serialize_model(self, model: Any, path: str, metadata: Optional[Dict] = None) -> Path:
         """
         Serialize (save) a model object to disk using pickle.
@@ -109,8 +157,14 @@ class DataStorageUtils:
             metadata (Optional[Dict]): Descriptive metadata to save alongside model (optional, defaulted to None)
         
         Returns:
-            path (Path): A Patch object showing the actual he path where the model was saved
+            path (Path): A Path object showing the actual path where the model was saved
+        
+        Raises:
+            TypeError: If path is not a string
         """
+        if not isinstance(path, str):
+             raise TypeError("Path must be a string.")
+        
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -135,6 +189,9 @@ class DataStorageUtils:
         
         Returns:
             model (Any): Loaded model object
+            
+        Raises:
+            FileNotFoundError: If the file does not exist
         """
         path = Path(path)
         if not path.exists():
@@ -146,7 +203,6 @@ class DataStorageUtils:
         self.logger.info(f"Model deserialized from: {path}")
         return model
     
-    # Logging Functions
     def log_pipeline_step(self, step_name: str, status: str, extra_info: Optional[Dict] = None) -> None:
         """
         Log a pipeline step for monitoring purposes.
@@ -169,7 +225,6 @@ class DataStorageUtils:
         else:
             self.logger.info(message)
     
-    # File Naming Utilities
     @staticmethod
     def generate_timestamped_filename(base_name: str, extension: str = ".csv") -> str:
         """
@@ -194,7 +249,6 @@ class DataStorageUtils:
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         return f"{base_name}_{timestamp}{extension}"
     
-    # Additional Utility Functions
     def save_to_json(self, data: Union[Dict, list], filepath: str, use_timestamp: bool = False, **kwargs) -> Path:
         """
         Save data to a JSON file.
@@ -206,14 +260,20 @@ class DataStorageUtils:
             **kwargs: Additional arguments passed to json.dump()
         
         Returns:
-            path (Path): The actual path obeject showing where the file was saved
+            path (Path): The actual path object showing where the file was saved
+            
+        Raises:
+            TypeError: If data is not a dict or list
         """
+        if not isinstance(data, (dict, list)):
+            raise TypeError("Data must be a dictionary or list for JSON serialization.")
+            
         path = Path(filepath)
         
         if use_timestamp:
             base_name = path.stem
             extension = path.suffix
-            timestamped_name = self.generate_timestamped_filename(base_name, extension)
+            timestamped_name = DataStorageUtils.generate_timestamped_filename(base_name, extension)
             path = path.parent / timestamped_name
         
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -233,6 +293,9 @@ class DataStorageUtils:
         
         Returns:
             data (Union[Dict, list]): Loaded data
+            
+        Raises:
+            FileNotFoundError: If the file does not exist
         """
         path = Path(filepath)
         if not path.exists():
@@ -254,12 +317,20 @@ class DataStorageUtils:
         
         Returns:
             hash_value (str): Hexadecimal hash string
+            
+        Raises:
+            FileNotFoundError: If the file does not exist
+            ValueError: If the hash algorithm is unsupported
         """
         path = Path(filepath)
         if not path.exists():
             raise FileNotFoundError(f"File not found: {path}")
         
-        hash_obj = hashlib.new(algorithm)
+        try:
+            hash_obj = hashlib.new(algorithm)
+        except ValueError:
+            raise ValueError(f"Unsupported hash algorithm: {algorithm}")
+            
         with open(path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_obj.update(chunk)
@@ -280,11 +351,11 @@ class DataStorageUtils:
             Path: Path where manifest was saved
         """
         if filepath is None:
-            filepath = self.base_output_dir / self.generate_timestamped_filename(
-                "pipeline_manifest", ".json"
-            )
-        
+            filename = DataStorageUtils.generate_timestamped_filename("pipeline_manifest", ".json")
+            filepath = self.base_output_dir / filename
+            
         manifest_data['created_at'] = datetime.now().isoformat()
+        
         return self.save_to_json(manifest_data, str(filepath))
     
     def get_directory_size(self, dirpath: str) -> int:
@@ -296,29 +367,36 @@ class DataStorageUtils:
         
         Returns:
             int: Total size in bytes
+            
+        Raises:
+            FileNotFoundError: If the directory does not exist
+            NotADirectoryError: If the path exists but is not a directory
         """
         path = Path(dirpath)
         if not path.exists():
             raise FileNotFoundError(f"Directory not found: {path}")
         
+        if not path.is_dir():
+             raise NotADirectoryError(f"Path is not a directory: {path}")
+            
         total_size = sum(f.stat().st_size for f in path.rglob('*') if f.is_file())
         self.logger.info(f"Directory {path} total size: {total_size / (1024**2):.2f} MB")
         return total_size
         
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Return a user-readable string representation of the DataStorageUtils object.
         
         Returns:
             str: A readable description including the base output directory
         """
-        return f"DataStorageUtils(base_output_dir='{self.base_output_dir}')"
+        return f"DataStorageUtils(base_output_dir='{self.base_output_dir}', log_level={self._log_level})"
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         Return a developer-targeted string representation of the DataStorageUtils object.
         
         Returns:
             str: A readable description that is valuable for debugging, showing constructor-valid arguments
         """
-        return f"DataStorageUtils(base_output_dir={repr(self.base_output_dir)})"
+        return f"DataStorageUtils(base_output_dir={repr(str(self.base_output_dir))}, log_level={self._log_level})"
