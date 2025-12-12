@@ -1,7 +1,7 @@
 """
 Crime Research Data Pipeline - Enhanced Data Ingestion
 
-This module defines the enhanced DataIngestion class with advanced features
+This module defines the enhanced FinalDataIngestion class with advanced features
 including source registry integration, caching, data validation, and
 comprehensive ingestion tracking.
 
@@ -23,7 +23,7 @@ from .proj4_specialized_sources import CSVDataSource, APIDataSource, DatabaseDat
 from .proj4_data_quality_standards import DataQualityStandards
 
 
-class DataIngestion:
+class FinalDataIngestion:
     """
     Enhanced class for core data ingestion features in the data pipeline.
     
@@ -38,7 +38,7 @@ class DataIngestion:
     
     def __init__(self, default_timeout: int = 10, track_sources: bool = True, quality_standards: Optional[DataQualityStandards] = None):
         """
-        Initialize an enhanced DataIngestion object.
+        Initialize an enhanced FinalDataIngestion object.
         
         Args:
             default_timeout: Default timeout for API requests
@@ -396,7 +396,7 @@ class DataIngestion:
         cached_count = len(self._loaded_data)
         tracking_status = "enabled" if self._track_sources else "disabled"
         return (
-            f"DataIngestion (id={self._ingestion_id[:8]}, timeout={self._default_timeout}s, "
+            f"FinalDataIngestion (id={self._ingestion_id[:8]}, timeout={self._default_timeout}s, "
             f"tracking={tracking_status}, loads={self._successful_loads}/{self._total_loads}, "
             f"cached={cached_count})"
         )
@@ -404,7 +404,7 @@ class DataIngestion:
     def __repr__(self) -> str:
         """Developer-friendly representation."""
         return (
-            f"DataIngestion(ingestion_id='{self._ingestion_id[:8]}...', "
+            f"FinalDataIngestion(ingestion_id='{self._ingestion_id[:8]}...', "
             f"successful_loads={self._successful_loads}, "
             f"failed_loads={self._failed_loads})"
         )
