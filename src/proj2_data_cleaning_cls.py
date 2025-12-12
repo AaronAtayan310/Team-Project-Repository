@@ -11,7 +11,9 @@ Project: OOP Class Implementation (Project 2)
 
 import pandas as pd
 import numpy as np
+import re 
 from typing import Optional, List, Union
+
 
 class DataCleaner:
     """
@@ -23,6 +25,7 @@ class DataCleaner:
         df (pd.DataFrame): The DataFrame being cleaned
         original_shape (tuple): The shape of the original DataFrame
         cleaning_history (list): A log of cleaning operations performed
+	verbose (bool): Whether or not to include verbose information (ex: cleaning operations)
     """
 
     def __init__(self, df: pd.DataFrame, verbose: bool = False):
@@ -119,49 +122,40 @@ class DataCleaner:
         if strategy not in valid_strategies:
             raise ValueError(f"Invalid Strategy. Choose from {valid_strategies}")
         
-        target_df = self._df[columns] if columns else self._df
         missing_before = self._df.isnull().sum().sum()
 
         if strategy == "mean":
-            if columns:
-                self._df[columns] = self._df[columns].fillna(self._df[columns].mean(numeric_only=True))
-            else:
-                self._df.fillna(self._df.mean(numeric_only=True), inplace=True)
+            fill_values = self._df[columns].mean(numeric_only=True).dropna() if columns else self._df.mean(numeric_only=True).dropna() # select numeric columns for imputation
+            self._df.fillna(fill_values, inplace=True)
         
         elif strategy == "median":
-            if columns:
-                self._df[columns] = self._df[columns].fillna(self._df[columns].median(numeric_only=True))
-            else:
-                self._df.fillna(self._df.median(numeric_only=True), inplace=True)
+            fill_values = self._df[columns].median(numeric_only=True).dropna() if columns else self._df.median(numeric_only=True).dropna() # select numeric columns for imputation 
+            self._df.fillna(fill_values, inplace=True)
         
         elif strategy == "mode":
-            if columns:
-                for col in columns:
-                    if not self._df[col].mode().empty:
-                        self._df[col].fillna(self._df[col].mode()[0], inplace=True)
-            else:
-                for col in self._df.columns:
-                    if not self._df[col].mode().empty:
-                        self._df[col].fillna(self._df[col].mode()[0], inplace=True)
+            cols_to_fill = columns if columns is not None else self._df.columns # mode must be calculated and applied column by column for non-numeric data
+            for col in cols_to_fill:
+                if not self._df[col].mode().empty:
+                    self._df[col].fillna(self._df[col].mode()[0], inplace=True) # impute using the first mode value
         
         elif strategy == "drop":
-            self._df.dropna(subset=columns, inplace=True)
+            self._df.dropna(subset=columns, inplace=True) # if columns arent specified, dropna applies to rows with ANY missing value, and if they are it applies to rows with missing values in those specific columns
         
         elif strategy == "forward_fill":
             if columns:
-                self._df[columns] = self._df[columns].fillna(method='ffill')
+                self._df.loc[:, columns] = self._df[columns].fillna(method='ffill') # update the DataFrame slice correctly
             else:
                 self._df.fillna(method='ffill', inplace=True)
         
         elif strategy == "backward_fill":
             if columns:
-                self._df[columns] = self._df[columns].fillna(method='bfill')
+                self._df.loc[:, columns] = self._df[columns].fillna(method='bfill') # update the DataFrame slice correctly
             else:
                 self._df.fillna(method='bfill', inplace=True)
 
         missing_after = self._df.isnull().sum().sum()
         cols_msg = f" in columns {columns}" if columns else ""
-        self._log_operation(f"Handled missing values using '{strategy}' strategy{cols_msg}")
+        self._log_operation(f"Handled missing values using '{strategy}' strategy{cols_msg}. {missing_before - missing_after} values imputed/dropped.")
         return self
     
     def normalize_text_column(self, column: str, remove_special_chars: bool = False) -> 'DataCleaner':
@@ -181,12 +175,12 @@ class DataCleaner:
         if column not in self._df.columns:
             raise ValueError(f"Column '{column}' not found")
         
-        self._df[column] = self._df[column].astype(str).str.lower().str.strip()
+        self._df[column] = self._df[column].astype(str).str.lower().str.strip() # ensure data is treated as string, lowercase, and stripped
 
         if remove_special_chars:
-            self._df[column] = self._df[column].str.replace(r'[^a-z0-9\s]', '', regex = True)
+            self._df[column] = self._df[column].str.replace(r'[^a-z0-9\s]', '', regex=True)
 
-        self._log_operation(f"Normalized text column '{column}'")
+        self._log_operation(f"Normalized text column '{column}' (special chars removed: {remove_special_chars})")
         return self
     
     def __str__(self) -> str:
@@ -196,10 +190,9 @@ class DataCleaner:
         Returns:
             str: Formatted summary
         """
-
         missing_values = self._df.isnull().sum().sum()
-        missing_pct = (
-            missing_values / (self._df.shape[0] * self._df.shape[1])) * 100 if self._df.size > 0 else 0
+        df_size = self._df.shape[0] * self._df.shape[1] # use np.prod for robust size calculation and handle potential division by zero
+        missing_pct = (missing_values / df_size) * 100 if df_size > 0 else 0
         
         lines = [
             "DataCleaner Summary",
