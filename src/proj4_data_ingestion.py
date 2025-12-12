@@ -19,7 +19,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 import uuid
 from .proj4_data_source import DataSource
-from .proj4_specialized_sources import CSVDataSource, APIDataSource, DatabaseDataSource
+from .proj4_specialized_sources import CSVCrimeDataSource, APICrimeDataSource, DatabaseCrimeDataSource
 from .proj4_data_quality_standards import DataQualityStandards
 
 
@@ -93,9 +93,9 @@ class FinalDataIngestion:
             raise ValueError("default_timeout must be a positive integer")
         self._default_timeout = value
     
-    def create_csv_source(self, filepath: str, name: Optional[str] = None, **kwargs) -> CSVDataSource:
+    def create_csv_source(self, filepath: str, name: Optional[str] = None, **kwargs) -> CSVCrimeDataSource:
         """
-        Factory method to create a CSVDataSource.
+        Factory method to create a CSVCrimeDataSource.
         
         Args:
             filepath: Path to CSV file
@@ -103,14 +103,14 @@ class FinalDataIngestion:
             **kwargs: Additional arguments for pd.read_csv()
             
         Returns:
-            CSVDataSource: Created source instance
+            CSVCrimeDataSource: Created source instance
         """
-        source = CSVDataSource(filepath, name=name, **kwargs)
+        source = CSVCrimeDataSource(filepath, name=name, **kwargs)
         return source
     
-    def create_api_source(self, url: str, params: Optional[Dict] = None, timeout: Optional[int] = None, name: Optional[str] = None) -> APIDataSource:
+    def create_api_source(self, url: str, params: Optional[Dict] = None, timeout: Optional[int] = None, name: Optional[str] = None) -> APICrimeDataSource:
         """
-        Factory method to create an APIDataSource.
+        Factory method to create an APICrimeDataSource.
         
         Args:
             url: API endpoint URL
@@ -119,15 +119,15 @@ class FinalDataIngestion:
             name: Optional name for the source
             
         Returns:
-            APIDataSource: Created source instance
+            APICrimeDataSource: Created source instance
         """
         actual_timeout = timeout if timeout is not None else self._default_timeout
-        source = APIDataSource(url, params=params, timeout=actual_timeout, name=name)
+        source = APICrimeDataSource(url, params=params, timeout=actual_timeout, name=name)
         return source
     
-    def create_database_source(self, connection_string: str, query: str, name: Optional[str] = None) -> DatabaseDataSource:
+    def create_database_source(self, connection_string: str, query: str, name: Optional[str] = None) -> DatabaseCrimeDataSource:
         """
-        Factory method to create a DatabaseDataSource.
+        Factory method to create a DatabaseCrimeDataSource.
         
         Args:
             connection_string: Database connection string
@@ -135,9 +135,9 @@ class FinalDataIngestion:
             name: Optional name for the source
             
         Returns:
-            DatabaseDataSource: Created source instance
+            DatabaseCrimeDataSource: Created source instance
         """
-        source = DatabaseDataSource(connection_string, query, name=name)
+        source = DatabaseCrimeDataSource(connection_string, query, name=name)
         return source
     
     def load_from_source(self, source: DataSource, 
@@ -236,7 +236,7 @@ class FinalDataIngestion:
     
     def load_csv(self, filepath: str, validate_quality: bool = True, **kwargs) -> pd.DataFrame:
         """
-        Convenience method to load CSV using CSVDataSource.
+        Convenience method to load CSV using CSVCrimeDataSource.
         
         Args:
             filepath: Path to the CSV file
