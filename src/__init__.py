@@ -13,9 +13,9 @@ Project: All (Projects 1, 2, 3 & 4)
 
 # Package metadata
 __version__ = "1.0.0"
-__author__ = "INST326 Crime Research Data Pipeline Project Team"
+__author__ = "INST326 Crime Research Data Pipeline Project Team (Group 0203-SAV-ASMV)"
 __email__ = "aatayan@terpmail.umd.edu"
-__description__ = "Crime Research Data Pipeline Function Library for INST326"
+__description__ = "Crime Research Data Pipeline for INST326"
 
 # Import main functions from the crime research data pipeline library for easy access - Project 1 feature
 from .proj1_crime_data_library import (
@@ -66,6 +66,16 @@ from .proj3_data_processors import NewDataAnalysis, NewDataCleaner, NewDataTrans
 from .proj3_data_sources import APIDataSource, CSVDataSource, DatabaseDataSource
 from .proj3_data_utilities_new import NewDataStorageUtils
 
+# Import enhanced capstone classes for easy access - Project 4 feature
+from .proj4_data_source import DataSource
+from .proj4_data_processor import DataProcessor
+from .proj4_specialized_sources import CSVCrimeDataSource, APICrimeDataSource, DatabaseCrimeDataSource
+from .proj4_specialized_processors import CrimeDataAnalysis, CrimeDataCleaner, CrimeDataTransformation
+from .proj4_data_quality_standards import DataQualityStandards, QualityLevel, ReportingStandard
+from .proj4_data_ingestion import CrimeDataIngestion
+from .proj4_data_utilities import CrimeDataStorageUtils
+from .proj4_pipeline_manager import PipelineManager
+
 # Define what gets imported with "import *" statements - Project 1/2/3/4 feature
 __all__ = [
     # Data Ingestion (Initial Work) - Project 1 feature
@@ -113,11 +123,27 @@ __all__ = [
     'DataPipeline',
     'NewDataAnalysis',
     'NewDataCleaner',
-    'NewDataIngestion',
+    'NewDataTransformation',
     'APIDataSource',
     'CSVDataSource',
     'DatabaseDataSource',
-    'NewDataStorageUtils'
+    'NewDataStorageUtils',
+
+    # Crime Research Data Pipeline Enhanced Capstone Classes - Project 4 feature
+    'DataSource',
+    'DataProcessor',
+    'CSVCrimeDataSource',
+    'APICrimeDataSource',
+    'DatabaseCrimeDataSource',
+    'CrimeDataAnalysis',
+    'CrimeDataCleaner',
+    'CrimeDataTransformation',
+    'DataQualityStandards',
+    'QualityLevel',
+    'ReportingStandard',
+    'CrimeDataIngestion',
+    'CrimeDataStorageUtils',
+    'PipelineManager',
 ]
 
 # Convenience groupings of functions in the library for easier access - Project 1 feature
@@ -210,5 +236,3 @@ def get_library_info(): # Project 1 feature
         'total_functions': len(lib_functions),
         'categories': list(get_function_categories().keys()),
     }
-
-
