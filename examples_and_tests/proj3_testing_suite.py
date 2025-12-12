@@ -16,6 +16,7 @@ import os
 import pandas as pd
 import numpy as np
 import json
+import logging
 from unittest.mock import MagicMock, patch, mock_open
 from abc import ABC
 from datetime import datetime
@@ -300,5 +301,5 @@ class TestSystemIntegration(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.CRITICAL) # Keep logging quieted for clean test output
+    logging.basicConfig(level=logging.CRITICAL) # keep logging quieted for clean test output
     unittest.main()
