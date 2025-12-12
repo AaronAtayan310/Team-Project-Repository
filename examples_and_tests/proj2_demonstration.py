@@ -27,7 +27,7 @@ from proj2_data_utilities_cls import DataStorageUtils
 
 
 def ingestion_class_demo():
-    """Demonstrate the basic capabilities of the DataIngestion class such as printing objects via _str__ or __repr__, loading & validating csv files, fetching API data, etc."""
+    """Demonstrate the basic capabilities of the DataIngestion class such as printing objects via __str__ or __repr__, loading & validating csv files, fetching API data, etc."""
     print("❗ DATA INGESTION CLASS DEMO")
     print("=" * 50)
     
@@ -37,7 +37,7 @@ def ingestion_class_demo():
     print(repr(ingestion))
     
     # Validate a CSV path
-    is_valid = DataIngestion.validate_csv_path("example.csv")
+    is_valid = DataIngestion.validate_csv_path("example.csv") # likely false but still usable for demo purposes
     print(f"CSV path valid: {is_valid}")
     
     # Load CSV (example - will fail if file doesn't exist)
@@ -47,8 +47,10 @@ def ingestion_class_demo():
     data = ingestion.fetch_api_data("https://api.nationalize.io/?name=nathaniel")
     
     # Check loaded sources
-    print(f"Data sources: {ingestion._data_sources}")
-
+    print(f"Data sources: {ingestion.data_sources}")
+    if isinstance(data, dict): # show data retrieved from the API call
+        print("API Result:", data.get('country', 'No country data returned'))
+    
     # Demonstrate different initialization options
     ingestion_custom = DataIngestion(default_timeout=5, track_sources=False)
     print("\nCustom initialized instance:")
@@ -64,13 +66,13 @@ def ingestion_class_demo():
     print(f"Tracking enabled: {ingestion.track_sources}")
     
     # Show source tracking after API calls
-    print(f"\nTracked sources after API calls: {len(ingestion._data_sources)}")
-    if ingestion._data_sources:
-        print("Latest source:", ingestion._data_sources[-1])
+    print(f"\nTracked sources after API calls: {len(ingestion.data_sources)}")
+    if ingestion.data_sources:
+        print("Latest source:", ingestion.data_sources[-1])
     
     # Demonstrate source clearing
     ingestion.clear_sources()
-    print(f"\nSources after clearing: {len(ingestion._data_sources)}")
+    print(f"\nSources after clearing: {len(ingestion.data_sources)}")
 
 
 def cleaning_class_demo():
@@ -91,7 +93,7 @@ def cleaning_class_demo():
 
     # Initialize cleaner
     cleaner = DataCleaner(df, verbose=True)
-    print("\nCleaner __repr__ output:")
+    print("\nDataCleaner __repr__ output:")
     print(repr(cleaner))
 
     # Handle missing values using mean strategy on numeric columns
@@ -107,6 +109,11 @@ def cleaning_class_demo():
     # Show string summary
     print("\nCleaner __str__ summary:")
     print(str(cleaner))
+    
+    # Show history explicitly
+    print("\nCleaning History from Property:")
+    for i, op in enumerate(cleaner.cleaning_history, 1):
+        print(f" {i}. {op}")
 
 
 def transformation_class_demo():
@@ -161,31 +168,36 @@ def analysis_class_demo():
             "neighborhood": ["A", "A", "B", "B"],
         }
     )
+    # Target variable for regression demo
     y = pd.Series([5.0, 10.0, 15.0, 20.0])
 
     # Initialize analysis object
     analysis = DataAnalysis(df)
     print("Analysis __repr__ output:")
     print(repr(analysis))
+    
+    # Show the 'described' property
+    print("\nAnalysis 'described' property (numeric statistics):")
+    print(analysis.described)
 
     # Run a simple regression
     model = analysis.run_regression(y)
-    print("\nTrained LinearRegression model:")
+    print("\nTrained LinearRegression model (using 'feature1' and 'feature2' as X):")
     print(model)
 
     # Evaluate model using same targets as a simple demo
     metrics = analysis.evaluate_model(model, y_test=y)
-    print("\nModel evaluation metrics:")
+    print("\nModel evaluation metrics (Mean Squared Error):")
     print(metrics)
 
     # Calculate missing data percentages
     missing_pct = analysis.calculate_missing_data()
-    print("\nMissing data percentage per column:")
+    print("\nMissing data percentage per column (should all be 0.0):")
     print(missing_pct)
 
     # Compute crime rate by year
     crime_rate_by_year = analysis.compute_crime_rate_by_year(population_col="population")
-    print("\nCrime rate by year:")
+    print("\nCrime rate by year (Crimes per 100,000 population):")
     print(crime_rate_by_year)
 
     # Top crime types
@@ -195,7 +207,7 @@ def analysis_class_demo():
 
     # High crime areas
     high_crime_areas = analysis.find_high_crime_areas(area_col="neighborhood")
-    print("\nHigh crime areas:")
+    print("\nHigh crime areas (by count):")
     print(high_crime_areas)
 
     # Use __str__ (prints internal data and description)
@@ -208,7 +220,7 @@ def utilities_class_demo():
     print("\n\n❗ DATA UTILITIES CLASS DEMO")
     print("=" * 50)
     
-    # Use a temporary directory so our demo does not cause clutter
+    # Use a temporary directory so our demo does not cause clutter and auto-remove created files on exit
     with tempfile.TemporaryDirectory() as tmpdir:
         utils = DataStorageUtils(base_output_dir=tmpdir)
         print("Utilities __repr__ output:")
@@ -224,14 +236,15 @@ def utilities_class_demo():
 
         # Serialize and deserialize a simple model
         model = LinearRegression()
-        model_path = utils.serialize_model(model, os.path.join(tmpdir, "model.pkl"))
-        print(f"\nModel serialized to: {model_path}")
+        metadata = {"model_type": "LinearRegression", "version": "1.0"} 
+        model_path = utils.serialize_model(model, os.path.join(tmpdir, "model.pkl"), metadata=metadata)
+        print(f"\nModel serialized to: {model_path} (Metadata saved to {model_path.with_suffix('.json')})")
         loaded_model = utils.deserialize_model(str(model_path))
         print("Deserialized model:")
         print(loaded_model)
 
         # Save and load JSON
-        json_data = {"step": "demo", "status": "success"}
+        json_data = {"step": "demo", "status": "success", "file_hash_alg": "sha256"}
         json_path = utils.save_to_json(json_data, os.path.join(tmpdir, "demo.json"), use_timestamp=False)
         print(f"\nJSON saved to: {json_path}")
         loaded_json = utils.load_from_json(str(json_path))
@@ -241,17 +254,17 @@ def utilities_class_demo():
         # Compute a file hash for the CSV
         file_hash = utils.compute_file_hash(str(csv_path))
         print(f"\nComputed file hash for CSV: {file_hash}")
+        
+        # Log a pipeline step while will print to console because of the logging setup for DataStorageUtils
+        utils.log_pipeline_step("utilities_demo_finish", "completed", extra_info={"files": 3})
 
         # Create a simple pipeline manifest
-        manifest_path = utils.create_pipeline_manifest(
-            {"steps": ["ingestion", "cleaning", "analysis"], "status": "completed"},
-            filepath=os.path.join(tmpdir, "manifest.json"),
-        )
-        print(f"\nPipeline manifest saved to: {manifest_path}")
-
+        manifest_path = utils.create_pipeline_manifest({"steps": ["ingestion", "cleaning", "analysis", "storage"], "status": "completed"}, filepath=None, )
+        print(f"\nPipeline manifest saved to (timestamped file): {manifest_path.name}")
+        
         # Get directory size
         dir_size = utils.get_directory_size(tmpdir)
-        print(f"\nTemporary directory size (bytes): {dir_size}")
+        print(f"\nTemporary directory size: {dir_size} bytes ({dir_size/1024:.2f} KB)") # bytes are converted to KB for more readable output
 
 
 def main():
