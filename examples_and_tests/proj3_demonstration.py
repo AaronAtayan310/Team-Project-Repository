@@ -27,7 +27,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 from proj3_base_classes import AbstractDataProcessor, AbstractDataSource
 from proj3_data_ingestion_new import NewDataIngestion
 from proj3_data_pipeline import DataPipeline
-from proj3_data_processors import NewDataAnalysis, NewDataCleaner, NewDataIngestion
+from proj3_data_processors import NewDataAnalysis, NewDataCleaner, NewDataTransformation
 from proj3_data_sources import APIDataSource, CSVDataSource, DatabaseDataSource
 from proj3_data_utilities_new import NewDataStorageUtils
 
