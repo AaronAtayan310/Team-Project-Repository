@@ -10,9 +10,10 @@ Project: OOP Class Implementation (Project 2)
 """
 
 import os
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 import pandas as pd
 import requests
+
 
 class DataIngestion:
     """ 
@@ -20,6 +21,7 @@ class DataIngestion:
 
     Attributes:
         default_timeout (int): Default timeout for API requests in seconds
+        track_sources (bool): Whether data sources are being tracked
         data_sources (list): List of successfully loaded data sources
     """
 
@@ -45,7 +47,7 @@ class DataIngestion:
         
         self._default_timeout = default_timeout
         self._track_sources = track_sources
-        self._data_sources =[]
+        self._data_sources: List[Dict[str, Any]] = []
 
     @property
     def default_timeout(self) -> int:
@@ -88,6 +90,13 @@ class DataIngestion:
         if not isinstance(value, bool):
             raise TypeError("track_sources must be a boolean")
         self._track_sources = value
+
+    @property
+    def data_sources(self) -> List[Dict[str, Any]]:
+        """
+        Gets the list of tracked data sources (to match the class Attribute docstring).
+        """
+        return self._data_sources
     
     def load_csv(self, filepath: str) -> pd.DataFrame:
         """
@@ -142,16 +151,27 @@ class DataIngestion:
         
         actual_timeout = timeout if timeout is not None else self._default_timeout
 
+        if timeout is not None and (not isinstance(timeout, int) or timeout <= 0): # type checking for if an override is provided
+             raise ValueError("If provided, timeout must be a positive integer.")
+
         response = requests.get(url, params = params, timeout = actual_timeout)
         response.raise_for_status()
         data = response.json()
 
         if self._track_sources:
+            if isinstance(data, list): # check if data is a list (common for JSON APIs) and get item count, else 1
+                 item_count = len(data)
+            elif isinstance(data, dict):
+                 item_count = 1
+            else:
+                 item_count = 0
+
             self._data_sources.append({
                 'type': 'api',
                 'source': url,
                 'params': params,
-                'status_code': response.status_code
+                'status_code': response.status_code,
+                'items_retrieved': item_count
             })
         
         return data
@@ -190,7 +210,7 @@ class DataIngestion:
         sources_count = len(self._data_sources)
         tracking_status = "enabled" if self._track_sources else "disabled"
         return (f"DataIngestion (timeout= {self._default_timeout}s, "
-                f"tracking= {tracking_status}, sources_loaded = {sources_count})")
+                f"tracking= {tracking_status}, sources_loaded= {sources_count})")
     
     def __repr__(self) -> str:
         """
