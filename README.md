@@ -494,7 +494,7 @@ The test suite covers:
 - **1**: One or more tests failed
 
 # Video Presentation
-Our team video presentation is located in the `Video Presentation` directory.
+Here is the link to our video presentation: https://drive.google.com/file/d/1pSBSmcSWwdP9f_YPhzCQKTHw1iBLOaLb/view?usp=drive_link
 
 # Project contribution guidelines for team members
 1. Ensure you have the latest code
