@@ -421,6 +421,79 @@ This implementation of the project demonstrates:
 4. **Composition Patterns** - Flexible pipeline orchestration
 5. **System Integration** - End-to-end crime data workflow
 
+# Overview and organization of Project 4 Capstone Integration & Testing
+The fourth implementation of the project features the most comprehensive and fully complete system yet. Project 4 is built upon all three previous projects, carrying over features from each project to create a full data pipeline. This project specifically includes a full demonstration with a sample dataset and a full test suite that covers each class and function. Our final project has the capabilities of data cleaning, transformation, and analysis. 
+
+## Run System Tests
+
+### Prerequisites
+
+Before running tests, ensure you have:
+- Python 3.x installed
+- Required dependencies: see `proj4_final_requirements.txt` 
+- All project modules in the `src/` directory
+
+### Running All Tests
+
+To run the complete test suite, run the file titled:
+  `proj4_testing_suite.py`
+
+This will execute all test classes and display detailed results for each test case.
+
+There is also an included sample demonstration file titled:
+  `proj4_demonstration.py`
+
+### Running Specific Test Classes
+
+The following Python unittest modules can be used if you want to run tests for a specific component:
+
+```bash
+# Test only DataSource enhancements
+python -m unittest tests.test_proj4.TestEnhancedDataSource
+
+# Test only DataProcessor enhancements
+python -m unittest tests.test_proj4.TestEnhancedDataProcessor
+
+# Test only PipelineManager
+python -m unittest tests.test_proj4.TestPipelineManager
+```
+
+### Running Individual Tests
+
+To run a single test method:
+
+```bash
+python -m unittest tests.test_proj4.TestEnhancedDataSource.test_uuid_identification
+```
+
+### Test Outputs
+
+The test runner provides:
+- **Verbose output** showing each test as it runs (pass/fail)
+- **Summary statistics** including:
+  - Total tests run
+  - Number of successes
+  - Number of failures
+  - Number of errors
+- **Detailed failure information** if any tests fail
+
+### Test Coverage
+
+The test suite covers:
+- **Enhanced DataSource**: UUID identification, registry pattern, temporal tracking, load statistics, data lineage
+- **Enhanced DataProcessor**: Performance monitoring, data quality tracking, original data preservation
+- **DataQualityStandards**: Quality thresholds, field validation, freshness checks, completeness scoring
+- **CrimeDataIngestion**: Factory methods, caching, ingestion statistics
+- **CrimeDataStorageUtils**: File versioning, checksum verification, storage tracking
+- **PipelineManager**: End-to-end pipeline orchestration, fluent interface, lineage tracking
+- **Polymorphism**: Cross-component polymorphic behavior
+
+### Exit Codes
+
+- **0**: All tests passed successfully
+- **1**: One or more tests failed
+
+
 # Project contribution guidelines for team members
 1. Ensure you have the latest code
 2. Make your changes in the appropriate module
