@@ -19,4 +19,11 @@
 # Below lists the current modules the Crime Research Data Pipeline 
 # Project is dependent upon...
 
-# 1.
+# 1. All initial modules required from Project 1 (i.e., pandas, datetime, sklearn modules, etc.)
+# 2. uuid
+# 3. numpy
+# 4. ABC, abstractmethod
+# 5. Enum
+# 6. hashlib
+# 7. shutil
+# 8. time
