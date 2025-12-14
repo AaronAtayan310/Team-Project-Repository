@@ -21,9 +21,9 @@ from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 import hashlib
-from .proj3_data_ingestion_new import NewDataIngestion 
-from .proj3_data_utilities_new import NewDataStorageUtils
-from .proj3_data_processors import NewDataCleaner, NewDataTransformation, NewDataAnalysis 
+from src.proj3_data_ingestion_new import NewDataIngestion 
+from src.proj3_data_utilities_new import NewDataStorageUtils
+from src.proj3_data_processors import NewDataCleaner, NewDataTransformation, NewDataAnalysis 
 
 
 class DataPipeline:

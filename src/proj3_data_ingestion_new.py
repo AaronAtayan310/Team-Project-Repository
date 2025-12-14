@@ -21,7 +21,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 import hashlib
-from .proj3_data_sources import CSVDataSource
+from src.proj3_data_sources import CSVDataSource
 
 
 class NewDataIngestion:

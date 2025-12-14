@@ -10,10 +10,10 @@ Institution: University of Maryland, College Park
 Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
 """
 
-from .proj3_base_classes import AbstractDataProcessor
+from src.proj3_base_classes import AbstractDataProcessor
 import pandas as pd
 import numpy as np
-from typing import Optional, List, Union
+from typing import Optional, List, Union, Dict
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler

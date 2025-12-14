@@ -10,7 +10,7 @@ Institution: University of Maryland, College Park
 Project: Advanced OOP with Inheritance & Polymorphism (Project 3)
 """
 
-from .proj3_base_classes import AbstractDataSource
+from src.proj3_base_classes import AbstractDataSource
 from typing import Any, Dict, List, Optional, Union
 from pathlib import Path
 import pandas as pd
