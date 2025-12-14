@@ -11,13 +11,13 @@ Institution: University of Maryland, College Park
 Project: Capstone Integration & Testing (Project 4)
 """
 
-from .proj4_data_source import DataSource
-from .proj4_data_processor import DataProcessor
-from .proj4_specialized_sources import CSVCrimeDataSource, APICrimeDataSource, DatabaseCrimeDataSource
-from .proj4_specialized_processors import CrimeDataAnalysis, CrimeDataCleaner, CrimeDataTransformation
-from .proj4_data_ingestion import CrimeDataIngestion
-from .proj4_data_utilities import CrimeDataStorageUtils
-from .proj4_data_quality_standards import DataQualityStandards, QualityLevel
+from src.proj4_data_source import DataSource
+from src.proj4_data_processor import DataProcessor
+from src.proj4_specialized_sources import CSVCrimeDataSource, APICrimeDataSource, DatabaseCrimeDataSource
+from src.proj4_specialized_processors import CrimeDataAnalysis, CrimeDataCleaner, CrimeDataTransformation
+from src.proj4_data_ingestion import CrimeDataIngestion
+from src.proj4_data_utilities import CrimeDataStorageUtils
+from src.proj4_data_quality_standards import DataQualityStandards, QualityLevel
 
 import pandas as pd
 from typing import Any, Dict, List, Optional, Union

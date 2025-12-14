@@ -11,7 +11,7 @@ Institution: University of Maryland, College Park
 Project: Capstone Integration & Testing (Project 4)
 """
 
-from .proj4_data_source import DataSource
+from src.proj4_data_source import DataSource
 from typing import Any, Dict, List, Optional, Union
 from pathlib import Path
 import pandas as pd

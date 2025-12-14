@@ -11,8 +11,8 @@ Institution: University of Maryland, College Park
 Project: Capstone Integration & Testing (Project 4)
 """
 
-from .proj4_data_processor import DataProcessor
-from .proj4_data_quality_standards import DataQualityStandards, QualityLevel
+from src.proj4_data_processor import DataProcessor
+from src.proj4_data_quality_standards import DataQualityStandards, QualityLevel
 import pandas as pd
 import numpy as np
 from typing import Optional, List, Dict, Any

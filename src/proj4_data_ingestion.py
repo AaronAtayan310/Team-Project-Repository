@@ -18,9 +18,9 @@ from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 import uuid
-from .proj4_data_source import DataSource
-from .proj4_specialized_sources import CSVCrimeDataSource, APICrimeDataSource, DatabaseCrimeDataSource
-from .proj4_data_quality_standards import DataQualityStandards
+from src.proj4_data_source import DataSource
+from src.proj4_specialized_sources import CSVCrimeDataSource, APICrimeDataSource, DatabaseCrimeDataSource
+from src.proj4_data_quality_standards import DataQualityStandards
 
 
 class CrimeDataIngestion:
