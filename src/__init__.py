@@ -18,7 +18,7 @@ __email__ = "aatayan@terpmail.umd.edu"
 __description__ = "Crime Research Data Pipeline for INST326"
 
 # Import main functions from the crime research data pipeline library for easy access - Project 1 feature
-from .proj1_crime_data_library import (
+from src.proj1_crime_data_library import (
     # Data Ingestion Functions
     load_csv,
     fetch_api_data,
@@ -52,29 +52,29 @@ from .proj1_crime_data_library import (
 )
 
 # Import core classes for easy access - Project 2 feature
-from .proj2_data_analysis_cls import DataAnalysis
-from .proj2_data_cleaning_cls import DataCleaner
-from .proj2_data_ingestion_cls import DataIngestion
-from .proj2_data_transformation_cls import DataTransformation
-from .proj2_data_utilities_cls import DataStorageUtils
+from src.proj2_data_analysis_cls import DataAnalysis
+from src.proj2_data_cleaning_cls import DataCleaner
+from src.proj2_data_ingestion_cls import DataIngestion
+from src.proj2_data_transformation_cls import DataTransformation
+from src.proj2_data_utilities_cls import DataStorageUtils
 
 # Import refactored & advanced classes for easy access - Project 3 feature
-from .proj3_base_classes import AbstractDataProcessor, AbstractDataSource
-from .proj3_data_ingestion_new import NewDataIngestion
-from .proj3_data_pipeline import DataPipeline
-from .proj3_data_processors import NewDataAnalysis, NewDataCleaner, NewDataTransformation
-from .proj3_data_sources import APIDataSource, CSVDataSource, DatabaseDataSource
-from .proj3_data_utilities_new import NewDataStorageUtils
+from src.proj3_base_classes import AbstractDataProcessor, AbstractDataSource
+from src.proj3_data_ingestion_new import NewDataIngestion
+from src.proj3_data_pipeline import DataPipeline
+from src.proj3_data_processors import NewDataAnalysis, NewDataCleaner, NewDataTransformation
+from src.proj3_data_sources import APIDataSource, CSVDataSource, DatabaseDataSource
+from src.proj3_data_utilities_new import NewDataStorageUtils
 
 # Import enhanced capstone classes for easy access - Project 4 feature
-from .proj4_data_source import DataSource
-from .proj4_data_processor import DataProcessor
-from .proj4_specialized_sources import CSVCrimeDataSource, APICrimeDataSource, DatabaseCrimeDataSource
-from .proj4_specialized_processors import CrimeDataAnalysis, CrimeDataCleaner, CrimeDataTransformation
-from .proj4_data_quality_standards import DataQualityStandards, QualityLevel, ReportingStandard
-from .proj4_data_ingestion import CrimeDataIngestion
-from .proj4_data_utilities import CrimeDataStorageUtils
-from .proj4_pipeline_manager import PipelineManager
+from src.proj4_data_source import DataSource
+from src.proj4_data_processor import DataProcessor
+from src.proj4_specialized_sources import CSVCrimeDataSource, APICrimeDataSource, DatabaseCrimeDataSource
+from src.proj4_specialized_processors import CrimeDataAnalysis, CrimeDataCleaner, CrimeDataTransformation
+from src.proj4_data_quality_standards import DataQualityStandards, QualityLevel, ReportingStandard
+from src.proj4_data_ingestion import CrimeDataIngestion
+from src.proj4_data_utilities import CrimeDataStorageUtils
+from src.proj4_pipeline_manager import PipelineManager
 
 # Define what gets imported with "import *" statements - Project 1/2/3/4 feature
 __all__ = [
