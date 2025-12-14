@@ -175,7 +175,7 @@ class NewDataAnalysis(AbstractDataProcessor):
 
         return result
     
-     def find_high_crime_areas(self, area_col: str = "neighborhood") -> pd.DataFrame:
+    def find_high_crime_areas(self, area_col: str = "neighborhood") -> pd.DataFrame:
         """
         Identify the areas with the highest number of reported crimes.
         
