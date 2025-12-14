@@ -493,6 +493,8 @@ The test suite covers:
 - **0**: All tests passed successfully
 - **1**: One or more tests failed
 
+# Video Presentation
+Our team video presentation is located in the `Video Presentation` directory.
 
 # Project contribution guidelines for team members
 1. Ensure you have the latest code
@@ -500,3 +502,4 @@ The test suite covers:
 3. Write tests for new functionality
 4. Update documentation as needed
 5. Follow PEP 8 documentation guidelines
+6. Ensure all A.I. assited code is correct and follows course guidelines
