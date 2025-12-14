@@ -203,13 +203,16 @@ class TestDataQualityStandards(unittest.TestCase):
     
     def setUp(self):
         """Set up test fixtures."""
+
+        recent_date = datetime.now() - pd.Timedelta(days=5)
+
         self.df = pd.DataFrame({
             'incident_id': [1, 2, 3, 4, 5],
-            'date': pd.date_range('2024-12-01', periods=5),
+            'date': pd.date_range(start=recent_date, periods=5),
             'crime_type': ['Theft', 'Assault', None, 'Burglary', 'Robbery'],
             'location': ['A', 'B', 'C', 'D', 'E'],
             'jurisdiction': ['MD', 'MD', 'MD', 'MD', 'MD'],
-            'reported_date': pd.date_range('2024-12-01', periods=5)
+            'reported_date': pd.date_range(start=recent_date, periods=5)
         })
         
         self.standards = DataQualityStandards("Maryland", "FBI_UCR")
