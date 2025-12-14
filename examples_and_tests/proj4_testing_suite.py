@@ -22,16 +22,18 @@ import os
 from datetime import datetime
 
 # Add src directory to path so we can import the relevant code files
-sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))    
 
-from proj4_data_source import DataSource
-from proj4_data_processor import DataProcessor
-from proj4_specialized_sources import CSVCrimeDataSource, APICrimeDataSource, DatabaseCrimeDataSource
-from proj4_specialized_processors import CrimeDataAnalysis, CrimeDataCleaner, CrimeDataTransformation
-from proj4_data_quality_standards import DataQualityStandards, QualityLevel, ReportingStandard
-from proj4_data_ingestion import CrimeDataIngestion
-from proj4_data_utilities import CrimeDataStorageUtils
-from proj4_pipeline_manager import PipelineManager
+from src.proj4_data_source import DataSource
+from src.proj4_data_processor import DataProcessor
+from src.proj4_specialized_sources import CSVCrimeDataSource, APICrimeDataSource, DatabaseCrimeDataSource
+from src.proj4_specialized_processors import CrimeDataAnalysis, CrimeDataCleaner, CrimeDataTransformation
+from src.proj4_data_quality_standards import DataQualityStandards, QualityLevel, ReportingStandard
+from src.proj4_data_ingestion import CrimeDataIngestion
+from src.proj4_data_utilities import CrimeDataStorageUtils
+from src.proj4_pipeline_manager import PipelineManager
+
 
 
 class TestEnhancedDataSource(unittest.TestCase):
